@@ -118,5 +118,11 @@ describe("WordleBoard", () => {
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toEqual("HRT");
     });
+    /* test("do not show non letter characters when the user type", async () => {
+      await playerSubmitGuess("333");
+      expect(
+        wrapper.find<HTMLInputElement>("input[type=text]").element.value
+      ).toEqual("");
+    }); */
   });
 });

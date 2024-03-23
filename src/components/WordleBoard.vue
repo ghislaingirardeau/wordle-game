@@ -15,14 +15,18 @@ defineProps({
   },
 });
 
-const guessInProcess = ref("");
+const guessInProcess = ref<string | null>(null);
 const guessSubmited = ref("");
 
-const formattedGuessInProcess = computed({
+const formattedGuessInProcess = computed<string>({
   get() {
-    return guessInProcess.value;
+    return guessInProcess.value ?? "";
   },
   set(rawValue: string) {
+    const regex = /\d+/;
+    guessInProcess.value = null;
+    /* guessInProcess.value?.replace(regex, "") */
+    // recupere ce que tape l'utilisateur et format le
     guessInProcess.value = rawValue
       .slice(0, WORD_SIZE)
       .toUpperCase()
@@ -31,10 +35,11 @@ const formattedGuessInProcess = computed({
 });
 
 function onSubmit() {
-  if (!englishWord.includes(guessInProcess.value)) {
+  if (!englishWord.includes(formattedGuessInProcess.value)) {
+    // ne fera rien quand je tape enter
     return;
   }
-  guessSubmited.value = guessInProcess.value;
+  guessSubmited.value = formattedGuessInProcess.value;
 }
 </script>
 

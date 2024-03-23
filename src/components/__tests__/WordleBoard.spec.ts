@@ -59,6 +59,9 @@ describe("WordleBoard", () => {
   });
 
   describe("Rules of the games", () => {
+    beforeEach(() => {
+      console.warn = vi.fn();
+    });
     // each permet de faire le test autant de fois qu'il y a d'éléments dans le tableau
     test.each([
       { wordFromArray: "FLY", reason: "must be 5 5characters length" },
@@ -70,7 +73,6 @@ describe("WordleBoard", () => {
         // prendra la valeur de chaque élément dans le tableau
         // pour espionner la console et voir si il y a un warning
         //* a executer avant le mount !
-        console.warn = vi.fn();
 
         // OPTION pour masquer le warning dans le test
         /* const spy = vi.spyOn(console, "warn");
@@ -86,7 +88,6 @@ describe("WordleBoard", () => {
       }
     );
     test("No warning if the word of the day is real, uppercase and contain  letter", async () => {
-      console.warn = vi.fn();
       mount(WordleBoard, {
         props: { wordOfTheDay: "TESTS" },
       });

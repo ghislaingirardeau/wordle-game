@@ -60,8 +60,12 @@ describe("WordleBoard", () => {
 
   describe("Rules of the games", () => {
     // each permet de faire le test autant de fois qu'il y a d'éléments dans le tableau
-    test.each(["FLY", "card", "QQQQQ"])(
-      "If the word of the day is '%s', a warning is emitted ",
+    test.each([
+      { wordFromArray: "FLY", reason: "must be 5 5characters length" },
+      { wordFromArray: "card", reason: "must be uppercase" },
+      { wordFromArray: "QQQQQ", reason: "must be a real word" },
+    ])(
+      "The word of the day is $wordFromArray but $reason",
       async (wordFromArray) => {
         // prendra la valeur de chaque élément dans le tableau
         // pour espionner la console et voir si il y a un warning

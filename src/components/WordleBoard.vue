@@ -23,16 +23,17 @@ const formattedGuessInProcess = computed({
     return guessInProcess.value;
   },
   set(rawValue: string) {
-    guessInProcess.value = rawValue.slice(0, WORD_SIZE);
+    guessInProcess.value = rawValue
+      .slice(0, WORD_SIZE)
+      .toUpperCase()
+      .replace(/[^A-Z]+/gi, "");
   },
 });
 
 function onSubmit() {
-  console.log(guessInProcess.value);
   if (!englishWord.includes(guessInProcess.value)) {
     return;
   }
-
   guessSubmited.value = guessInProcess.value;
 }
 </script>

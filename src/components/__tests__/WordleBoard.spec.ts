@@ -106,7 +106,17 @@ describe("WordleBoard", () => {
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
       expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
     });
-    test.todo("player guesses are not case-sensitive");
-    test.todo("player guesses can only contains letters");
+    test("player guesses are not case-sensitive", async () => {
+      await playerSubmitGuess(wordOfTheDay.toLowerCase());
+
+      expect(wrapper.text()).toContain(VICTORY_MESSAGE);
+    });
+    test("player guesses can only contains letters", async () => {
+      await playerSubmitGuess("H3R!T");
+
+      expect(
+        wrapper.find<HTMLInputElement>("input[type=text]").element.value
+      ).toEqual("HRT");
+    });
   });
 });

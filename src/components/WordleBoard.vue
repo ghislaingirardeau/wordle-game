@@ -2,12 +2,16 @@
 import { VICTORY_MESSAGE, DEFEAT_MESSAGE } from "@/settings";
 import { ref } from "vue";
 
+import englishWord from "../utils/englishWordsWith5Letters.json";
+
 defineProps({
   wordOfTheDay: {
     type: String,
     // methode sur la props pour vérifier que celle-ci aura bien une longueur de 5
     validator: (wordGiven: string) =>
-      wordGiven.length === 5 && wordGiven === wordGiven.toUpperCase(),
+      wordGiven.length === 5 &&
+      wordGiven === wordGiven.toUpperCase() &&
+      englishWord.includes(wordGiven),
   },
 });
 

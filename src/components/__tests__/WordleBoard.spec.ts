@@ -17,21 +17,22 @@ describe("WordleBoard", () => {
       props: { wordOfTheDay: wordOfTheDay },
     });
   });
-  test("A victory message when user type the right word", async () => {
+
+  async function playerSubmitGuess(word: string): Promise<void> {
     // Act - action
     const guessInput: DOMWrapper<Element> = wrapper.find("input[type=text]");
-    await guessInput.setValue(wordOfTheDay);
+    await guessInput.setValue(word);
     await guessInput.trigger("keydown.enter");
+  }
+  test("A victory message when user type the right word", async () => {
+    await playerSubmitGuess(wordOfTheDay);
     // Assert - evalue
     expect(wrapper.text()).toContain(VICTORY_MESSAGE);
   });
   // placeholder test to do later
   // test.todo("Defeat message appears if the user type the wrong word");
   test("Defeat message appears if the user type the wrong word", async () => {
-    // Act - action
-    const guessInput: DOMWrapper<Element> = wrapper.find("input[type=text]");
-    await guessInput.setValue("WRONG");
-    await guessInput.trigger("keydown.enter");
+    await playerSubmitGuess("WRONG");
     // Assert - evalue
     expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
   });

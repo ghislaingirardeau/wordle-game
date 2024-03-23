@@ -1,5 +1,8 @@
 import { DOMWrapper, VueWrapper, mount } from "@vue/test-utils";
 import WordleBoard from "../WordleBoard.vue";
+//* definir des variables dans settings
+// Utilsable dans le test ET dans le component
+import { VICTORY_MESSAGE } from "@/settings";
 
 describe("WordleBoard", () => {
   it("A victory message when user type the right word", async () => {
@@ -12,6 +15,6 @@ describe("WordleBoard", () => {
     await guessInput.setValue("TEST");
     await guessInput.trigger("keydown.enter");
     // Assert - evalue
-    expect(wrapper.text()).toContain("You won!");
+    expect(wrapper.text()).toContain(VICTORY_MESSAGE);
   });
 });

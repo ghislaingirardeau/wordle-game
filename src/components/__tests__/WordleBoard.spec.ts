@@ -32,5 +32,14 @@ describe("WordleBoard", () => {
     // Assert - evalue
     expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
   });
-  test.todo("no end of game if the user has not make a guess");
+  // si utilisateur n'a rien tapé, je ne renvoie aucun de ces messages
+  test("no end of game if the user has not make a guess yet", async () => {
+    // Arrange - le mount
+    const wrapper: VueWrapper = mount(WordleBoard, {
+      props: { wordOfTheDay: wordOfTheDay },
+    });
+    // Assert - evalue
+    expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+    expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+  });
 });

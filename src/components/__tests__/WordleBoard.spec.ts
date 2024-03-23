@@ -53,11 +53,25 @@ describe("WordleBoard", () => {
   test("If the word of the day do not have exactly 5 letters, a warning is emitted ", async () => {
     // pour espionner la console et voir si il y a un warning
     //* a executer avant le mount !
-    vi.spyOn(console, "warn");
+    console.warn = vi.fn();
+
+    // OPTION pour masquer le warning dans le test
+    /* const spy = vi.spyOn(console, "warn");
+    spy.mockImplementation(() => null); */
+    //----------------------------------------
+
     mount(WordleBoard, {
       props: { wordOfTheDay: "FLY" },
     });
-
+    // si j'envoie un mot de moins de 5 lettres, j'ai bien un console warnning coté navigateur
+    // le warning s'affiche aussi dans le test
+    expect(console.warn).toHaveBeenCalled();
+  });
+  test("If the word of the day is not uppercase, a warning is emitted ", async () => {
+    console.warn = vi.fn();
+    mount(WordleBoard, {
+      props: { wordOfTheDay: "card" },
+    });
     expect(console.warn).toHaveBeenCalled();
   });
 });

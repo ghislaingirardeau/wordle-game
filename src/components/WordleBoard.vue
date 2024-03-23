@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { VICTORY_MESSAGE, DEFEAT_MESSAGE } from "@/settings";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
@@ -17,12 +17,22 @@ defineProps({
 
 const guessInProcess = ref("");
 const guessSubmited = ref("");
+
+const formattedGuessInProcess = computed({
+  get() {
+    return guessInProcess.value;
+  },
+  set(rawValue: string) {
+    guessInProcess.value = rawValue.slice(0, 5);
+  },
+});
 </script>
 
 <template>
   <input
     type="text"
-    v-model="guessInProcess"
+    v-model="formattedGuessInProcess"
+    maxlength="5"
     @keydown.enter="guessSubmited = guessInProcess"
   />
   <p

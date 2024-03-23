@@ -8,7 +8,7 @@ import exp from "constants";
 describe("WordleBoard", () => {
   // REFACTORISER, je peux utiliser les fonctions, objet, variable pour refactoriser le code de test
   // comme du JS
-  let wordOfTheDay: string = "TEST";
+  let wordOfTheDay: string = "TESTS";
 
   // code qui est commun au test du describe WordleBoard
   // avant chaque test; execute ce code
@@ -66,10 +66,10 @@ describe("WordleBoard", () => {
     test.each([
       { wordFromArray: "FLY", reason: "must be 5 5characters length" },
       { wordFromArray: "card", reason: "must be uppercase" },
-      { wordFromArray: "QQQQQ", reason: "must be a real word" },
+      { wordFromArray: "AAAAA", reason: "must be a real word" },
     ])(
       "The word of the day is $wordFromArray but $reason",
-      async (wordFromArray) => {
+      async (objectFomEach) => {
         // prendra la valeur de chaque élément dans le tableau
         // pour espionner la console et voir si il y a un warning
         //* a executer avant le mount !
@@ -80,7 +80,7 @@ describe("WordleBoard", () => {
         //----------------------------------------
 
         mount(WordleBoard, {
-          props: { wordOfTheDay: wordFromArray },
+          props: { wordOfTheDay: objectFomEach.wordFromArray },
         });
         // si j'envoie un mot de moins de 5 lettres, j'ai bien un console warnning coté navigateur
         // le warning s'affiche aussi dans le test
@@ -95,6 +95,13 @@ describe("WordleBoard", () => {
     });
   });
   describe("player input", () => {
-    test.todo("sdf");
+    test("player guesses are limited to 5 letters", async () => {
+      await playerSubmitGuess(wordOfTheDay + "EXTRAS");
+
+      expect(wrapper.text()).toContain(VICTORY_MESSAGE);
+    });
+    test.todo("player guesses can only be submited if they are real words");
+    test.todo("player guesses are not case-sensitive");
+    test.todo("player guesses can only contains letters");
   });
 });

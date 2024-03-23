@@ -21,6 +21,7 @@ const guessSubmited = ref("");
 </script>
 
 <template>
+  <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
   <guess-input @guess-submitted="(guess:string) => (guessSubmited = guess)" />
   <p
     v-if="guessSubmited.length > 0"

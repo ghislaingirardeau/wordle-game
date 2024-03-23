@@ -5,7 +5,10 @@ import { computed, ref } from "vue";
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
 const guessInProcess = ref<string | null>(null);
+//* Pour passer une donnée à notre parent
+// define the event
 const emit = defineEmits<{
+  // name of the event et je lui passe le string
   "guess-submitted": [guess: string];
 }>();
 
@@ -30,6 +33,7 @@ function onSubmit() {
     // ne fera rien quand je tape enter
     return;
   }
+  // je passe la valeur au component parent
   emit("guess-submitted", formattedGuessInProcess.value);
 }
 </script>

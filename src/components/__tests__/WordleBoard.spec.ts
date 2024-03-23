@@ -59,37 +59,28 @@ describe("WordleBoard", () => {
   });
 
   describe("Rules of the games", () => {
-    test("If the word of the day do not have exactly 5 letters, a warning is emitted ", async () => {
-      // pour espionner la console et voir si il y a un warning
-      //* a executer avant le mount !
-      console.warn = vi.fn();
+    // each permet de faire le test autant de fois qu'il y a d'éléments dans le tableau
+    test.each(["FLY", "card", "QQQQQ"])(
+      "If the word of the day is '%s', a warning is emitted ",
+      async (wordFromArray) => {
+        // prendra la valeur de chaque élément dans le tableau
+        // pour espionner la console et voir si il y a un warning
+        //* a executer avant le mount !
+        console.warn = vi.fn();
 
-      // OPTION pour masquer le warning dans le test
-      /* const spy = vi.spyOn(console, "warn");
+        // OPTION pour masquer le warning dans le test
+        /* const spy = vi.spyOn(console, "warn");
       spy.mockImplementation(() => null); */
-      //----------------------------------------
+        //----------------------------------------
 
-      mount(WordleBoard, {
-        props: { wordOfTheDay: "FLY" },
-      });
-      // si j'envoie un mot de moins de 5 lettres, j'ai bien un console warnning coté navigateur
-      // le warning s'affiche aussi dans le test
-      expect(console.warn).toHaveBeenCalled();
-    });
-    test("If the word of the day is not uppercase, a warning is emitted ", async () => {
-      console.warn = vi.fn();
-      mount(WordleBoard, {
-        props: { wordOfTheDay: "card" },
-      });
-      expect(console.warn).toHaveBeenCalled();
-    });
-    test("If the word of the day is not a really word, a warning is emitted ", async () => {
-      console.warn = vi.fn();
-      mount(WordleBoard, {
-        props: { wordOfTheDay: "QQQQQ" },
-      });
-      expect(console.warn).toHaveBeenCalled();
-    });
+        mount(WordleBoard, {
+          props: { wordOfTheDay: wordFromArray },
+        });
+        // si j'envoie un mot de moins de 5 lettres, j'ai bien un console warnning coté navigateur
+        // le warning s'affiche aussi dans le test
+        expect(console.warn).toHaveBeenCalled();
+      }
+    );
     test("No warning if the word of the day is real, uppercase and contain  letter", async () => {
       console.warn = vi.fn();
       mount(WordleBoard, {
@@ -98,5 +89,7 @@ describe("WordleBoard", () => {
       expect(console.warn).not.toHaveBeenCalled();
     });
   });
-  describe("player input", () => {});
+  describe("player input", () => {
+    test.todo("sdf");
+  });
 });

@@ -6,11 +6,18 @@ import { DEFEAT_MESSAGE, VICTORY_MESSAGE } from "@/settings";
 
 describe("WordleBoard", () => {
   let wordOfTheDay: string = "TEST";
-  test("A victory message when user type the right word", async () => {
+
+  // code qui est commun au test du describe WordleBoard
+  // avant chaque test; execute ce code
+  let wrapper: ReturnType<typeof mount>;
+  // wrapper prendra toujours en retour de la méthode mount()
+  beforeEach((): void => {
     // Arrange - le mount
-    const wrapper: VueWrapper = mount(WordleBoard, {
+    wrapper = mount(WordleBoard, {
       props: { wordOfTheDay: wordOfTheDay },
     });
+  });
+  test("A victory message when user type the right word", async () => {
     // Act - action
     const guessInput: DOMWrapper<Element> = wrapper.find("input[type=text]");
     await guessInput.setValue(wordOfTheDay);
@@ -21,10 +28,6 @@ describe("WordleBoard", () => {
   // placeholder test to do later
   // test.todo("Defeat message appears if the user type the wrong word");
   test("Defeat message appears if the user type the wrong word", async () => {
-    // Arrange - le mount
-    const wrapper: VueWrapper = mount(WordleBoard, {
-      props: { wordOfTheDay: wordOfTheDay },
-    });
     // Act - action
     const guessInput: DOMWrapper<Element> = wrapper.find("input[type=text]");
     await guessInput.setValue("WRONG");
@@ -34,10 +37,6 @@ describe("WordleBoard", () => {
   });
   // si utilisateur n'a rien tapé, je ne renvoie aucun de ces messages
   test("no end of game if the user has not make a guess yet", async () => {
-    // Arrange - le mount
-    const wrapper: VueWrapper = mount(WordleBoard, {
-      props: { wordOfTheDay: wordOfTheDay },
-    });
     // Assert - evalue
     expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
     expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);

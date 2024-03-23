@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VICTORY_MESSAGE, DEFEAT_MESSAGE } from "@/settings";
+import { VICTORY_MESSAGE, DEFEAT_MESSAGE, WORD_SIZE } from "@/settings";
 import { computed, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
@@ -23,17 +23,26 @@ const formattedGuessInProcess = computed({
     return guessInProcess.value;
   },
   set(rawValue: string) {
-    guessInProcess.value = rawValue.slice(0, 5);
+    guessInProcess.value = rawValue.slice(0, WORD_SIZE);
   },
 });
+
+function onSubmit() {
+  console.log(guessInProcess.value);
+  if (!englishWord.includes(guessInProcess.value)) {
+    return;
+  }
+
+  guessSubmited.value = guessInProcess.value;
+}
 </script>
 
 <template>
   <input
     type="text"
     v-model="formattedGuessInProcess"
-    maxlength="5"
-    @keydown.enter="guessSubmited = guessInProcess"
+    :maxlength="WORD_SIZE"
+    @keydown.enter="onSubmit"
   />
   <p
     v-if="guessSubmited.length > 0"

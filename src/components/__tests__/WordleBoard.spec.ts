@@ -2,7 +2,7 @@ import { DOMWrapper, VueWrapper, mount } from "@vue/test-utils";
 import WordleBoard from "../WordleBoard.vue";
 //* definir des variables dans settings
 // Utilsable dans le test ET dans le component
-import { DEFEAT_MESSAGE, VICTORY_MESSAGE } from "@/settings";
+import { DEFEAT_MESSAGE, VICTORY_MESSAGE, WORD_SIZE } from "@/settings";
 import exp from "constants";
 
 describe("WordleBoard", () => {
@@ -95,12 +95,17 @@ describe("WordleBoard", () => {
     });
   });
   describe("player input", () => {
-    test("player guesses are limited to 5 letters", async () => {
+    test(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
       await playerSubmitGuess(wordOfTheDay + "EXTRAS");
 
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
-    test.todo("player guesses can only be submited if they are real words");
+    test("player guesses can only be submited if they are real words", async () => {
+      await playerSubmitGuess("QWERT");
+
+      expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+      expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+    });
     test.todo("player guesses are not case-sensitive");
     test.todo("player guesses can only contains letters");
   });

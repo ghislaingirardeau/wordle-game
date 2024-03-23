@@ -28,3 +28,10 @@ Refactoriser:
 - Refactorise le fichier test
 
 Enfin je commit
+
+## Archi
+
+### settings.ts
+
+Permet d'exporter des const que je peux utiliser dans les components et dans son fichier test
++: plus facile à maintenir, pas besoin de changer dans les 2 fichiers

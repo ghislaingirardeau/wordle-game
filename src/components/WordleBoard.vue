@@ -4,6 +4,8 @@ import { computed, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
+import GuessInput from "@/components/GuessInput.vue";
+
 defineProps({
   wordOfTheDay: {
     type: String,
@@ -15,41 +17,11 @@ defineProps({
   },
 });
 
-const guessInProcess = ref<string | null>(null);
 const guessSubmited = ref("");
-
-const formattedGuessInProcess = computed<string>({
-  get() {
-    return guessInProcess.value ?? "";
-  },
-  set(rawValue: string) {
-    const regex = /\d+/;
-    guessInProcess.value = null;
-    /* guessInProcess.value?.replace(regex, "") */
-    // recupere ce que tape l'utilisateur et format le
-    guessInProcess.value = rawValue
-      .slice(0, WORD_SIZE)
-      .toUpperCase()
-      .replace(/[^A-Z]+/gi, "");
-  },
-});
-
-function onSubmit() {
-  if (!englishWord.includes(formattedGuessInProcess.value)) {
-    // ne fera rien quand je tape enter
-    return;
-  }
-  guessSubmited.value = formattedGuessInProcess.value;
-}
 </script>
 
 <template>
-  <input
-    type="text"
-    v-model="formattedGuessInProcess"
-    :maxlength="WORD_SIZE"
-    @keydown.enter="onSubmit"
-  />
+  <guess-input @guess-submitted="(guess:string) => (guessSubmited = guess)" />
   <p
     v-if="guessSubmited.length > 0"
     v-text="guessSubmited === wordOfTheDay ? VICTORY_MESSAGE : DEFEAT_MESSAGE"

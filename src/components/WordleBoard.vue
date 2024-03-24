@@ -26,6 +26,11 @@ const guessSubmited = ref<string[]>([]);
   <guess-input
     @guess-submitted="(guess:string) => (guessSubmited.push(guess))"
   />
+  <ul>
+    <li v-for="(guess, index) in guessSubmited" :key="`${index} - ${guess}`">
+      {{ guess }}
+    </li>
+  </ul>
   <p
     v-if="
       guessSubmited.length === END_GAME_ATTEMPT ||

@@ -173,4 +173,13 @@ describe("WordleBoard", () => {
       ).toEqual("");
     }); */
   });
+  test("All guesses are display during the game", async () => {
+    const guesses = ["WRONG", "TESTS", "WRONG", "TESTS"];
+    for (const guess of guesses) {
+      await playerSubmitGuess(guess);
+    }
+    for (const guess of guesses) {
+      expect(wrapper.text()).toContain(guess);
+    }
+  });
 });

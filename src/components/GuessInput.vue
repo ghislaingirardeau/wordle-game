@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { VICTORY_MESSAGE, DEFEAT_MESSAGE, WORD_SIZE } from "@/settings";
+import { WORD_SIZE } from "@/settings";
 import { computed, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
@@ -28,13 +28,15 @@ const formattedGuessInProcess = computed<string>({
   },
 });
 
-function onSubmit() {
+function onSubmit(event) {
   if (!englishWord.includes(formattedGuessInProcess.value)) {
     // ne fera rien quand je tape enter
     return;
   }
   // je passe la valeur au component parent
   emit("guess-submitted", formattedGuessInProcess.value);
+  console.log(formattedGuessInProcess.value);
+  event.target.value = "";
 }
 
 function reFocusOnBlur(event: Event) {

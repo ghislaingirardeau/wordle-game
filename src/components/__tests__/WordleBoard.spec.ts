@@ -2,7 +2,12 @@ import { DOMWrapper, VueWrapper, mount } from "@vue/test-utils";
 import WordleBoard from "../WordleBoard.vue";
 //* definir des variables dans settings
 // Utilsable dans le test ET dans le component
-import { DEFEAT_MESSAGE, VICTORY_MESSAGE, WORD_SIZE } from "@/settings";
+import {
+  DEFEAT_MESSAGE,
+  VICTORY_MESSAGE,
+  WORD_SIZE,
+  END_GAME_ATTEMPT,
+} from "@/settings";
 import exp from "constants";
 
 describe("WordleBoard", () => {
@@ -45,11 +50,32 @@ describe("WordleBoard", () => {
       // Assert - evalue
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
-    test("Defeat message appears if the user type the wrong word", async () => {
-      await playerSubmitGuess("WRONG");
-      // Assert - evalue
-      expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
-    });
+
+    describe.each([
+      { numberOfGuess: 0, shouldSeeDefeatMessage: false },
+      { numberOfGuess: 1, shouldSeeDefeatMessage: false },
+      { numberOfGuess: 2, shouldSeeDefeatMessage: false },
+      { numberOfGuess: 3, shouldSeeDefeatMessage: false },
+      { numberOfGuess: 4, shouldSeeDefeatMessage: false },
+      { numberOfGuess: 5, shouldSeeDefeatMessage: false },
+      { numberOfGuess: END_GAME_ATTEMPT, shouldSeeDefeatMessage: true },
+    ])(
+      "A defeat message should appear if user make 6 worng attempts",
+      async ({ numberOfGuess, shouldSeeDefeatMessage }) => {
+        test(`Therefore each guess ${numberOfGuess}, defeat message shoud ${
+          shouldSeeDefeatMessage ? "" : "not"
+        } appear`, async () => {
+          for (let index = 0; index < numberOfGuess; index++) {
+            await playerSubmitGuess("WRONG");
+          }
+          if (shouldSeeDefeatMessage) {
+            expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
+          } else {
+            expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+          }
+        });
+      }
+    );
     // si utilisateur n'a rien tapé, je ne renvoie aucun de ces messages
     test("no end of game if the user has not make a guess yet", async () => {
       // Assert - evalue

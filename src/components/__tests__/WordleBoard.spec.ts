@@ -137,6 +137,12 @@ describe("WordleBoard", () => {
         wrapper.find("input[type=text]").element
       );
     });
+    test("input should be reset after every submission", async () => {
+      await playerSubmitGuess("WRONG");
+      expect(
+        wrapper.find<HTMLInputElement>("input[type=text]").element.value
+      ).toBe("");
+    });
     test(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
       await playerSubmitGuess(wordOfTheDay + "EXTRAS");
 

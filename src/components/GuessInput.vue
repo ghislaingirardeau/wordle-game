@@ -35,7 +35,6 @@ function onSubmit(event) {
   }
   // je passe la valeur au component parent
   emit("guess-submitted", formattedGuessInProcess.value);
-  console.log(formattedGuessInProcess.value);
   event.target.value = "";
 }
 

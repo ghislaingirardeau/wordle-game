@@ -27,11 +27,18 @@ describe("WordleBoard", () => {
     });
   });
 
-  async function playerSubmitGuess(word: string): Promise<void> {
+  async function playerPressingEnter(): Promise<void> {
+    await wrapper.find("input[type=text]").trigger("keydown.enter");
+  }
+
+  async function playerTypesGuess(word: string): Promise<void> {
+    await wrapper.find("input[type=text]").setValue(word);
+  }
+
+  async function playerSubmitAndTypeGuess(word: string): Promise<void> {
     // Act - action
-    const guessInput: DOMWrapper<Element> = wrapper.find("input[type=text]");
-    await guessInput.setValue(word);
-    await guessInput.trigger("keydown.enter");
+    await playerTypesGuess(word);
+    await playerPressingEnter();
   }
 
   //----------------------------------
@@ -46,7 +53,7 @@ describe("WordleBoard", () => {
 
   describe("End of games messages", () => {
     test("A victory message when user type the right word", async () => {
-      await playerSubmitGuess(wordOfTheDay);
+      await playerSubmitAndTypeGuess(wordOfTheDay);
       // Assert - evalue
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
@@ -66,7 +73,7 @@ describe("WordleBoard", () => {
           shouldSeeDefeatMessage ? "" : "not"
         } appear`, async () => {
           for (let index = 0; index < numberOfGuess; index++) {
-            await playerSubmitGuess("WRONG");
+            await playerSubmitAndTypeGuess("WRONG");
           }
           if (shouldSeeDefeatMessage) {
             expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
@@ -138,7 +145,7 @@ describe("WordleBoard", () => {
       );
     });
     test("input should be reset after every submission", async () => {
-      await playerSubmitGuess("WRONG");
+      await playerSubmitAndTypeGuess("WRONG");
       expect(
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toBe("");
@@ -146,7 +153,7 @@ describe("WordleBoard", () => {
     test("input should be disabled after 6 attempts", async () => {
       const guesses = ["WRONG", "TESTS", "WRONG", "TESTS", "WRONG", "TESTS"];
       for (const guess of guesses) {
-        await playerSubmitGuess(guess);
+        await playerSubmitAndTypeGuess(guess);
       }
       expect(
         wrapper
@@ -155,7 +162,7 @@ describe("WordleBoard", () => {
       ).not.toBeUndefined();
     });
     test("input should be disabled after success to find the word of the day", async () => {
-      await playerSubmitGuess(wordOfTheDay);
+      await playerSubmitAndTypeGuess(wordOfTheDay);
       expect(
         wrapper
           .find<HTMLInputElement>("input[type=text]")
@@ -163,30 +170,30 @@ describe("WordleBoard", () => {
       ).not.toBeUndefined();
     });
     test(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
-      await playerSubmitGuess(wordOfTheDay + "EXTRAS");
+      await playerSubmitAndTypeGuess(wordOfTheDay + "EXTRAS");
 
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
     test("player guesses can only be submited if they are real words", async () => {
-      await playerSubmitGuess("QWERT");
+      await playerSubmitAndTypeGuess("QWERT");
 
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
       expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
     });
     test("player guesses are not case-sensitive", async () => {
-      await playerSubmitGuess(wordOfTheDay.toLowerCase());
+      await playerSubmitAndTypeGuess(wordOfTheDay.toLowerCase());
 
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
     test("player guesses can only contains letters", async () => {
-      await playerSubmitGuess("H3R!T");
+      await playerTypesGuess("H3R!T");
 
       expect(
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toEqual("HRT");
     });
     /* test("do not show non letter characters when the user type", async () => {
-      await playerSubmitGuess("333");
+      await playerSubmitAndTypeGuess("333");
       expect(
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toEqual("");
@@ -195,7 +202,7 @@ describe("WordleBoard", () => {
   test("All guesses are display during the game", async () => {
     const guesses = ["WRONG", "TESTS", "WRONG", "TESTS"];
     for (const guess of guesses) {
-      await playerSubmitGuess(guess);
+      await playerSubmitAndTypeGuess(guess);
     }
     for (const guess of guesses) {
       expect(wrapper.text()).toContain(guess);

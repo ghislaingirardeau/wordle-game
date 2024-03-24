@@ -12,6 +12,8 @@ npm run test: pour voir les resultats des tests en continue
 
 ## Principe
 
+On teste comportement et leur but
+
 Feu rouge:
 
 - Je décris et j'écris le test, ce que j'attends

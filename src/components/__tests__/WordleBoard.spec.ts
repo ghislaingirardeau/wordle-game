@@ -143,6 +143,25 @@ describe("WordleBoard", () => {
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toBe("");
     });
+    test("input should be disabled after 6 attempts", async () => {
+      const guesses = ["WRONG", "TESTS", "WRONG", "TESTS", "WRONG", "TESTS"];
+      for (const guess of guesses) {
+        await playerSubmitGuess(guess);
+      }
+      expect(
+        wrapper
+          .find<HTMLInputElement>("input[type=text]")
+          .attributes("disabled")
+      ).not.toBeUndefined();
+    });
+    test("input should be disabled after success to find the word of the day", async () => {
+      await playerSubmitGuess(wordOfTheDay);
+      expect(
+        wrapper
+          .find<HTMLInputElement>("input[type=text]")
+          .attributes("disabled")
+      ).not.toBeUndefined();
+    });
     test(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
       await playerSubmitGuess(wordOfTheDay + "EXTRAS");
 

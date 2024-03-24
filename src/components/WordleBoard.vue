@@ -6,7 +6,7 @@ import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
 
-defineProps({
+const props = defineProps({
   wordOfTheDay: {
     type: String,
     required: true,
@@ -19,23 +19,28 @@ defineProps({
 });
 
 const guessSubmited = ref<string[]>([]);
+
+function onSubmitGuess(guess: string) {
+  guessSubmited.value.push(guess);
+}
+const isGameOver = computed<boolean>(() => {
+  return (
+    guessSubmited.value.length === END_GAME_ATTEMPT ||
+    guessSubmited.value.includes(props.wordOfTheDay)
+  );
+});
 </script>
 
 <template>
   <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
-  <guess-input
-    @guess-submitted="(guess:string) => (guessSubmited.push(guess))"
-  />
+  <guess-input @guess-submitted="onSubmitGuess" :disabledInput="isGameOver" />
   <ul>
     <li v-for="(guess, index) in guessSubmited" :key="`${index} - ${guess}`">
       {{ guess }}
     </li>
   </ul>
   <p
-    v-if="
-      guessSubmited.length === END_GAME_ATTEMPT ||
-      guessSubmited.includes(wordOfTheDay)
-    "
+    v-if="isGameOver"
     v-text="
       guessSubmited.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE
     "

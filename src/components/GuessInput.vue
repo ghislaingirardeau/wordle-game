@@ -4,7 +4,15 @@ import { computed, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
+const props = defineProps({
+  disabledInput: {
+    type: Boolean,
+    required: true,
+  },
+});
+
 const guessInProcess = ref<string | null>(null);
+
 //* Pour passer une donnée à notre parent
 // define the event
 const emit = defineEmits<{
@@ -35,7 +43,7 @@ function onSubmit(event) {
   }
   // je passe la valeur au component parent
   emit("guess-submitted", formattedGuessInProcess.value);
-  event.target.value = "";
+  guessInProcess.value = null;
 }
 
 function reFocusOnBlur(event: Event) {
@@ -52,6 +60,7 @@ function reFocusOnBlur(event: Event) {
     :maxlength="WORD_SIZE"
     @keydown.enter="onSubmit"
     autofocus
+    :disabled="props.disabledInput"
     @blur="reFocusOnBlur"
   />
 </template>

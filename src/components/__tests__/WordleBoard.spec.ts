@@ -95,6 +95,22 @@ describe("WordleBoard", () => {
     });
   });
   describe("player input", () => {
+    test("Input has to be always focus", async () => {
+      document.body.innerHTML = "<div id='app'></div>";
+      wrapper = mount(WordleBoard, {
+        props: { wordOfTheDay: wordOfTheDay },
+        attachTo: "#app",
+      });
+      expect(
+        wrapper.find("input[type=text]").attributes("autofocus")
+      ).not.toBeUndefined();
+      // decleneche un event
+      await wrapper.find("input[type=text]").trigger("blur");
+      // savoir quel element est actif (focus)
+      expect(document.activeElement).toBe(
+        wrapper.find("input[type=text]").element
+      );
+    });
     test(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
       await playerSubmitGuess(wordOfTheDay + "EXTRAS");
 

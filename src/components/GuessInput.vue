@@ -36,6 +36,12 @@ function onSubmit() {
   // je passe la valeur au component parent
   emit("guess-submitted", formattedGuessInProcess.value);
 }
+
+function reFocusOnBlur(event: Event) {
+  // pour ne pas perdre le focus sur le bouton
+  const input = event.target as HTMLInputElement;
+  input.focus();
+}
 </script>
 
 <template>
@@ -44,5 +50,7 @@ function onSubmit() {
     v-model="formattedGuessInProcess"
     :maxlength="WORD_SIZE"
     @keydown.enter="onSubmit"
+    autofocus
+    @blur="reFocusOnBlur"
   />
 </template>

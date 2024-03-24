@@ -29,6 +29,11 @@ Refactoriser:
 
 Enfin je commit
 
+Le nom donnée au test, peut etre une description complète cela aide à 2 points
+
+- Nommer les commits
+- Sert à la documentation de notre application / projet
+
 ## Archi
 
 ### settings.ts

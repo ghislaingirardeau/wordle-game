@@ -36,7 +36,7 @@ const formattedGuessInProcess = computed<string>({
   },
 });
 
-function onSubmit(event) {
+function onSubmit(event: Event) {
   if (!englishWord.includes(formattedGuessInProcess.value)) {
     // ne fera rien quand je tape enter
     return;

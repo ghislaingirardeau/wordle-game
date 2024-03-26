@@ -54,7 +54,6 @@ function onSubmit(event: Event) {
 
 function reFocusOnBlur(event: Event) {
   // pour ne pas perdre le focus sur le bouton
-  console.log("lose focus");
   const input = event.target as HTMLInputElement;
   input.focus();
 }
@@ -72,6 +71,11 @@ function wordToDisplayInLetter(guessAttempt: number) {
   // pour les prochains mots, tu les laisse vide
   return "";
 }
+
+const input = ref<HTMLInputElement | null>(null);
+onMounted(() => {
+  input.value?.focus();
+});
 </script>
 
 <template>
@@ -83,6 +87,7 @@ function wordToDisplayInLetter(guessAttempt: number) {
     />
 
     <input
+      ref="input"
       type="text"
       v-model="formattedGuessInProcess"
       :maxlength="WORD_SIZE"
@@ -95,7 +100,7 @@ function wordToDisplayInLetter(guessAttempt: number) {
 </template>
 
 <style scoped lang="css">
-/* input {
+input {
   position: fixed;
   top: 0px;
   opacity: 0;
@@ -111,5 +116,5 @@ input:disabled {
   border: none;
   color: white;
   background-color: white;
-} */
+}
 </style>

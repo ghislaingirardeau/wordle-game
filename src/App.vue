@@ -15,17 +15,13 @@ const randomWord = computed(() => {
   console.log(random);
   return random;
 });
-
-function restart() {
-  numberOfGamePlayed.value++;
-}
 </script>
 
 <template>
   <wordle-board
     :key="numberOfGamePlayed"
     :wordOfTheDay="randomWord"
-    @restart-game="restart"
+    @restart-game="numberOfGamePlayed++"
   />
 </template>
 

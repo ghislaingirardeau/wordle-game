@@ -35,7 +35,7 @@ function onSubmitGuess(guess: string) {
 
 function startNewGame(event: Event) {
   guessSubmited.value = [];
-  // emit("restart-game");
+  emit("restart-game");
 }
 </script>
 

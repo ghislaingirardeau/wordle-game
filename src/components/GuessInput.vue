@@ -91,6 +91,7 @@ onMounted(() => {
       :wordToDisplay="wordToDisplayInLetter(guessAttempt)"
       :guessSubmited="props.guessSubmited"
       :guessAttempt="guessAttempt"
+      :wordOfTheDay="wordOfTheDay"
     />
 
     <input

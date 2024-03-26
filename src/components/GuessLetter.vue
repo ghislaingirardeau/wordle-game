@@ -5,6 +5,7 @@
       :key="`${numberLetter}`"
       class="letter"
       :class="{ active: isCurrentWord }"
+      :data-letter-feedback="feedbackLetter(numberLetter)"
     >
       {{ wordToDisplay.charAt(numberLetter - 1) }}
     </li>
@@ -26,11 +27,26 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  wordOfTheDay: {
+    type: String,
+    required: true,
+  },
 });
 
 const isCurrentWord = computed(() => {
   return props.guessAttempt - 1 === props.guessSubmited.length;
 });
+
+function feedbackLetter(numberLetter) {
+  if (
+    props.wordToDisplay &&
+    props.wordOfTheDay.includes(props.wordToDisplay.charAt(numberLetter - 1))
+  ) {
+    return "almost";
+  } else {
+    return "incorrect";
+  }
+}
 </script>
 
 <style lang="css" scoped>
@@ -56,5 +72,9 @@ const isCurrentWord = computed(() => {
 
 .active {
   background-color: rgb(255, 255, 255);
+}
+
+li[data-letter-feedback="almost"] {
+  background-color: green;
 }
 </style>

@@ -41,9 +41,8 @@ const isGameOver = computed<boolean>(() => {
       :guessSubmited="guessSubmited"
       class="game_content"
     />
-    <div class="game_footer">
+    <div v-if="isGameOver" class="game_footer">
       <h2
-        v-if="isGameOver"
         v-text="
           guessSubmited.includes(wordOfTheDay)
             ? VICTORY_MESSAGE

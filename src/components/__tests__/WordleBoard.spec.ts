@@ -89,6 +89,11 @@ describe("WordleBoard", () => {
       expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
     });
+    test("A button is displayed at the end of the game to ask if the user want to play again", async () => {
+      expect(wrapper.text()).not.toContain("Play again");
+      await playerSubmitAndTypeGuess(wordOfTheDay);
+      expect(wrapper.text()).toContain("Play again");
+    });
   });
 
   describe("Rules of the games", () => {

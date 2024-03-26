@@ -1,14 +1,14 @@
 <template>
   <ul class="letters">
     <li v-for="numberLetter in 5" :key="`${numberLetter}`" class="letter">
-      {{ formattedGuessInProcess.charAt(numberLetter - 1) }}
+      {{ wordToDisplay.charAt(numberLetter - 1) }}
     </li>
   </ul>
 </template>
 
 <script setup>
 const props = defineProps({
-  formattedGuessInProcess: {
+  wordToDisplay: {
     type: String,
     require: true,
   },

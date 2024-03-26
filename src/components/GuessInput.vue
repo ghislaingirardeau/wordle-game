@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { WORD_SIZE } from "@/settings";
+import { WORD_SIZE, END_GAME_ATTEMPT } from "@/settings";
 import { computed, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
@@ -13,6 +13,7 @@ const props = defineProps({
   },
   guessSubmited: {
     type: Array,
+    required: true,
   },
 });
 
@@ -56,15 +57,28 @@ function reFocusOnBlur(event: Event) {
   const input = event.target as HTMLInputElement;
   input.focus();
 }
+
+function wordToDisplayInLetter(guessAttempt) {
+  // si tu as un mot dans le tatbleau qui correspond à la tentative précédente, tu renvoie ce mot
+  if (props.guessSubmited[guessAttempt - 1]) {
+    return props.guessSubmited[guessAttempt - 1];
+  }
+  // si tu as 2 mots dans le tableau (donc 2 tentatives), et donc que la prochaine est égale à la tentative en cours
+  // tu renvoie le mot en cours de formatage
+  if (props.guessSubmited.length + 1 === guessAttempt) {
+    return formattedGuessInProcess.value;
+  }
+  // pour les prochains mots, tu les laisse vide
+  return "";
+}
 </script>
 
 <template>
   <GuessLetter
-    v-for="(oldGuess, i) in guessSubmited"
-    :key="`${i} - ${oldGuess}`"
-    :formattedGuessInProcess="oldGuess"
+    v-for="guessAttempt in END_GAME_ATTEMPT"
+    :key="`${guessAttempt}`"
+    :wordToDisplay="wordToDisplayInLetter(guessAttempt)"
   />
-  <GuessLetter :formattedGuessInProcess="formattedGuessInProcess" />
 
   <input
     type="text"

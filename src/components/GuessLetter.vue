@@ -31,6 +31,6 @@ const props = defineProps({
   margin-inline: 0.4em;
   padding: 0.4em;
   border: 2px solid grey;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 </style>

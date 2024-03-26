@@ -38,11 +38,6 @@ const isGameOver = computed<boolean>(() => {
     :disabledInput="isGameOver"
     :guessSubmited="guessSubmited"
   />
-  <ul>
-    <li v-for="(guess, index) in guessSubmited" :key="`${index} - ${guess}`">
-      {{ guess }}
-    </li>
-  </ul>
   <p
     v-if="isGameOver"
     v-text="

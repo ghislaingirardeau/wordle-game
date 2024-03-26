@@ -4,10 +4,15 @@ import { computed, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
+import GuessLetter from "@/components/GuessLetter.vue";
+
 const props = defineProps({
   disabledInput: {
     type: Boolean,
     required: true,
+  },
+  guessSubmited: {
+    type: Array,
   },
 });
 
@@ -54,6 +59,13 @@ function reFocusOnBlur(event: Event) {
 </script>
 
 <template>
+  <GuessLetter
+    v-for="(oldGuess, i) in guessSubmited"
+    :key="`${i} - ${oldGuess}`"
+    :formattedGuessInProcess="oldGuess"
+  />
+  <GuessLetter :formattedGuessInProcess="formattedGuessInProcess" />
+
   <input
     type="text"
     v-model="formattedGuessInProcess"
@@ -64,3 +76,17 @@ function reFocusOnBlur(event: Event) {
     @blur="reFocusOnBlur"
   />
 </template>
+
+<style scoped lang="css">
+input:focus-visible {
+  outline: none;
+  border: none;
+  color: white;
+}
+input:disabled {
+  outline: none;
+  border: none;
+  color: white;
+  background-color: white;
+}
+</style>

@@ -1,5 +1,10 @@
 # TEST DRVIEN DEVELOPMENT
 
+## DOC
+
+Vue test utils:
+https://test-utils.vuejs.org/api/
+
 ## Installation
 
 npm run test: pour voir les resultats des tests en continue

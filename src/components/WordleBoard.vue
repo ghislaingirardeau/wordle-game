@@ -33,7 +33,11 @@ const isGameOver = computed<boolean>(() => {
 
 <template>
   <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
-  <guess-input @guess-submitted="onSubmitGuess" :disabledInput="isGameOver" />
+  <guess-input
+    @guess-submitted="onSubmitGuess"
+    :disabledInput="isGameOver"
+    :guessSubmited="guessSubmited"
+  />
   <ul>
     <li v-for="(guess, index) in guessSubmited" :key="`${index} - ${guess}`">
       {{ guess }}

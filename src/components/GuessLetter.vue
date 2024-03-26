@@ -5,12 +5,12 @@
       :key="`${numberLetter}`"
       class="letter"
       :class="{ active: isCurrentWord }"
-      :data-letter="shouldReveal"
+      :data-letter="wordToDisplay[numberLetter - 1]"
       :data-letter-feedback="
         shouldReveal ? feedbackLetter(numberLetter, shouldReveal) : null
       "
     >
-      {{ wordToDisplay.charAt(numberLetter - 1) }}
+      {{ wordToDisplay[numberLetter - 1] }}
     </li>
   </ul>
 </template>

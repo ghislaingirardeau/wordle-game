@@ -15,6 +15,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  wordOfTheDay: {
+    type: String,
+    required: true,
+  },
 });
 
 const guessInProcess = ref<string | null>(null);
@@ -72,6 +76,7 @@ function wordToDisplayInLetter(guessAttempt: number) {
   return "";
 }
 
+// pour refaire le focus sur l'input, lors du restart de game, je perds le focus
 const input = ref<HTMLInputElement | null>(null);
 onMounted(() => {
   input.value?.focus();
@@ -84,6 +89,8 @@ onMounted(() => {
       v-for="guessAttempt in END_GAME_ATTEMPT"
       :key="`${guessAttempt}`"
       :wordToDisplay="wordToDisplayInLetter(guessAttempt)"
+      :guessSubmited="props.guessSubmited"
+      :guessAttempt="guessAttempt"
     />
 
     <input

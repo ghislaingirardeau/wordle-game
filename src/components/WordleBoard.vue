@@ -47,6 +47,7 @@ function startNewGame(event: Event) {
       @guess-submitted="onSubmitGuess"
       :disabledInput="isGameOver"
       :guessSubmited="guessSubmited"
+      :wordOfTheDay="wordOfTheDay"
       class="game_content"
     />
     <div v-if="isGameOver" class="game_footer">

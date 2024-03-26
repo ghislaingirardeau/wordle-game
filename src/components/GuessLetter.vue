@@ -49,7 +49,13 @@ const shouldReveal = computed(() => {
 function feedbackLetter(numberLetter, reveal) {
   if (
     reveal &&
-    props.wordToDisplay &&
+    props.wordOfTheDay[numberLetter - 1] ===
+      props.wordToDisplay[numberLetter - 1]
+  ) {
+    return "correct";
+  }
+  if (
+    reveal &&
     props.wordOfTheDay.includes(props.wordToDisplay.charAt(numberLetter - 1))
   ) {
     return "almost";
@@ -86,5 +92,8 @@ function feedbackLetter(numberLetter, reveal) {
 
 li[data-letter-feedback="almost"] {
   background-color: rgb(255, 221, 0);
+}
+li[data-letter-feedback="correct"] {
+  background-color: green;
 }
 </style>

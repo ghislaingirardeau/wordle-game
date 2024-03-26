@@ -6,7 +6,9 @@
       class="letter"
       :class="{ active: isCurrentWord }"
       :data-letter="shouldReveal"
-      :data-letter-feedback="feedbackLetter(numberLetter, shouldReveal)"
+      :data-letter-feedback="
+        shouldReveal ? feedbackLetter(numberLetter, shouldReveal) : null
+      "
     >
       {{ wordToDisplay.charAt(numberLetter - 1) }}
     </li>

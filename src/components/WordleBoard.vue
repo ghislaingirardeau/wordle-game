@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { VICTORY_MESSAGE, DEFEAT_MESSAGE, END_GAME_ATTEMPT } from "@/settings";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
@@ -18,6 +18,8 @@ const props = defineProps({
   },
 });
 
+const emit = defineEmits(["restart-game"]);
+
 const guessSubmited = ref<string[]>([]);
 
 const isGameOver = computed<boolean>(() => {
@@ -31,8 +33,9 @@ function onSubmitGuess(guess: string) {
   guessSubmited.value.push(guess);
 }
 
-function startNewGame() {
+function startNewGame(event: Event) {
   guessSubmited.value = [];
+  // emit("restart-game");
 }
 </script>
 

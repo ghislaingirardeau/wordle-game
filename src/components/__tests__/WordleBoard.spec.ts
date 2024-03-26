@@ -99,6 +99,9 @@ describe("WordleBoard", () => {
       await wrapper.find("button[type=reset]").trigger("click");
       expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+      /* expect(
+        wrapper.find("input[type=text]").attributes("focus")
+      ).not.toBeUndefined(); */
     });
   });
 

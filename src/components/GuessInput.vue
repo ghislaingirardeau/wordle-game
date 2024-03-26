@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { WORD_SIZE, END_GAME_ATTEMPT } from "@/settings";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
@@ -54,11 +54,12 @@ function onSubmit(event: Event) {
 
 function reFocusOnBlur(event: Event) {
   // pour ne pas perdre le focus sur le bouton
+  console.log("lose focus");
   const input = event.target as HTMLInputElement;
   input.focus();
 }
 
-function wordToDisplayInLetter(guessAttempt) {
+function wordToDisplayInLetter(guessAttempt: number) {
   // si tu as un mot dans le tatbleau qui correspond à la tentative précédente, tu renvoie ce mot
   if (props.guessSubmited[guessAttempt - 1]) {
     return props.guessSubmited[guessAttempt - 1];
@@ -94,7 +95,7 @@ function wordToDisplayInLetter(guessAttempt) {
 </template>
 
 <style scoped lang="css">
-input {
+/* input {
   position: fixed;
   top: 0px;
   opacity: 0;
@@ -110,5 +111,5 @@ input:disabled {
   border: none;
   color: white;
   background-color: white;
-}
+} */
 </style>

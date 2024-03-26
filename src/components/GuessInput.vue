@@ -74,24 +74,32 @@ function wordToDisplayInLetter(guessAttempt) {
 </script>
 
 <template>
-  <GuessLetter
-    v-for="guessAttempt in END_GAME_ATTEMPT"
-    :key="`${guessAttempt}`"
-    :wordToDisplay="wordToDisplayInLetter(guessAttempt)"
-  />
+  <div>
+    <GuessLetter
+      v-for="guessAttempt in END_GAME_ATTEMPT"
+      :key="`${guessAttempt}`"
+      :wordToDisplay="wordToDisplayInLetter(guessAttempt)"
+    />
 
-  <input
-    type="text"
-    v-model="formattedGuessInProcess"
-    :maxlength="WORD_SIZE"
-    @keydown.enter="onSubmit"
-    autofocus
-    :disabled="props.disabledInput"
-    @blur="reFocusOnBlur"
-  />
+    <input
+      type="text"
+      v-model="formattedGuessInProcess"
+      :maxlength="WORD_SIZE"
+      @keydown.enter="onSubmit"
+      autofocus
+      :disabled="props.disabledInput"
+      @blur="reFocusOnBlur"
+    />
+  </div>
 </template>
 
 <style scoped lang="css">
+input {
+  position: fixed;
+  top: 0px;
+  opacity: 0;
+  right: 0;
+}
 input:focus-visible {
   outline: none;
   border: none;

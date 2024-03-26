@@ -32,16 +32,49 @@ const isGameOver = computed<boolean>(() => {
 </script>
 
 <template>
-  <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
-  <guess-input
-    @guess-submitted="onSubmitGuess"
-    :disabledInput="isGameOver"
-    :guessSubmited="guessSubmited"
-  />
-  <p
-    v-if="isGameOver"
-    v-text="
-      guessSubmited.includes(wordOfTheDay) ? VICTORY_MESSAGE : DEFEAT_MESSAGE
-    "
-  ></p>
+  <div class="game">
+    <h1 class="game_header">Wordle Game</h1>
+    <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
+    <guess-input
+      @guess-submitted="onSubmitGuess"
+      :disabledInput="isGameOver"
+      :guessSubmited="guessSubmited"
+      class="game_content"
+    />
+    <div class="game_footer">
+      <h2
+        v-if="isGameOver"
+        v-text="
+          guessSubmited.includes(wordOfTheDay)
+            ? VICTORY_MESSAGE
+            : DEFEAT_MESSAGE
+        "
+      ></h2>
+      <button>Play again</button>
+    </div>
+  </div>
 </template>
+
+<style scoped lang="css">
+.game {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.game_header {
+  font-size: 2.5rem;
+  max-height: 7vh;
+}
+.game_content {
+  max-height: 70vh;
+}
+.game_footer {
+  margin-top: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+</style>

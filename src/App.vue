@@ -11,8 +11,16 @@ const randomIndex = (min: number, max: number): number => {
 const randomWord = computed(() => {
   return englishWord[randomIndex(0, 2500)];
 });
+console.log(randomWord.value);
 </script>
 
 <template>
   <wordle-board :wordOfTheDay="randomWord" />
 </template>
+
+<style>
+body {
+  max-height: 100vh;
+  margin: 0px;
+}
+</style>

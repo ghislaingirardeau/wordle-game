@@ -20,15 +20,20 @@ const props = defineProps({
 
 const guessSubmited = ref<string[]>([]);
 
-function onSubmitGuess(guess: string) {
-  guessSubmited.value.push(guess);
-}
 const isGameOver = computed<boolean>(() => {
   return (
     guessSubmited.value.length === END_GAME_ATTEMPT ||
     guessSubmited.value.includes(props.wordOfTheDay)
   );
 });
+
+function onSubmitGuess(guess: string) {
+  guessSubmited.value.push(guess);
+}
+
+function startNewGame() {
+  guessSubmited.value = [];
+}
 </script>
 
 <template>
@@ -49,7 +54,7 @@ const isGameOver = computed<boolean>(() => {
             : DEFEAT_MESSAGE
         "
       ></h2>
-      <button>Play again</button>
+      <button type="reset" @click="startNewGame">Play again</button>
     </div>
   </div>
 </template>

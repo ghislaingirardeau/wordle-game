@@ -94,6 +94,12 @@ describe("WordleBoard", () => {
       await playerSubmitAndTypeGuess(wordOfTheDay);
       expect(wrapper.text()).toContain("Play again");
     });
+    test("When click on button play again, inputs are cleared and guesses are empty", async () => {
+      await playerSubmitAndTypeGuess(wordOfTheDay);
+      await wrapper.find("button[type=reset]").trigger("click");
+      expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+      expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+    });
   });
 
   describe("Rules of the games", () => {

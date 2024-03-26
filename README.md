@@ -1,4 +1,4 @@
-# TEST DRVIEN DEVELOPMENT
+# TEST DRIVEN DEVELOPMENT
 
 ## DOC
 
@@ -17,15 +17,19 @@ npm run test: pour voir les resultats des tests en continue
 
 ## Principe
 
-On teste comportement et leur but
+On passe par le test pour créer notre application (et non l'inverse). D'habitude, on écrit le code et on teste coté navigateur
+
+On teste le comportement et le but d'une fonctionnalité que l'on veut créer, dans un fichier test en 1er
 
 Feu rouge:
 
+- dans le fichier test
 - Je décris et j'écris le test, ce que j'attends
 - le test renvoie donc ROUGE
 
 Feu vert:
 
+- C'est là que j'écris mon code
 - Je mets à jour mon component ou ma fonction pour que le test passe au vert
 - Une fois résolu le test renvoie VERT
 

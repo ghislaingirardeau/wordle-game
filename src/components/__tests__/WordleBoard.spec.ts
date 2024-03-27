@@ -94,14 +94,21 @@ describe("WordleBoard", () => {
       await playerSubmitAndTypeGuess(wordOfTheDay);
       expect(wrapper.text()).toContain("Play again");
     });
-    test("When click on button play again, inputs are cleared and guesses are empty", async () => {
+  });
+  describe("Restart the game", () => {
+    beforeEach(async () => {
       await playerSubmitAndTypeGuess(wordOfTheDay);
       await wrapper.find("button[type=reset]").trigger("click");
+    });
+    test("When click on button play again, all the message disappear", async () => {
       expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
       /* expect(
         wrapper.find("input[type=text]").attributes("focus")
       ).not.toBeUndefined(); */
+    });
+    test("When click on button play again, an event is emit to empty the trigger a restart on parent", async () => {
+      expect(wrapper.emitted()).toHaveProperty("restart-game");
     });
   });
 

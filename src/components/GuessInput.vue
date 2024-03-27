@@ -30,6 +30,10 @@ const emit = defineEmits<{
   "guess-submitted": [guess: string];
 }>();
 
+const classesStyling = ref({
+  shake: false,
+});
+
 const formattedGuessInProcess = computed<string>({
   get() {
     return guessInProcess.value ?? "";
@@ -48,9 +52,15 @@ const formattedGuessInProcess = computed<string>({
 
 function onSubmit(event: Event) {
   if (!englishWord.includes(formattedGuessInProcess.value)) {
+    classesStyling.value = {
+      shake: true,
+    };
     // ne fera rien quand je tape enter
     return;
   }
+  classesStyling.value = {
+    shake: false,
+  };
   // je passe la valeur au component parent
   emit("guess-submitted", formattedGuessInProcess.value);
   guessInProcess.value = null;
@@ -92,6 +102,7 @@ onMounted(() => {
       :guessSubmited="props.guessSubmited"
       :guessAttempt="guessAttempt"
       :wordOfTheDay="wordOfTheDay"
+      :classesStyling="classesStyling"
     />
 
     <input

@@ -1,10 +1,10 @@
 <template>
-  <ul class="letters">
+  <ul class="letters" :class="isCurrentWord ? props.classesStyling : ''">
     <li
       v-for="numberLetter in 5"
       :key="`${numberLetter}`"
       class="letter"
-      :class="{ active: isCurrentWord }"
+      :class="{ active: isCurrentWord, flip: shouldReveal }"
       :data-letter="wordToDisplay[numberLetter - 1]"
       :data-letter-feedback="
         shouldReveal ? feedbackLetter(numberLetter, shouldReveal) : null
@@ -33,6 +33,9 @@ const props = defineProps({
   wordOfTheDay: {
     type: String,
     required: true,
+  },
+  classesStyling: {
+    type: Object,
   },
 });
 
@@ -92,10 +95,62 @@ function feedbackLetter(numberLetter, reveal) {
   background-color: rgb(255, 255, 255);
 }
 
+.shake {
+  animation: horizontal-shaking 0.5s ease;
+}
+
 li[data-letter-feedback="almost"] {
   background-color: rgb(255, 221, 0);
 }
 li[data-letter-feedback="correct"] {
   background-color: green;
+}
+
+li[data-letter].flip {
+  animation: vertical-rotation 0.4s ease;
+}
+@keyframes vertical-rotation {
+  0% {
+    opacity: 0;
+    transform: rotateY(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(360deg);
+  }
+}
+
+li[data-letter] {
+  animation: scale 0.4s ease;
+}
+
+@keyframes scale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes horizontal-shaking {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(5px);
+  }
+  50% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 </style>

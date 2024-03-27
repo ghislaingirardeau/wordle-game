@@ -18,8 +18,10 @@ const props = defineProps({
   },
 });
 
+// recuperation de l'event de guessInput
 const emit = defineEmits(["restart-game"]);
 
+// le tableau qui va recevoir tous les essais du joueur
 const guessSubmited = ref<string[]>([]);
 
 const isGameOver = computed<boolean>(() => {

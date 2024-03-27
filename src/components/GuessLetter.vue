@@ -40,10 +40,13 @@ const props = defineProps({
 });
 
 const isCurrentWord = computed(() => {
+  // si je suis sur la ligne du mot à taper
+  // renverra la classe active
   return props.guessAttempt - 1 === props.guessSubmited.length;
 });
 
 const shouldReveal = computed(() => {
+  // revele les aides des mots précédents
   if (!(props.guessAttempt - 1 >= props.guessSubmited.length)) {
     return true;
   } else {
@@ -52,6 +55,8 @@ const shouldReveal = computed(() => {
 });
 
 function feedbackLetter(numberLetter, reveal) {
+  // suivant le feedback, tu enregistres comme data de la lettre
+  // avec le css, je colore la lettre suivant sa data
   if (
     reveal &&
     props.wordOfTheDay[numberLetter - 1] ===

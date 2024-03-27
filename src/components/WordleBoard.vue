@@ -55,7 +55,7 @@ function startNewGame(event: Event) {
         v-text="
           guessSubmited.includes(wordOfTheDay)
             ? VICTORY_MESSAGE
-            : DEFEAT_MESSAGE
+            : `${DEFEAT_MESSAGE} The word to find was: '${wordOfTheDay}'`
         "
       ></h2>
       <button type="reset" @click="startNewGame">Play again</button>

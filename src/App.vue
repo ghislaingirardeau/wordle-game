@@ -31,7 +31,7 @@ const randomWord = computed(() => {
 
 <style>
 body {
-  max-height: 100vh;
+  height: 100vh;
   margin: 0px;
 }
 </style>

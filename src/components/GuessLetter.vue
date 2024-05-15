@@ -1,5 +1,8 @@
 <template>
-  <ul class="letters" :class="isCurrentWord ? props.classesStyling : ''">
+  <ul
+    class="flex justify-around items-center list-none px-10"
+    :class="isCurrentWord ? props.classesStyling : ''"
+  >
     <li
       v-for="numberLetter in 5"
       :key="`${numberLetter}`"
@@ -76,19 +79,12 @@ function feedbackLetter(numberLetter, reveal) {
 </script>
 
 <style lang="css" scoped>
-.letters {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  list-style-type: none;
-  padding-inline-start: 0px;
-}
 .letter {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 1.6em;
-  height: 1.6em;
+  height: 2.6em;
   margin-inline: 0.4em;
   padding: 0.4em;
   border: 2px solid grey;
@@ -97,7 +93,7 @@ function feedbackLetter(numberLetter, reveal) {
 }
 
 .active {
-  background-color: rgb(255, 255, 255);
+  background-color: theme("colors.white");
 }
 
 .shake {
@@ -105,10 +101,10 @@ function feedbackLetter(numberLetter, reveal) {
 }
 
 li[data-letter-feedback="almost"] {
-  background-color: rgb(255, 221, 0);
+  background-color: theme("colors.amber.DEFAULT");
 }
 li[data-letter-feedback="correct"] {
-  background-color: green;
+  background-color: theme("colors.amber.DEFAULT");
 }
 
 li[data-letter].flip {

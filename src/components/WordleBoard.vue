@@ -42,17 +42,17 @@ function startNewGame(event: Event) {
 </script>
 
 <template>
-  <div class="game">
-    <h1 class="game_header">Wordle Game</h1>
+  <div class="flex flex-col justify-start items-center h-screen">
+    <h1 class=" text-4xl text-center text-amber-dark h-1/6 w-full">Wordle Game</h1>
     <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
     <guess-input
       @guess-submitted="onSubmitGuess"
       :disabledInput="isGameOver"
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
-      class="game_content"
+      class="h-4/6 flex flex-col justify-around w-full"
     />
-    <div v-if="isGameOver" class="game_footer">
+    <div v-if="isGameOver" class="h-1/6 flex flex-col justify-start items-center ">
       <h2
         v-text="
           guessSubmited.includes(wordOfTheDay)
@@ -62,29 +62,11 @@ function startNewGame(event: Event) {
       ></h2>
       <button type="reset" @click="startNewGame">Play again</button>
     </div>
+    <div v-else class="h-1/6 flex flex-col justify-start items-center ">
+      <p>Develop by GG web dev</p>
+    </div>
   </div>
 </template>
 
 <style scoped lang="css">
-.game {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.game_header {
-  font-size: 2.5rem;
-  max-height: 7vh;
-}
-.game_content {
-  max-height: 70vh;
-}
-.game_footer {
-  margin-top: 0.4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 </style>

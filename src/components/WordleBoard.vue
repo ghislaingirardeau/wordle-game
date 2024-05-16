@@ -58,7 +58,7 @@ function reFocusInput() {
   >
     <header class="flex flex-col justify-start w-full">
       <h1
-        class="text-4xl text-center text-amber min-h-[15%] font-PermanentMarker mb-4"
+        class="text-4xl text-center text-amber min-h-[15%] font-PermanentMarker my-2"
       >
         Wordle Game
       </h1>

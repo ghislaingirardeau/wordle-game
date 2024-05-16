@@ -10,8 +10,7 @@ import { computed, onMounted, ref } from "vue";
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
-import DialogInfo from './DialogInfo.vue'
-
+import DialogInfo from "./DialogInfo.vue";
 
 const props = defineProps({
   wordOfTheDay: {
@@ -47,10 +46,9 @@ function startNewGame(event: Event) {
   emit("restart-game");
 }
 function reFocusInput() {
-  console.log(document.querySelector('input'));
-  document.querySelector('input').focus()
+  console.log(document.querySelector("input"));
+  document.querySelector("input").focus();
 }
-
 </script>
 
 <template>
@@ -64,25 +62,25 @@ function reFocusInput() {
       >
         Wordle Game
       </h1>
-      
+
       <div class="border-solid border-amber border-t-2 border-b-2 py-3">
         <h2 class="text-xl underline text-marine">Rules of the game</h2>
-        <p class="text-xs italic text-marine">
-
-            Try to find a {{ WORD_SIZE }} letter word in
-            {{ END_GAME_ATTEMPT }} tries and Tap
-            <code><small>'Enter'</small></code> to valid the word :
-            <ul class="list-disc list-inside">
-              <li>Letter in Yellow: the letter is correct but at the wrong
-                position
-              </li>
-              <li>Letter in Green: The letter is correctly placed</li>
-            </ul>
-
-        </p>
+        <div class="text-xs italic text-marine">
+          Try to find a {{ WORD_SIZE }} letter word in
+          {{ END_GAME_ATTEMPT }} tries and Tap
+          <code><small>'Enter'</small></code> to valid the word :
+          <ul class="list-disc list-inside">
+            <li>
+              Letter in Yellow: the letter is correct but at the wrong position
+            </li>
+            <li>Letter in Green: The letter is correctly placed</li>
+          </ul>
+        </div>
       </div>
     </header>
-    <DialogInfo />
+    <dialog-info>
+      <template v-slot:message> This word does not exist in the list </template>
+    </dialog-info>
     <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
     <guess-input
       @guess-submitted="onSubmitGuess"

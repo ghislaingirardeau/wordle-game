@@ -19,6 +19,7 @@
               type="button"
               class="text-amber bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-hide="info-modal"
+              @click="closeModal"
             >
               <svg
                 class="w-3 h-3"
@@ -40,7 +41,9 @@
           </div>
           <!-- Modal body -->
           <div class="p-4 md:p-5 space-y-4">
-            <p class="text-white leading-relaxed">Message</p>
+            <p class="text-white leading-relaxed">
+              <slot name="message"></slot>
+            </p>
           </div>
         </div>
       </div>
@@ -48,8 +51,10 @@
   </div>
 </template>
 
-<script>
-export default {};
+<script lang="ts" setup>
+function closeModal(event) {
+  event.target.closest("#info-modal").classList.add("hidden");
+}
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,7 +1,12 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        PermanentMarker: ['"Permanent Marker"'],
+        Kalam: ['"Kalam"'],
+      },
+    },
     colors: {
       amber: {
         light: "#FEF3C7",
@@ -15,6 +20,10 @@ module.exports = {
       },
       white: "#60A5FA",
     },
+  },
+  fontFamily: {
+    sans: ["Graphik", "sans-serif"],
+    serif: ["Merriweather", "serif"],
   },
   variants: {
     extend: {},

@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { VICTORY_MESSAGE, DEFEAT_MESSAGE, END_GAME_ATTEMPT } from "@/settings";
+import {
+  VICTORY_MESSAGE,
+  DEFEAT_MESSAGE,
+  END_GAME_ATTEMPT,
+  WORD_SIZE,
+} from "@/settings";
 import { computed, onMounted, ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
@@ -42,31 +47,61 @@ function startNewGame(event: Event) {
 </script>
 
 <template>
-  <div class="flex flex-col justify-start items-center h-screen">
-    <h1 class=" text-4xl text-center text-amber-dark h-1/6 w-full">Wordle Game</h1>
+  <div
+    class="flex flex-col justify-start items-center h-screen font-Kalam mx-3"
+  >
+    <header class="flex flex-col justify-start w-full">
+      <h1
+        class="text-4xl text-center text-amber min-h-[15%] font-PermanentMarker mb-4"
+      >
+        Wordle Game
+      </h1>
+      <div class="border-solid border-amber border-t-2 border-b-2 py-3">
+        <h2 class="text-xl underline text-marine">Rules of the game</h2>
+        <ul class="text-xs italic text-marine">
+          <li>
+            Try to find a {{ WORD_SIZE }} letter word in
+            {{ END_GAME_ATTEMPT }} tries
+          </li>
+          <li>
+            Tap <code><small>'Enter'</small></code> to valid the word :
+            <ul class="list-disc list-inside">
+              <li>
+                Letter in Yellow: the letter is correct but at the wrong
+                position
+              </li>
+              <li>Letter in Green: The letter is correctly placed</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </header>
     <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
     <guess-input
       @guess-submitted="onSubmitGuess"
       :disabledInput="isGameOver"
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
-      class="h-4/6 flex flex-col justify-around w-full"
+      class="h-[80%] flex flex-col justify-around w-full my-3"
     />
-    <div v-if="isGameOver" class="h-1/6 flex flex-col justify-start items-center ">
-      <h2
-        v-text="
-          guessSubmited.includes(wordOfTheDay)
-            ? VICTORY_MESSAGE
-            : `${DEFEAT_MESSAGE} The word to find was: '${wordOfTheDay}'`
-        "
-      ></h2>
-      <button type="reset" @click="startNewGame">Play again</button>
-    </div>
-    <div v-else class="h-1/6 flex flex-col justify-start items-center ">
-      <p>Develop by GG web dev</p>
-    </div>
+    <footer
+      class="min-h-[10%] w-full flex flex-col justify-start items-center border-solid border-amber border-t-2"
+    >
+      <div v-if="isGameOver">
+        <h2
+          v-text="
+            guessSubmited.includes(wordOfTheDay)
+              ? VICTORY_MESSAGE
+              : `${DEFEAT_MESSAGE} The word to find was: '${wordOfTheDay}'`
+          "
+        ></h2>
+        <button type="reset" @click="startNewGame">Play again</button>
+      </div>
+      <div v-else>
+        <p>Develop by GG web dev</p>
+      </div>
+    </footer>
   </div>
 </template>
 
-<style scoped lang="css">
-</style>
+<style scoped lang="css"></style>

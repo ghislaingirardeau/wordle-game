@@ -10,7 +10,6 @@ import { computed, onMounted, ref } from "vue";
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
-import DialogInfo from "./DialogInfo.vue";
 
 const props = defineProps({
   wordOfTheDay: {
@@ -78,9 +77,7 @@ function reFocusInput() {
         </div>
       </div>
     </header>
-    <dialog-info>
-      <template v-slot:message> This word does not exist in the list </template>
-    </dialog-info>
+
     <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
     <guess-input
       @guess-submitted="onSubmitGuess"

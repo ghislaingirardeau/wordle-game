@@ -5,6 +5,7 @@ import { computed, onMounted, ref } from "vue";
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessLetter from "@/components/GuessLetter.vue";
+import DialogInfo from "./DialogInfo.vue";
 
 const props = defineProps({
   disabledInput: {
@@ -23,6 +24,9 @@ const props = defineProps({
 
 // le mot que va taper au fur et à mesure le joueur
 const guessInProcess = ref<string | null>(null);
+
+// message for information inside modal
+const messageInfo = ref("");
 
 //* Pour passer une donnée à notre parent, lui dire que le joueur à valider son mot avec ENTER
 // define the event
@@ -45,6 +49,11 @@ const formattedGuessInProcess = computed<string>({
   set(rawValue: string) {
     const regex = /\d+/;
     guessInProcess.value = null;
+    console.log(regex.test(rawValue));
+    if (regex.test(rawValue)) {
+      messageInfo.value = "You can only type letters";
+      document.getElementById("info-modal").classList.remove("hidden");
+    }
     /* guessInProcess.value?.replace(regex, "") */
     // recupere ce que tape l'utilisateur et format le
     // format la valeur pour qu'elle soit de longueur 5, en maj et sans digit
@@ -62,7 +71,8 @@ function onSubmit(event: Event) {
     classesStyling.value = {
       shake: true,
     };
-    // ne fera rien quand je tape enter
+    // affiche la modal avec l'erreur info
+    messageInfo.value = "This word does not exist in the list";
     document.getElementById("info-modal").classList.remove("hidden");
     return;
   }
@@ -115,7 +125,7 @@ onMounted(() => {
       :wordOfTheDay="wordOfTheDay"
       :classesStyling="classesStyling"
     />
-
+    <!-- input to contain user type -->
     <input
       ref="input"
       type="text"
@@ -126,6 +136,10 @@ onMounted(() => {
       :disabled="props.disabledInput"
       @blur="reFocusOnBlur"
     />
+    <!-- Modal to display info -->
+    <dialog-info>
+      <template v-slot:message> {{ messageInfo }} </template>
+    </dialog-info>
   </div>
 </template>
 

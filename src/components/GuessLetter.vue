@@ -6,8 +6,12 @@
     <li
       v-for="numberLetter in 5"
       :key="`${numberLetter}`"
-      class="letter"
-      :class="{ active: isCurrentWord, flip: shouldReveal }"
+      class="flex justify-center items-center w-12 h-20 mx-2 p-2 text-md border-solid border-2 border-amber rounded-lg bg-marine text-marine text-4xl"
+      :class="{
+        active: isCurrentWord,
+        flip: shouldReveal,
+        current: isCurrentLetter(numberLetter),
+      }"
       :data-letter="wordToDisplay[numberLetter - 1]"
       :data-letter-feedback="
         shouldReveal ? feedbackLetter(numberLetter, shouldReveal) : null
@@ -23,21 +27,26 @@ import { computed } from "vue";
 
 const props = defineProps({
   wordToDisplay: {
+    // le mot en cours de saisi dans l'input
     type: String,
     required: true,
   },
   guessSubmited: {
+    // la liste de mots déjà soumis
     type: Array,
   },
   guessAttempt: {
+    // le nombre de tentative en cours
     type: Number,
     required: true,
   },
   wordOfTheDay: {
+    // le mot du jour
     type: String,
     required: true,
   },
   classesStyling: {
+    // les classes à appliquer, si on est pas sur le mot en cours
     type: Object,
   },
 });
@@ -56,6 +65,23 @@ const shouldReveal = computed(() => {
     return false;
   }
 });
+
+/**
+ * Index est le numéro de la lettre de la boucle entre 1 et 5
+ * @param {number} index
+ */
+function isCurrentLetter(index) {
+  // Si je suis sur la ligne à taper => props.guessAttempt - 1 === props.guessSubmited.length
+  // et que je suis sur la case de la lettre à taper => props.wordToDisplay.length + 1 === index
+  if (
+    props.wordToDisplay.length + 1 === index &&
+    props.guessAttempt - 1 === props.guessSubmited.length
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
 
 function feedbackLetter(numberLetter, reveal) {
   // suivant le feedback, tu enregistres comme data de la lettre
@@ -94,6 +120,10 @@ function feedbackLetter(numberLetter, reveal) {
 
 .active {
   background-color: theme("colors.white");
+}
+
+.current {
+  box-shadow: inset 0px 0px 4px 3px theme("colors.amber");
 }
 
 .shake {

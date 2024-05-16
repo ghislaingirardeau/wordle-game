@@ -134,6 +134,7 @@ input {
   top: 0px;
   opacity: 0;
   right: 0;
+  cursor: default;
 }
 input:focus-visible {
   outline: none;

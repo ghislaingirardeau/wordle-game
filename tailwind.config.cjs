@@ -8,17 +8,11 @@ module.exports = {
       },
     },
     colors: {
-      amber: {
-        light: "#FEF3C7",
-        DEFAULT: "#FCD34D",
-        dark: "#F59E0B",
-      },
-      emerald: {
-        light: "#D1FAE5",
-        DEFAULT: "#6EE7B7",
-        dark: "#10B981",
-      },
-      white: "#60A5FA",
+      amber: "#e07a5f",
+      emerald: "#f2cc8f",
+      white: "#f4f1de",
+      green: "#81b29a",
+      marine: "#3d405b",
     },
   },
   fontFamily: {

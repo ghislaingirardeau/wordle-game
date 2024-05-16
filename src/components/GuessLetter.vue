@@ -101,10 +101,13 @@ function feedbackLetter(numberLetter, reveal) {
 }
 
 li[data-letter-feedback="almost"] {
-  background-color: theme("colors.amber.DEFAULT");
+  background-color: theme("colors.emerald");
 }
 li[data-letter-feedback="correct"] {
-  background-color: theme("colors.amber.DEFAULT");
+  background-color: theme("colors.green");
+}
+li[data-letter-feedback="incorrect"] {
+  background-color: theme("colors.amber");
 }
 
 li[data-letter].flip {

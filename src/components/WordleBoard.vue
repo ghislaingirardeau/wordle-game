@@ -58,22 +58,19 @@ function startNewGame(event: Event) {
       </h1>
       <div class="border-solid border-amber border-t-2 border-b-2 py-3">
         <h2 class="text-xl underline text-marine">Rules of the game</h2>
-        <ul class="text-xs italic text-marine">
-          <li>
+        <p class="text-xs italic text-marine">
+
             Try to find a {{ WORD_SIZE }} letter word in
-            {{ END_GAME_ATTEMPT }} tries
-          </li>
-          <li>
-            Tap <code><small>'Enter'</small></code> to valid the word :
+            {{ END_GAME_ATTEMPT }} tries and Tap
+            <code><small>'Enter'</small></code> to valid the word :
             <ul class="list-disc list-inside">
-              <li>
-                Letter in Yellow: the letter is correct but at the wrong
+              <li>Letter in Yellow: the letter is correct but at the wrong
                 position
               </li>
               <li>Letter in Green: The letter is correctly placed</li>
             </ul>
-          </li>
-        </ul>
+
+        </p>
       </div>
     </header>
     <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->

@@ -22,7 +22,7 @@
   </ul>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from "vue";
 
 const props = defineProps({
@@ -70,7 +70,7 @@ const shouldReveal = computed(() => {
  * Index est le numéro de la lettre de la boucle entre 1 et 5
  * @param {number} index
  */
-function isCurrentLetter(index) {
+function isCurrentLetter(index: Number) {
   // Si je suis sur la ligne à taper => props.guessAttempt - 1 === props.guessSubmited.length
   // et que je suis sur la case de la lettre à taper => props.wordToDisplay.length + 1 === index
   if (
@@ -83,7 +83,7 @@ function isCurrentLetter(index) {
   }
 }
 
-function feedbackLetter(numberLetter, reveal) {
+function feedbackLetter(numberLetter: Number, reveal: Boolean) {
   // suivant le feedback, tu enregistres comme data de la lettre
   // avec le css, je colore la lettre suivant sa data
   if (

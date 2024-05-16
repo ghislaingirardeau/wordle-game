@@ -63,6 +63,7 @@ function onSubmit(event: Event) {
       shake: true,
     };
     // ne fera rien quand je tape enter
+    document.getElementById("info-modal").classList.remove("hidden");
     return;
   }
   classesStyling.value = {

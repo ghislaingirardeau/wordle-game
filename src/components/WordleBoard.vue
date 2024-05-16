@@ -10,6 +10,8 @@ import { computed, onMounted, ref } from "vue";
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
+import DialogInfo from './DialogInfo.vue'
+
 
 const props = defineProps({
   wordOfTheDay: {
@@ -62,6 +64,7 @@ function reFocusInput() {
       >
         Wordle Game
       </h1>
+      
       <div class="border-solid border-amber border-t-2 border-b-2 py-3">
         <h2 class="text-xl underline text-marine">Rules of the game</h2>
         <p class="text-xs italic text-marine">
@@ -79,6 +82,7 @@ function reFocusInput() {
         </p>
       </div>
     </header>
+    <DialogInfo />
     <!-- input avec l'event attaché, a chaque event, MAJ la constante  guessSubmited-->
     <guess-input
       @guess-submitted="onSubmitGuess"

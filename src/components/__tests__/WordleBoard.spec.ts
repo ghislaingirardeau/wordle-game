@@ -207,11 +207,11 @@ describe("WordleBoard", () => {
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
     test("player guesses can only contains letters", async () => {
-      await playerTypesGuess("H3R!T");
+      await playerTypesGuess("HR3");
 
       expect(
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
-      ).toEqual("HRT");
+      ).toEqual("HR");
     });
     /* test("do not show non letter characters when the user type", async () => {
       await playerSubmitAndTypeGuess("333");

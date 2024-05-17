@@ -58,22 +58,20 @@ const formattedGuessInProcess = computed<string>({
     const regex = /\d+/;
     guessInProcess.value = null;
 
-    // TODO: BUG FIX
-    // si je tape 2 lettres et 3 chiffres, je ne peux plus taper les lettres
-    // console.log(rawValue);
-    if (regex.test(rawValue)) {
-      /* messageInfo.value = "You can only type letters";
-      document.getElementById("info-modal").classList.remove("hidden"); */
-    }
     /* guessInProcess.value?.replace(regex, "") */
     // recupere ce que tape l'utilisateur et format le
     // format la valeur pour qu'elle soit de longueur 5, en maj et sans digit
-    guessInProcess.value = rawValue
-      .slice(0, WORD_SIZE)
-      .toUpperCase()
-      .replace(/[^A-Z]+/gi, "");
+    guessInProcess.value = rawValue.slice(0, WORD_SIZE).toUpperCase();
+    /* .replace(/[^A-Z]+/gi, ""); */
 
-    // console.log(guessInProcess.value);
+    // si il y a un nombre
+    if (regex.test(rawValue)) {
+      showModalInfo("Error", "Number is not permited");
+      // retire le nombre du v-model
+      guessInProcess.value = rawValue.slice(0, -1);
+      // met à jour la valeur de l'input
+      input.value.value = guessInProcess.value;
+    }
   },
 });
 
@@ -106,9 +104,7 @@ function reFocusOnBlur(event: Event) {
   // le joueur peut cliquer n'importe le focus sera toujours sur le input
   const input = event.target as HTMLInputElement;
   // je dois mettre un léger délai sinon ne s'éxécute pas
-  setTimeout(() => {
-    input.focus();
-  }, 100);
+  setTimeout(() => input.focus());
 }
 
 // C'est ici qu'est choisi le mot à dispatcher en lettre
@@ -158,6 +154,7 @@ onMounted(() => {
       ref="input"
       id="input-user"
       type="text"
+      autofocus
       v-model="formattedGuessInProcess"
       :maxlength="WORD_SIZE"
       @keydown.enter="onSubmit"

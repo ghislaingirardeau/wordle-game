@@ -14,7 +14,7 @@ const randomIndex = (min: number, max: number): number => {
 
 // trouve un mot aléatoire
 // pour qu'il se declenche, je dois lui passer une variable qui change, donc le numberOfGamePlayed
-const randomWord = computed(() => {
+const randomWord = computed<string>(() => {
   const random = englishWord[randomIndex(numberOfGamePlayed.value, 2500)];
   console.log(random);
   return random;

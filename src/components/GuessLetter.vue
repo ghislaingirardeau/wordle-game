@@ -33,7 +33,8 @@ const props = defineProps({
   },
   guessSubmited: {
     // la liste de mots déjà soumis
-    type: Array,
+    type: [String],
+    required: true,
   },
   guessAttempt: {
     // le nombre de tentative en cours
@@ -70,7 +71,7 @@ const shouldReveal = computed(() => {
  * Index est le numéro de la lettre de la boucle entre 1 et 5
  * @param {number} index
  */
-function isCurrentLetter(index: Number) {
+function isCurrentLetter(index: number) {
   // Si je suis sur la ligne à taper => props.guessAttempt - 1 === props.guessSubmited.length
   // et que je suis sur la case de la lettre à taper => props.wordToDisplay.length + 1 === index
   if (
@@ -83,7 +84,7 @@ function isCurrentLetter(index: Number) {
   }
 }
 
-function feedbackLetter(numberLetter: Number, reveal: Boolean) {
+function feedbackLetter(numberLetter: number, reveal: boolean) {
   // suivant le feedback, tu enregistres comme data de la lettre
   // avec le css, je colore la lettre suivant sa data
   if (

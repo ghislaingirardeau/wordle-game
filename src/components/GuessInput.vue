@@ -13,7 +13,7 @@ const props = defineProps({
     required: true,
   },
   guessSubmited: {
-    type: Array,
+    type: [String],
     required: true,
   },
   wordOfTheDay: {
@@ -111,7 +111,7 @@ function reFocusOnBlur(event: Event) {
 }
 
 // C'est ici qu'est choisi le mot à dispatcher en lettre
-function wordToDisplayInLetter(guessAttempt: number) {
+function wordToDisplayInLetter(guessAttempt: number): string {
   // si tu as un mot dans le tatbleau qui correspond à la tentative précédente, tu renvoie ce mot
   if (props.guessSubmited[guessAttempt - 1]) {
     return props.guessSubmited[guessAttempt - 1];

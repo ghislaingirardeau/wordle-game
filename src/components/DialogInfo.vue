@@ -57,9 +57,9 @@
 <script lang="ts" setup>
 import { ref, type Ref } from "vue";
 
-const dialogElement: Ref<HTMLElement | null> = ref(null);
+const dialogElement = ref<HTMLElement>();
 
-function toggleModal(event: Event) {
+function toggleModal(): void {
   const element = dialogElement.value as HTMLElement;
   element.classList.toggle("hidden");
 }

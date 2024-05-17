@@ -36,7 +36,7 @@ const modalInfo = reactive({
 });
 
 // defini une ref sur un component
-const dialogElement: Ref<HTMLElement | null> = ref(null);
+const dialogElement = ref<InstanceType<typeof DialogInfo>>();
 
 //* Pour passer une donnée à notre parent, lui dire que le joueur à valider son mot avec ENTER
 // define the event
@@ -131,7 +131,7 @@ function showModalInfo(title: string, message: string) {
   modalInfo.title = title;
   // execute la fonction dans le component child qui ouvre la modale
   // la fonction est accessible ici grace au defineExpose() dans le component child
-  dialogElement.value.toggleModal();
+  dialogElement?.value?.toggleModal();
 }
 
 onMounted(() => {

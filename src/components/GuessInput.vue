@@ -86,8 +86,13 @@ function onSubmit(event: Event) {
     classesStyling.value = {
       shake: true,
     };
-    /* MODAL */
-    showModalInfo("Error", "This word does not exist in the list");
+    /* MODAL INFO*/
+    let messageToDisplay = "";
+    formattedGuessInProcess.value.length !== 5
+      ? (messageToDisplay = `This word must contain ${WORD_SIZE} letters`)
+      : (messageToDisplay = "This word does not exist in the list");
+    showModalInfo("Error", messageToDisplay);
+
     return;
   }
   classesStyling.value = {

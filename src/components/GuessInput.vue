@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { WORD_SIZE, END_GAME_ATTEMPT } from "@/settings";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, reactive, ref, type Ref } from "vue";
 
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
@@ -22,11 +22,21 @@ const props = defineProps({
   },
 });
 
+// pour refaire le focus sur l'input,
+// sinon lors du click sur le restart de game, je perds le focus
+const input = ref<HTMLInputElement | null>(null);
+
 // le mot que va taper au fur et à mesure le joueur
 const guessInProcess = ref<string | null>(null);
 
 // message for information inside modal
-const messageInfo = ref("");
+const modalInfo = reactive({
+  title: "",
+  message: "",
+});
+
+// defini une ref sur un component
+const dialogElement: Ref<HTMLElement | null> = ref(null);
 
 //* Pour passer une donnée à notre parent, lui dire que le joueur à valider son mot avec ENTER
 // define the event
@@ -49,10 +59,13 @@ const formattedGuessInProcess = computed<string>({
   set(rawValue: string) {
     const regex = /\d+/;
     guessInProcess.value = null;
-    console.log(regex.test(rawValue));
+
+    // TODO: BUG FIX
+    // si je tape 2 lettres et 3 chiffres, je ne peux plus taper les lettres
+    // console.log(rawValue);
     if (regex.test(rawValue)) {
-      messageInfo.value = "You can only type letters";
-      document.getElementById("info-modal").classList.remove("hidden");
+      /* messageInfo.value = "You can only type letters";
+      document.getElementById("info-modal").classList.remove("hidden"); */
     }
     /* guessInProcess.value?.replace(regex, "") */
     // recupere ce que tape l'utilisateur et format le
@@ -61,6 +74,8 @@ const formattedGuessInProcess = computed<string>({
       .slice(0, WORD_SIZE)
       .toUpperCase()
       .replace(/[^A-Z]+/gi, "");
+
+    // console.log(guessInProcess.value);
   },
 });
 
@@ -71,9 +86,8 @@ function onSubmit(event: Event) {
     classesStyling.value = {
       shake: true,
     };
-    // affiche la modal avec l'erreur info
-    messageInfo.value = "This word does not exist in the list";
-    document.getElementById("info-modal").classList.remove("hidden");
+    /* MODAL */
+    showModalInfo("Error", "This word does not exist in the list");
     return;
   }
   classesStyling.value = {
@@ -106,9 +120,15 @@ function wordToDisplayInLetter(guessAttempt: number) {
   return "";
 }
 
-// pour refaire le focus sur l'input,
-// sinon lors du click sur le restart de game, je perds le focus
-const input = ref<HTMLInputElement | null>(null);
+function showModalInfo(title: string, message: string) {
+  // affiche la modal avec l'erreur info
+  modalInfo.message = message;
+  modalInfo.title = title;
+  // execute la fonction dans le component child qui ouvre la modale
+  // la fonction est accessible ici grace au defineExpose() dans le component child
+  dialogElement.value.toggleModal();
+}
+
 onMounted(() => {
   input.value?.focus();
 });
@@ -137,8 +157,9 @@ onMounted(() => {
       @blur="reFocusOnBlur"
     />
     <!-- Modal to display info -->
-    <dialog-info>
-      <template v-slot:message> {{ messageInfo }} </template>
+    <dialog-info ref="dialogElement">
+      <template v-slot:title> {{ modalInfo.title }} </template>
+      <template v-slot:message> {{ modalInfo.message }} </template>
     </dialog-info>
   </div>
 </template>

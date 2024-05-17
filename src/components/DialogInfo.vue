@@ -3,6 +3,7 @@
     <!-- Main modal -->
     <div
       id="info-modal"
+      ref="dialogElement"
       tabindex="-1"
       aria-hidden="true"
       class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
@@ -14,12 +15,14 @@
           <div
             class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
           >
-            <h3 class="text-xl font-semibold text-gray-900 text-amber">Info</h3>
+            <h3 class="text-xl font-semibold text-gray-900 text-amber">
+              <slot name="title"></slot>
+            </h3>
             <button
               type="button"
               class="text-amber bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-hide="info-modal"
-              @click="closeModal"
+              @click="toggleModal"
             >
               <svg
                 class="w-3 h-3"
@@ -52,9 +55,19 @@
 </template>
 
 <script lang="ts" setup>
-function closeModal(event) {
-  event.target.closest("#info-modal").classList.add("hidden");
+import { ref, type Ref } from "vue";
+
+const dialogElement: Ref<HTMLElement | null> = ref(null);
+
+function toggleModal(event: Event) {
+  const element = dialogElement.value as HTMLElement;
+  element.classList.toggle("hidden");
 }
+
+// define expose me permettra d'éxécuter cette méhode à partir du parent (en ajoutant une ref au component)
+defineExpose({
+  toggleModal,
+});
 </script>
 
 <style lang="scss" scoped></style>

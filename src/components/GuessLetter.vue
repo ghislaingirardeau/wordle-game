@@ -33,7 +33,7 @@ const props = defineProps({
   },
   guessSubmited: {
     // la liste de mots déjà soumis
-    type: [String],
+    type: Array,
     required: true,
   },
   guessAttempt: {

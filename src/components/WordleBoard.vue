@@ -44,16 +44,11 @@ function startNewGame(event: Event) {
   guessSubmited.value = [];
   emit("restart-game");
 }
-function reFocusInput() {
-  console.log(document.querySelector("input"));
-  document.querySelector("input").focus();
-}
 </script>
 
 <template>
   <div
     class="flex flex-col justify-start items-center h-screen font-Kalam mx-3"
-    @click="reFocusInput"
   >
     <header class="flex flex-col justify-start w-full">
       <h1

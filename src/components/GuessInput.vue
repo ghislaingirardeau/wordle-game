@@ -13,7 +13,7 @@ const props = defineProps({
     required: true,
   },
   guessSubmited: {
-    type: [String],
+    type: Array,
     required: true,
   },
   wordOfTheDay: {
@@ -22,9 +22,7 @@ const props = defineProps({
   },
 });
 
-// pour refaire le focus sur l'input,
-// sinon lors du click sur le restart de game, je perds le focus
-const input = ref<HTMLInputElement | null>(null);
+const input = ref<HTMLInputElement>();
 
 // le mot que va taper au fur et à mesure le joueur
 const guessInProcess = ref<string | null>(null);
@@ -107,7 +105,10 @@ function reFocusOnBlur(event: Event) {
   // pour ne pas perdre le focus sur le bouton
   // le joueur peut cliquer n'importe le focus sera toujours sur le input
   const input = event.target as HTMLInputElement;
-  input.focus();
+  // je dois mettre un léger délai sinon ne s'éxécute pas
+  setTimeout(() => {
+    input.focus();
+  }, 100);
 }
 
 // C'est ici qu'est choisi le mot à dispatcher en lettre
@@ -134,6 +135,8 @@ function showModalInfo(title: string, message: string) {
   dialogElement?.value?.toggleModal();
 }
 
+// pour refaire le focus sur l'input,
+// sinon lors du click sur le restart de game, je perds le focus
 onMounted(() => {
   input.value?.focus();
 });
@@ -153,13 +156,13 @@ onMounted(() => {
     <!-- input to contain user type -->
     <input
       ref="input"
+      id="input-user"
       type="text"
       v-model="formattedGuessInProcess"
       :maxlength="WORD_SIZE"
       @keydown.enter="onSubmit"
-      autofocus
       :disabled="props.disabledInput"
-      @blur="reFocusOnBlur"
+      @focusout="reFocusOnBlur"
     />
     <!-- Modal to display info -->
     <dialog-info ref="dialogElement">
@@ -170,19 +173,19 @@ onMounted(() => {
 </template>
 
 <style scoped lang="css">
-input {
+#input-user {
   position: fixed;
   top: 0px;
   opacity: 0;
   right: 0;
   cursor: default;
 }
-input:focus-visible {
+#input-user:focus-visible {
   outline: none;
   border: none;
   color: white;
 }
-input:disabled {
+#input-user:disabled {
   outline: none;
   border: none;
   color: white;

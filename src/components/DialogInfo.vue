@@ -23,6 +23,7 @@
               class="text-amber bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-hide="info-modal"
               @click="toggleModal"
+              @keyup="toggleModal"
             >
               <svg
                 class="w-3 h-3"

@@ -75,18 +75,17 @@ function startNewGame(event: Event) {
             </ul>
           </div>
         </div>
-        <div
-          class="actions_block flex flex-col justify-center mt-3 lg:h-[80%]"
-          v-if="isGameOver"
-        >
-          <h2
-            v-text="
-              guessSubmited.includes(wordOfTheDay)
-                ? VICTORY_MESSAGE
-                : `${DEFEAT_MESSAGE} The word to find was: '${wordOfTheDay}'`
-            "
-          ></h2>
-          <button type="reset" @click="startNewGame">Play again</button>
+        <div class="actions_block flex flex-col justify-center mt-3 lg:h-[80%]">
+          <div v-if="isGameOver">
+            <h2
+              v-text="
+                guessSubmited.includes(wordOfTheDay)
+                  ? VICTORY_MESSAGE
+                  : `${DEFEAT_MESSAGE} The word to find was: '${wordOfTheDay}'`
+              "
+            ></h2>
+            <button type="reset" @click="startNewGame">Play again</button>
+          </div>
         </div>
       </div>
     </header>

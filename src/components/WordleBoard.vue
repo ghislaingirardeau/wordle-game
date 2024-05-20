@@ -48,9 +48,9 @@ function startNewGame(event: Event) {
 
 <template>
   <div
-    class="flex flex-col justify-start items-center min-h-screen font-Kalam mx-3"
+    class="flex flex-col lg:flex-row lg:flex-wrap justify-start items-center min-h-screen font-Kalam mx-3"
   >
-    <header class="flex flex-col justify-start w-full min-h-[15vh]">
+    <header class="flex flex-col justify-start w-full min-h-[15vh] lg:w-[30%]">
       <h1 class="text-4xl text-center text-amber font-PermanentMarker my-2">
         Wordle Game
       </h1>
@@ -79,10 +79,10 @@ function startNewGame(event: Event) {
       :disabledInput="isGameOver"
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
-      class="min-h-[75vh] md:w-[70%] xl:w-[50%] flex flex-col justify-around w-full mt-3"
+      class="min-h-[75vh] md:w-[70%] xl:w-[50%] flex flex-col justify-around w-full lg:w-[70%] mt-3"
     />
     <footer
-      class="min-h-[5vh] w-full flex flex-col justify-start items-center border-solid border-amber border-t-2"
+      class="min-h-[5vh] w-full flex flex-col justify-start items-center border-solid border-amber border-t-2 lg:border-t-0"
     >
       <div v-if="isGameOver">
         <h2

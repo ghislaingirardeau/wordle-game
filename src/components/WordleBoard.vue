@@ -10,6 +10,7 @@ import { computed, onMounted, ref } from "vue";
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
+import DifficultyTab from "@/components/DifficultyTab.vue";
 
 const props = defineProps({
   wordOfTheDay: {
@@ -76,6 +77,7 @@ function startNewGame(event: Event) {
           </div>
         </div>
         <div class="actions_block flex flex-col justify-center mt-3 lg:h-[80%]">
+          <DifficultyTab />
           <div v-if="isGameOver">
             <h2
               v-text="

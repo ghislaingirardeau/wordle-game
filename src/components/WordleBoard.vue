@@ -50,13 +50,15 @@ function startNewGame(event: Event) {
   <div
     class="flex flex-col lg:flex-row lg:flex-wrap justify-start items-center min-h-screen font-Kalam mx-3"
   >
-    <header class="flex flex-col justify-start w-full min-h-[15vh] lg:w-[30%]">
+    <header
+      class="flex flex-col justify-start w-full min-h-[15vh] lg:min-h-[75vh] lg:w-[30%]"
+    >
       <h1 class="text-4xl text-center text-amber font-PermanentMarker my-2">
         Wordle Game
       </h1>
 
       <div
-        class="border-solid border-amber border-t-2 border-b-2 py-3 md:text-center"
+        class="border-solid border-amber border-t-2 border-b-2 lg:border-b-0 py-3 md:text-center lg:text-left"
       >
         <h2 class="text-xl underline text-marine">Rules of the game</h2>
         <div class="text-xs italic text-marine">
@@ -82,7 +84,7 @@ function startNewGame(event: Event) {
       class="min-h-[75vh] md:w-[70%] xl:w-[50%] flex flex-col justify-around w-full lg:w-[70%] mt-3"
     />
     <footer
-      class="min-h-[5vh] w-full flex flex-col justify-start items-center border-solid border-amber border-t-2 lg:border-t-0"
+      class="min-h-[5vh] w-full lg:w-[30%] lg:min-h-[25vh] flex flex-col justify-start items-center border-solid border-amber border-t-2"
     >
       <div v-if="isGameOver">
         <h2

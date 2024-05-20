@@ -8,7 +8,7 @@
         href="#"
         class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-amber"
         :class="{ active: index == 0 }"
-        @click="changeDifficulty"
+        @click="changeDifficulty($event, level)"
         >{{ level }}</a
       >
     </li>
@@ -17,11 +17,11 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
-import { LEVELS } from "@/settings";
+import { LEVELS, SET_DIFFICULTY, END_GAME_ATTEMPT } from "@/settings";
 
 const tabs = ref<HTMLElement>();
 
-function changeDifficulty(event: Event) {
+function changeDifficulty(event: Event, level: string) {
   // remove class active for all
   tabs.value?.querySelectorAll("a").forEach((element) => {
     element.classList.remove("active");
@@ -29,6 +29,7 @@ function changeDifficulty(event: Event) {
   // add active class
   const button = event.target as HTMLElement;
   button.classList.add("active");
+  SET_DIFFICULTY(level);
 }
 </script>
 

@@ -1,18 +1,18 @@
 export const VICTORY_MESSAGE: string = "You won!";
 export const DEFEAT_MESSAGE: string = "You lose!";
 export const WORD_SIZE: number = 5;
-export let END_GAME_ATTEMPT: number = 6;
+export let END_GAME_ATTEMPT: number = 10;
 export const LEVELS: string[] = ["Easy", "Medium", "Difficult"];
 
-export function setDifficulty(type: string) {
+export function SET_DIFFICULTY(type: string) {
   switch (type) {
-    case "easy":
+    case "Easy":
       END_GAME_ATTEMPT = 10;
       break;
-    case "medium":
+    case "Medium":
       END_GAME_ATTEMPT = 8;
       break;
-    case "difficult":
+    case "Difficult":
       END_GAME_ATTEMPT = 6;
       break;
   }

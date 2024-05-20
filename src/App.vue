@@ -31,8 +31,10 @@ const randomWord = computed<string>(() => {
 
 <style>
 body {
-  min-height: 100vh;
   margin: 0px;
   background-color: theme("colors.white");
+}
+
+#app {
 }
 </style>

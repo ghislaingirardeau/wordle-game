@@ -1,6 +1,6 @@
 <template>
   <ul
-    class="flex justify-around items-center list-none px-10"
+    class="flex justify-around items-center list-none py-1"
     :class="isCurrentWord ? props.classesStyling : ''"
   >
     <li

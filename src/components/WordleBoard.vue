@@ -48,16 +48,16 @@ function startNewGame(event: Event) {
 
 <template>
   <div
-    class="flex flex-col justify-start items-center h-screen font-Kalam mx-3"
+    class="flex flex-col justify-start items-center min-h-screen font-Kalam mx-3"
   >
-    <header class="flex flex-col justify-start w-full">
-      <h1
-        class="text-4xl text-center text-amber min-h-[15%] font-PermanentMarker my-2"
-      >
+    <header class="flex flex-col justify-start w-full min-h-[15vh]">
+      <h1 class="text-4xl text-center text-amber font-PermanentMarker my-2">
         Wordle Game
       </h1>
 
-      <div class="border-solid border-amber border-t-2 border-b-2 py-3">
+      <div
+        class="border-solid border-amber border-t-2 border-b-2 py-3 md:text-center"
+      >
         <h2 class="text-xl underline text-marine">Rules of the game</h2>
         <div class="text-xs italic text-marine">
           Try to find a {{ WORD_SIZE }} letter word in
@@ -79,10 +79,10 @@ function startNewGame(event: Event) {
       :disabledInput="isGameOver"
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
-      class="h-[80%] flex flex-col justify-around w-full my-3"
+      class="min-h-[75vh] md:w-[70%] xl:w-[50%] flex flex-col justify-around w-full mt-3"
     />
     <footer
-      class="min-h-[10%] w-full flex flex-col justify-start items-center border-solid border-amber border-t-2"
+      class="min-h-[5vh] w-full flex flex-col justify-start items-center border-solid border-amber border-t-2"
     >
       <div v-if="isGameOver">
         <h2

@@ -111,14 +111,13 @@ describe("WordleBoard", () => {
       expect(wrapper.emitted()).toHaveProperty("restart-game");
     });
   });
-
   describe("Rules of the games", () => {
     beforeEach(() => {
       console.warn = vi.fn();
     });
     // each permet de faire le test autant de fois qu'il y a d'éléments dans le tableau
     test.each([
-      { wordFromArray: "FLY", reason: "must be 5 5characters length" },
+      { wordFromArray: "FLY", reason: "must be 5 characters length" },
       { wordFromArray: "card", reason: "must be uppercase" },
       { wordFromArray: "AAAAA", reason: "must be a real word" },
     ])(
@@ -193,6 +192,8 @@ describe("WordleBoard", () => {
     test(`player guesses are limited to ${WORD_SIZE} letters`, async () => {
       await playerSubmitAndTypeGuess(wordOfTheDay + "EXTRAS");
 
+      // "toContain" agit comme un "includes"
+      // comme le début de la cdc est le mot de jour, le test est validé
       expect(wrapper.text()).toContain(VICTORY_MESSAGE);
     });
     test("player guesses can only be submited if they are real words", async () => {
@@ -200,6 +201,12 @@ describe("WordleBoard", () => {
 
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
       expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+      // test vérifie que la modal s'affiche bien lors d'une erreur
+      const modal = wrapper.find("#info-modal");
+      expect(modal.classes()).not.toContain("hidden");
+      expect(modal.find("p").text()).toBe(
+        "This word does not exist in the list"
+      );
     });
     test("player guesses are not case-sensitive", async () => {
       await playerSubmitAndTypeGuess(wordOfTheDay.toLowerCase());
@@ -212,6 +219,9 @@ describe("WordleBoard", () => {
       expect(
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toEqual("HR");
+      const modal = wrapper.find("#info-modal");
+      expect(modal.classes()).not.toContain("hidden");
+      expect(modal.find("p").text()).toBe("Number is not permited");
     });
     /* test("do not show non letter characters when the user type", async () => {
       await playerSubmitAndTypeGuess("333");

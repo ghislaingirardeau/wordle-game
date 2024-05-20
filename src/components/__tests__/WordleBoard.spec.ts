@@ -41,6 +41,12 @@ describe("WordleBoard", () => {
     await playerPressingEnter();
   }
 
+  function openModalInformation(message: string): void {
+    const modal = wrapper.find("#info-modal");
+    expect(modal.classes()).not.toContain("hidden");
+    expect(modal.find("p").text()).toBe(message);
+  }
+
   //----------------------------------
 
   //----------------------------------
@@ -202,11 +208,7 @@ describe("WordleBoard", () => {
       expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
       expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
       // test vérifie que la modal s'affiche bien lors d'une erreur
-      const modal = wrapper.find("#info-modal");
-      expect(modal.classes()).not.toContain("hidden");
-      expect(modal.find("p").text()).toBe(
-        "This word does not exist in the list"
-      );
+      openModalInformation("This word does not exist in the list");
     });
     test("player guesses are not case-sensitive", async () => {
       await playerSubmitAndTypeGuess(wordOfTheDay.toLowerCase());
@@ -219,9 +221,7 @@ describe("WordleBoard", () => {
       expect(
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toEqual("HR");
-      const modal = wrapper.find("#info-modal");
-      expect(modal.classes()).not.toContain("hidden");
-      expect(modal.find("p").text()).toBe("Number is not permited");
+      openModalInformation("Number is not permited");
     });
     /* test("do not show non letter characters when the user type", async () => {
       await playerSubmitAndTypeGuess("333");

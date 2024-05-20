@@ -20,7 +20,7 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
-import { LEVELS, SET_DIFFICULTY, END_GAME_ATTEMPT } from "@/settings";
+import { LEVELS, SET_DIFFICULTY} from "@/settings";
 
 const tabs = ref<HTMLElement>();
 

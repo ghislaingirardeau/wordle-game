@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import WordleBoard from "./components/WordleBoard.vue";
 
 import englishWord from "./utils/englishWordsWith5Letters.json";

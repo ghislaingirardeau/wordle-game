@@ -71,7 +71,7 @@ describe("WordleBoard", () => {
       { numberOfGuess: 3, shouldSeeDefeatMessage: false },
       { numberOfGuess: 4, shouldSeeDefeatMessage: false },
       { numberOfGuess: 5, shouldSeeDefeatMessage: false },
-      { numberOfGuess: END_GAME_ATTEMPT, shouldSeeDefeatMessage: true },
+      { numberOfGuess: END_GAME_ATTEMPT.value, shouldSeeDefeatMessage: true },
     ])(
       "A defeat message should appear if user make 6 worng attempts",
       async ({ numberOfGuess, shouldSeeDefeatMessage }) => {
@@ -154,9 +154,12 @@ describe("WordleBoard", () => {
     });
   });
   describe("Set options", () => {
+    // level of difficulties
     test("Option to change the difficulty of the game on click", async () => {
       await wrapper.find(".tabs_container #level-medium").trigger("click");
-      expect(END_GAME_ATTEMPT).toBe(8);
+      expect(END_GAME_ATTEMPT.value).toBe(8);
+      await wrapper.find(".tabs_container #level-difficult").trigger("click");
+      expect(END_GAME_ATTEMPT.value).toBe(6);
     });
   });
   describe("player input", () => {

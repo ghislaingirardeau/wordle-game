@@ -32,7 +32,7 @@ const guessSubmited = ref<string[]>([]);
 
 const isGameOver = computed<boolean>(() => {
   return (
-    guessSubmited.value.length === END_GAME_ATTEMPT ||
+    guessSubmited.value.length === END_GAME_ATTEMPT.value ||
     guessSubmited.value.includes(props.wordOfTheDay)
   );
 });

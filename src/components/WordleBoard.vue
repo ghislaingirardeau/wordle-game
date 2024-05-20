@@ -58,19 +58,35 @@ function startNewGame(event: Event) {
       </h1>
 
       <div
-        class="border-solid border-amber border-t-2 border-b-2 lg:border-b-0 py-3 md:text-center lg:text-left"
+        class="flex flex-col justify-start lg:h-[100%] items-center border-solid border-amber border-t-2 border-b-2 lg:border-b-0 py-3 md:text-center lg:text-left"
       >
-        <h2 class="text-xl underline text-marine">Rules of the game</h2>
-        <div class="text-xs italic text-marine">
-          Try to find a {{ WORD_SIZE }} letter word in
-          {{ END_GAME_ATTEMPT }} tries and Tap
-          <code><small>'Enter'</small></code> to valid the word :
-          <ul class="list-disc list-inside">
-            <li>
-              Letter in Yellow: the letter is correct but at the wrong position
-            </li>
-            <li>Letter in Green: The letter is correctly placed</li>
-          </ul>
+        <div class="rules_block">
+          <h2 class="text-xl underline text-marine">Rules of the game</h2>
+          <div class="text-xs italic text-marine">
+            Try to find a {{ WORD_SIZE }} letter word in
+            {{ END_GAME_ATTEMPT }} tries and Tap
+            <code><small>'Enter'</small></code> to valid the word :
+            <ul class="list-disc list-inside">
+              <li>
+                Letter in Yellow: the letter is correct but at the wrong
+                position
+              </li>
+              <li>Letter in Green: The letter is correctly placed</li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="actions_block flex flex-col justify-center mt-3 lg:h-[80%]"
+          v-if="isGameOver"
+        >
+          <h2
+            v-text="
+              guessSubmited.includes(wordOfTheDay)
+                ? VICTORY_MESSAGE
+                : `${DEFEAT_MESSAGE} The word to find was: '${wordOfTheDay}'`
+            "
+          ></h2>
+          <button type="reset" @click="startNewGame">Play again</button>
         </div>
       </div>
     </header>
@@ -86,17 +102,7 @@ function startNewGame(event: Event) {
     <footer
       class="min-h-[5vh] lg:h-[10vh] w-full lg:w-[30%] flex flex-col justify-start items-center border-solid border-amber border-t-2 lg:border-r-2"
     >
-      <div v-if="isGameOver">
-        <h2
-          v-text="
-            guessSubmited.includes(wordOfTheDay)
-              ? VICTORY_MESSAGE
-              : `${DEFEAT_MESSAGE} The word to find was: '${wordOfTheDay}'`
-          "
-        ></h2>
-        <button type="reset" @click="startNewGame">Play again</button>
-      </div>
-      <div v-else>
+      <div>
         <p>Develop by GG web dev</p>
       </div>
     </footer>

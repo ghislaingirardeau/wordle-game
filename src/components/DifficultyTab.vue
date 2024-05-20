@@ -1,18 +1,21 @@
 <template>
-  <ul
-    ref="tabs"
-    class="flex flex-wrap text-sm font-medium text-center text-marine"
-  >
-    <li v-for="(level, index) in LEVELS" :key="index">
-      <a
-        href="#"
-        class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-amber"
-        :class="{ active: index == 0 }"
-        @click="changeDifficulty($event, level)"
-        >{{ level }}</a
-      >
-    </li>
-  </ul>
+  <div class="tabs_container">
+    <ul
+      ref="tabs"
+      class="flex flex-wrap text-sm font-medium text-center text-marine"
+    >
+      <li v-for="(level, index) in LEVELS" :key="'index-' + index">
+        <a
+          href="#"
+          :id="'level-' + level.toLowerCase()"
+          class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-amber"
+          :class="{ active: index == 0 }"
+          @click="changeDifficulty($event, level)"
+          >{{ level }}</a
+        >
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">

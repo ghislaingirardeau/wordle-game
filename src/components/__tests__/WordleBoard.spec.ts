@@ -153,6 +153,12 @@ describe("WordleBoard", () => {
       expect(console.warn).not.toHaveBeenCalled();
     });
   });
+  describe("Set options", () => {
+    test("Option to change the difficulty of the game on click", async () => {
+      await wrapper.find(".tabs_container #level-medium").trigger("click");
+      expect(END_GAME_ATTEMPT).toBe(8);
+    });
+  });
   describe("player input", () => {
     test("Input has to be always focus", async () => {
       document.body.innerHTML = "<div id='app'></div>";

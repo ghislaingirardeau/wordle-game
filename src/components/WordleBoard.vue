@@ -48,10 +48,10 @@ function startNewGame(event: Event) {
 
 <template>
   <div
-    class="flex flex-col lg:flex-row lg:flex-wrap justify-start items-center min-h-screen font-Kalam mx-3"
+    class="flex flex-col lg:flex-wrap justify-start items-center min-h-screen lg:h-screen font-Kalam mx-3"
   >
     <header
-      class="flex flex-col justify-start w-full min-h-[15vh] lg:min-h-[75vh] lg:w-[30%]"
+      class="flex flex-col justify-start w-full min-h-[15vh] lg:h-[90vh] lg:w-[30%] border-solid border-amber lg:border-r-2"
     >
       <h1 class="text-4xl text-center text-amber font-PermanentMarker my-2">
         Wordle Game
@@ -81,10 +81,10 @@ function startNewGame(event: Event) {
       :disabledInput="isGameOver"
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
-      class="min-h-[75vh] md:w-[70%] xl:w-[50%] flex flex-col justify-around w-full lg:w-[70%] mt-3"
+      class="min-h-[75vh] md:w-[70%] lg:h-[100vh] flex flex-col lg:order-last justify-around w-full lg:w-[70%] mt-3"
     />
     <footer
-      class="min-h-[5vh] w-full lg:w-[30%] lg:min-h-[25vh] flex flex-col justify-start items-center border-solid border-amber border-t-2"
+      class="min-h-[5vh] lg:h-[10vh] w-full lg:w-[30%] flex flex-col justify-start items-center border-solid border-amber border-t-2 lg:border-r-2"
     >
       <div v-if="isGameOver">
         <h2

@@ -84,7 +84,7 @@ function onSubmit(event: Event) {
     };
     /* MODAL INFO*/
     let messageToDisplay = "";
-    formattedGuessInProcess.value.length !== 5
+    formattedGuessInProcess.value.length !== Number(`${WORD_SIZE}`)
       ? (messageToDisplay = `This word must contain ${WORD_SIZE} letters`)
       : (messageToDisplay = "This word does not exist in the list");
     showModalInfo("Error", messageToDisplay);

@@ -4,7 +4,7 @@
     :class="isCurrentWord ? props.classesStyling : ''"
   >
     <li
-      v-for="numberLetter in 5"
+      v-for="numberLetter in Number(`${WORD_SIZE}`)"
       :key="`${numberLetter}`"
       class="flex justify-center items-center w-12 h-20 mx-2 p-2 text-md border-solid border-2 border-amber rounded-lg bg-marine text-marine text-4xl"
       :class="{
@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { WORD_SIZE } from "@/settings";
 
 const props = defineProps({
   wordToDisplay: {

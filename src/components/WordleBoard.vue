@@ -17,7 +17,7 @@ const props = defineProps({
     required: true,
     // methode sur la props pour vérifier que celle-ci aura bien une longueur de 5
     validator: (wordGiven: string) =>
-      wordGiven.length === 5 &&
+      wordGiven.length === Number(`${WORD_SIZE}`) &&
       wordGiven === wordGiven.toUpperCase() &&
       englishWord.includes(wordGiven),
   },

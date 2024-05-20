@@ -2,13 +2,17 @@
   <div class="tabs_container">
     <ul
       ref="tabs"
-      class="flex flex-wrap text-sm font-medium text-center text-marine"
+      class="flex justify-between text-sm font-medium text-center text-marine"
     >
-      <li v-for="(level, index) in LEVELS" :key="'index-' + index">
+      <li
+        v-for="(level, index) in LEVELS"
+        :key="'index-' + index"
+        class="w-1/4 rounded hover:text-gray-600 hover:bg-amber"
+      >
         <a
           href="#"
           :id="'level-' + level.toLowerCase()"
-          class="inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-amber"
+          class="inline-block p-4"
           :class="{ active: index == 0 }"
           @click="changeDifficulty($event, level)"
           >{{ level }}</a
@@ -20,7 +24,7 @@
 
 <script setup lang="ts">
 import { ref, type Ref } from "vue";
-import { LEVELS, SET_DIFFICULTY} from "@/settings";
+import { LEVELS, SET_DIFFICULTY } from "@/settings";
 
 const tabs = ref<HTMLElement>();
 

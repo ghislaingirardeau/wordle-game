@@ -104,7 +104,7 @@ describe("WordleBoard", () => {
   describe("Restart the game", () => {
     beforeEach(async () => {
       await playerSubmitAndTypeGuess(wordOfTheDay);
-      await wrapper.find("button[type=reset]").trigger("click");
+      await wrapper.find("button[name=reset]").trigger("click");
     });
     test("When click on button play again, all the message disappear", async () => {
       expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);

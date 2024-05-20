@@ -97,7 +97,7 @@ function startNewGame(event: Event) {
       :disabledInput="isGameOver"
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
-      class="min-h-[75vh] md:w-[70%] lg:h-[100vh] flex flex-col lg:order-last justify-around w-full lg:w-[70%] mt-3"
+      class="min-h-[75vh] md:w-[70%] lg:h-[100vh] flex flex-col lg:order-last justify-around w-full lg:w-[70%] my-3"
     />
     <footer
       class="min-h-[5vh] lg:h-[10vh] w-full lg:w-[30%] flex flex-col justify-start items-center border-solid border-amber border-t-2 lg:border-r-2"

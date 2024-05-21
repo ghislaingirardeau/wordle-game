@@ -45,6 +45,13 @@ function startNewGame(event: Event) {
   guessSubmited.value = [];
   emit("restart-game");
 }
+
+// display / hide options menu
+const isOptionsMenu = ref(false);
+function showOptionsMenu() {
+  isOptionsMenu.value = !isOptionsMenu.value;
+}
+//----------------------------
 </script>
 
 <template>
@@ -77,8 +84,24 @@ function startNewGame(event: Event) {
           </div>
         </div>
         <div class="actions_block w-full my-3">
-          <h2 class="text-xl underline text-marine">Options</h2>
-          <DifficultyTab />
+          <h2 class="text-xl underline text-marine inline-block mr-3">
+            Options
+          </h2>
+          <svg
+            @click="showOptionsMenu"
+            class="h-8 w-8 text-marine inline-block mb-1 cursor-pointer"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+          <DifficultyTab v-if="isOptionsMenu" />
         </div>
         <div v-if="isGameOver" class="result_block w-full">
           <h2

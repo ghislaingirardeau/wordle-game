@@ -101,7 +101,7 @@ function showOptionsMenu() {
               d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <DifficultyTab v-if="isOptionsMenu" />
+          <DifficultyTab :isOptionsMenu="isOptionsMenu" />
         </div>
         <div v-if="isGameOver" class="result_block w-full">
           <h2

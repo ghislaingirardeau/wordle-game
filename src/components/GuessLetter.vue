@@ -9,8 +9,8 @@
       class="flex justify-center items-center w-12 h-20 mx-2 p-2 text-md border-solid border-2 border-amber rounded-lg bg-marine text-marine text-4xl"
       :class="{
         active: isCurrentWord,
-        flip: shouldReveal,
         current: isCurrentLetter(numberLetter),
+        [`flip-delay-${numberLetter}`]: shouldReveal,
       }"
       :data-letter="wordToDisplay[numberLetter - 1]"
       :data-letter-feedback="
@@ -54,6 +54,11 @@ const props = defineProps({
 });
 
 const isCurrentWord = computed(() => {
+  // Si le mot a été trouvé la prochaine ligne reste comme elle est
+  if (props.guessSubmited.find((word) => word === props.wordOfTheDay)) {
+    return false;
+  }
+
   // si je suis sur la ligne du mot à taper
   // renverra la classe active
   return props.guessAttempt - 1 === props.guessSubmited.length;
@@ -73,6 +78,10 @@ const shouldReveal = computed(() => {
  * @param {number} index
  */
 function isCurrentLetter(index: number) {
+  // Si le mot a été trouvé la prochaine ligne reste comme elle est
+  if (props.guessSubmited.find((word) => word === props.wordOfTheDay)) {
+    return false;
+  }
   // Si je suis sur la ligne à taper => props.guessAttempt - 1 === props.guessSubmited.length
   // et que je suis sur la case de la lettre à taper => props.wordToDisplay.length + 1 === index
   if (
@@ -142,18 +151,30 @@ li[data-letter-feedback="incorrect"] {
   background-color: theme("colors.amber");
 }
 
-li[data-letter].flip {
-  animation: vertical-rotation 0.4s ease;
+li[data-letter].flip-delay-1 {
+  transform: rotateY(360deg);
+  transition: 0.5s;
+  transition-delay: 0s;
 }
-@keyframes vertical-rotation {
-  0% {
-    opacity: 0;
-    transform: rotateY(0deg);
-  }
-  100% {
-    opacity: 1;
-    transform: rotateY(360deg);
-  }
+li[data-letter].flip-delay-2 {
+  transform: rotateY(360deg);
+  transition: 0.5s;
+  transition-delay: 0.2s;
+}
+li[data-letter].flip-delay-3 {
+  transform: rotateY(360deg);
+  transition: 0.5s;
+  transition-delay: 0.4s;
+}
+li[data-letter].flip-delay-4 {
+  transform: rotateY(360deg);
+  transition: 0.5s;
+  transition-delay: 0.6s;
+}
+li[data-letter].flip-delay-5 {
+  transform: rotateY(360deg);
+  transition: 0.5s;
+  transition-delay: 0.8s;
 }
 
 li[data-letter] {

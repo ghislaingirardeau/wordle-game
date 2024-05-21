@@ -1,6 +1,6 @@
 <template>
   <Transition>
-    <div v-if="isOptionsMenu" class="tabs_container">
+    <div class="tabs_container">
       <ul
         ref="tabs"
         class="flex justify-between text-sm font-medium text-center text-marine"
@@ -29,12 +29,6 @@ import { ref, type Ref } from "vue";
 import { LEVELS, SET_DIFFICULTY } from "@/settings";
 
 const tabs = ref<HTMLElement>();
-
-const props = defineProps({
-  isOptionsMenu: {
-    type: Boolean,
-  },
-});
 
 function changeDifficulty(event: Event, level: string) {
   // remove class active for all

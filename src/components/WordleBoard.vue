@@ -10,7 +10,7 @@ import { computed, onMounted, ref } from "vue";
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
-import DifficultyTab from "@/components/DifficultyTab.vue";
+import Difficulty from "@/components/Difficulty.vue";
 
 const props = defineProps({
   wordOfTheDay: {
@@ -47,9 +47,19 @@ function startNewGame(event: Event) {
 }
 
 // display / hide options menu
-const isOptionsMenu = ref(false);
-function showOptionsMenu() {
-  isOptionsMenu.value = !isOptionsMenu.value;
+const isOptionsShow = ref(false);
+const isRulesShow = ref(false);
+function toggleContentToShow(content: string) {
+  if (content === "rules") {
+    isRulesShow.value = !isRulesShow.value;
+    isOptionsShow.value = false;
+    return;
+  }
+  if (content === "options") {
+    isRulesShow.value = false;
+    isOptionsShow.value = !isOptionsShow.value;
+    return;
+  }
 }
 //----------------------------
 </script>
@@ -66,11 +76,33 @@ function showOptionsMenu() {
       </h1>
 
       <div
-        class="flex flex-col justify-start lg:h-[100%] items-center border-solid border-amber border-t-2 border-b-2 lg:border-b-0 py-3 md:text-center lg:text-left"
+        class="flex flex-col justify-start lg:h-[100%] items-center border-solid border-amber border-t-2 border-b-2 lg:border-b-0 md:text-center lg:text-left"
       >
-        <div class="rules_block">
-          <h2 class="text-xl underline text-marine">Rules of the game</h2>
-          <div class="text-xs italic text-marine">
+        <div class="actions_block w-full flex justify-around my-3">
+          <h2
+            @click="toggleContentToShow('rules')"
+            class="text-xl underline text-marine"
+            data-type="rules"
+          >
+            Rules
+          </h2>
+          <h2
+            @click="toggleContentToShow('options')"
+            class="text-xl underline text-marine inline-block mr-3"
+            data-type="options"
+          >
+            Options
+          </h2>
+        </div>
+        <div
+          v-if="isOptionsShow || isRulesShow"
+          class="content_block w-full my-3"
+        >
+          <Difficulty v-if="isOptionsShow" />
+          <div
+            v-if="isRulesShow"
+            class="text-xs italic text-marine rules-content"
+          >
             Try to find a {{ WORD_SIZE }} letter word in
             {{ END_GAME_ATTEMPT }} tries and Tap
             <code><small>'Enter'</small></code> to valid the word :
@@ -82,26 +114,6 @@ function showOptionsMenu() {
               <li>Letter in Green: The letter is correctly placed</li>
             </ul>
           </div>
-        </div>
-        <div class="actions_block w-full my-3">
-          <h2 class="text-xl underline text-marine inline-block mr-3">
-            Options
-          </h2>
-          <svg
-            @click="showOptionsMenu"
-            class="h-8 w-8 text-marine inline-block mb-1 cursor-pointer"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          <DifficultyTab :isOptionsMenu="isOptionsMenu" />
         </div>
         <div v-if="isGameOver" class="result_block w-full">
           <h2

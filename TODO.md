@@ -11,5 +11,3 @@
 ## enrgistrer les scores
 
 ## avoir plusieurs niveau de difficultés
-
-## finir le responsive

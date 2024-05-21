@@ -13,7 +13,7 @@
           href="#"
           :id="'level-' + level.toLowerCase()"
           class="inline-block p-4"
-          :class="{ active: index == 0 }"
+          :class="{ active: index == 1 }"
           @click="changeDifficulty($event, level)"
           >{{ level }}</a
         >

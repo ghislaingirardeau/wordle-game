@@ -96,13 +96,16 @@ function toggleContentToShow(content: string) {
             Options
           </h2>
         </div>
-        <div
-          v-if="isOptionsShow || isRulesShow"
-          class="content_block w-full my-3"
-        >
-          <Difficulty v-if="isOptionsShow" />
-          <Rules v-if="isRulesShow" />
+
+        <div class="content_block w-full">
+          <Transition>
+            <Difficulty v-if="isOptionsShow" />
+          </Transition>
+          <Transition>
+            <Rules v-if="isRulesShow" />
+          </Transition>
         </div>
+
         <div v-if="isGameOver" class="result_block w-full">
           <h2
             v-text="
@@ -142,4 +145,17 @@ function toggleContentToShow(content: string) {
   </div>
 </template>
 
-<style scoped lang="css"></style>
+<style scoped lang="css">
+.v-enter-active,
+.v-leave-active {
+  transition: all 0.5s ease;
+  height: 68px;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+  transform: scale(0);
+  height: 0px;
+}
+</style>

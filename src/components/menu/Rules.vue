@@ -13,4 +13,8 @@
 import { END_GAME_ATTEMPT, WORD_SIZE } from "@/settings";
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+.rules-content {
+  height: 68px;
+}
+</style>

@@ -10,7 +10,9 @@ import { computed, onMounted, ref } from "vue";
 import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
-import Difficulty from "@/components/Difficulty.vue";
+import Difficulty from "@/components/menu/Difficulty.vue";
+// @ts-ignore: Unreachable code error
+import Rules from "@/components/menu/Rules.vue";
 
 const props = defineProps({
   wordOfTheDay: {
@@ -81,14 +83,14 @@ function toggleContentToShow(content: string) {
         <div class="actions_block w-full flex justify-around my-3">
           <h2
             @click="toggleContentToShow('rules')"
-            class="text-xl underline text-marine"
+            class="text-xl underline text-marine cursor-pointer"
             data-type="rules"
           >
             Rules
           </h2>
           <h2
             @click="toggleContentToShow('options')"
-            class="text-xl underline text-marine inline-block mr-3"
+            class="text-xl underline text-marine inline-block cursor-pointer"
             data-type="options"
           >
             Options
@@ -99,21 +101,7 @@ function toggleContentToShow(content: string) {
           class="content_block w-full my-3"
         >
           <Difficulty v-if="isOptionsShow" />
-          <div
-            v-if="isRulesShow"
-            class="text-xs italic text-marine rules-content"
-          >
-            Try to find a {{ WORD_SIZE }} letter word in
-            {{ END_GAME_ATTEMPT }} tries and Tap
-            <code><small>'Enter'</small></code> to valid the word :
-            <ul class="list-disc list-inside">
-              <li>
-                Letter in Yellow: the letter is correct but at the wrong
-                position
-              </li>
-              <li>Letter in Green: The letter is correctly placed</li>
-            </ul>
-          </div>
+          <Rules v-if="isRulesShow" />
         </div>
         <div v-if="isGameOver" class="result_block w-full">
           <h2

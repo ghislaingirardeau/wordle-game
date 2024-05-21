@@ -70,7 +70,7 @@ const formattedGuessInProcess = computed<string>({
       // retire le nombre du v-model
       guessInProcess.value = rawValue.slice(0, -1);
       // met à jour la valeur de l'input
-      input.value.value = guessInProcess.value;
+      input.value ? (input.value.value = guessInProcess.value) : "";
     }
   },
 });
@@ -111,7 +111,7 @@ function reFocusOnBlur(event: Event) {
 function wordToDisplayInLetter(guessAttempt: number): string {
   // si tu as un mot dans le tatbleau qui correspond à la tentative précédente, tu renvoie ce mot
   if (props.guessSubmited[guessAttempt - 1]) {
-    return props.guessSubmited[guessAttempt - 1];
+    return props.guessSubmited[guessAttempt - 1] as string;
   }
   // si tu as 2 mots dans le tableau (donc 2 tentatives), donc que le prochain est égale à la tentative en cours
   // tu renvoie le mot en cours de formatage

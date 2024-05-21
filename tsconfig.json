@@ -15,6 +15,9 @@
     "noImplicitAny": false,
     "strict": false,
     "allowJs": true,
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
-  
 }

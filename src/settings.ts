@@ -8,11 +8,15 @@ export const WORD_SIZE: number = 5;
 // On pourra alors changer sa valeur, mais aussi "watch" les changements dans un autre component
 export const END_GAME_ATTEMPT = ref<number>(6);
 //--------------------------------
-export const LEVELS: string[] = ["Easy", "Medium", "Difficult"];
+export const LEVELS: levels[] = [
+  { type: "Easy", attempt: 8 },
+  { type: "Medium", attempt: 6 },
+  { type: "Difficult", attempt: 4 },
+];
 
 // Pour le component difficultyTabs
-export function SET_DIFFICULTY(type: string) {
-  switch (type) {
+export function SET_DIFFICULTY(level: string) {
+  switch (level) {
     case "Easy":
       END_GAME_ATTEMPT.value = 8;
       break;
@@ -23,4 +27,9 @@ export function SET_DIFFICULTY(type: string) {
       END_GAME_ATTEMPT.value = 4;
       break;
   }
+}
+
+interface levels {
+  type: string;
+  attempt: number;
 }

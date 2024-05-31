@@ -1,3 +1,36 @@
+
+
+<template>
+  <div>
+    <GuessLetter
+      v-for="guessAttempt in END_GAME_ATTEMPT"
+      :key="`${guessAttempt}`"
+      :wordToDisplay="wordToDisplayInLetter(guessAttempt)"
+      :guessSubmited="props.guessSubmited"
+      :guessAttempt="guessAttempt"
+      :wordOfTheDay="wordOfTheDay"
+      :classesStyling="classesStyling"
+    />
+    <!-- input to contain user type -->
+    <input
+      ref="input"
+      id="input-user"
+      type="text"
+      autofocus
+      v-model="formattedGuessInProcess"
+      :maxlength="WORD_SIZE"
+      @keydown.enter="onSubmit"
+      :disabled="props.disabledInput"
+      @focusout="reFocusOnBlur"
+    />
+    <!-- Modal to display info -->
+    <dialog-info ref="dialogElement">
+      <template v-slot:title> {{ modalInfo.title }} </template>
+      <template v-slot:message> {{ modalInfo.message }} </template>
+    </dialog-info>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { WORD_SIZE, END_GAME_ATTEMPT } from "@/settings";
 import { computed, onMounted, reactive, ref, type Ref } from "vue";
@@ -137,37 +170,6 @@ onMounted(() => {
   input.value?.focus();
 });
 </script>
-
-<template>
-  <div>
-    <GuessLetter
-      v-for="guessAttempt in END_GAME_ATTEMPT"
-      :key="`${guessAttempt}`"
-      :wordToDisplay="wordToDisplayInLetter(guessAttempt)"
-      :guessSubmited="props.guessSubmited"
-      :guessAttempt="guessAttempt"
-      :wordOfTheDay="wordOfTheDay"
-      :classesStyling="classesStyling"
-    />
-    <!-- input to contain user type -->
-    <input
-      ref="input"
-      id="input-user"
-      type="text"
-      autofocus
-      v-model="formattedGuessInProcess"
-      :maxlength="WORD_SIZE"
-      @keydown.enter="onSubmit"
-      :disabled="props.disabledInput"
-      @focusout="reFocusOnBlur"
-    />
-    <!-- Modal to display info -->
-    <dialog-info ref="dialogElement">
-      <template v-slot:title> {{ modalInfo.title }} </template>
-      <template v-slot:message> {{ modalInfo.message }} </template>
-    </dialog-info>
-  </div>
-</template>
 
 <style scoped lang="css">
 #input-user {

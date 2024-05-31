@@ -1,3 +1,11 @@
+<template>
+  <wordle-board
+    :key="numberOfGamePlayed"
+    :wordOfTheDay="randomWord"
+    @restart-game="numberOfGamePlayed++"
+  />
+</template>
+
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import WordleBoard from "./components/WordleBoard.vue";
@@ -20,14 +28,6 @@ const randomWord = computed<string>(() => {
   return random;
 });
 </script>
-
-<template>
-  <wordle-board
-    :key="numberOfGamePlayed"
-    :wordOfTheDay="randomWord"
-    @restart-game="numberOfGamePlayed++"
-  />
-</template>
 
 <style>
 body {

@@ -1,5 +1,3 @@
-
-
 <template>
   <div>
     <GuessLetter
@@ -24,7 +22,7 @@
       @focusout="reFocusOnBlur"
     />
     <!-- Modal to display info -->
-    <dialog-info ref="dialogElement">
+    <dialog-info ref="dialogComponent">
       <template v-slot:title> {{ modalInfo.title }} </template>
       <template v-slot:message> {{ modalInfo.message }} </template>
     </dialog-info>
@@ -67,7 +65,7 @@ const modalInfo = reactive({
 });
 
 // defini une ref sur un component
-const dialogElement = ref<InstanceType<typeof DialogInfo>>();
+const dialogComponent = ref<InstanceType<typeof DialogInfo>>();
 
 //* Pour passer une donnée à notre parent, lui dire que le joueur à valider son mot avec ENTER
 // define the event
@@ -88,6 +86,15 @@ const formattedGuessInProcess = computed<string>({
     return guessInProcess.value ?? "";
   },
   set(rawValue: string) {
+    // FERME LA MODALE SI CELLE-CI EST OUVERTE LORSQUE USER TAPE UNE NOUVELLE LETTRE
+    let isModalOpenOnType =
+      !dialogComponent?.value?.dialogElement?.classList.contains("hidden");
+    if (isModalOpenOnType) {
+      !dialogComponent?.value?.dialogElement?.classList.add("hidden");
+    }
+    //------------------------------
+
+    // SI USER TAPE UNE LETTRE, TOUT EST CORRECTE
     const regex = /\d+/;
     guessInProcess.value = null;
 
@@ -96,8 +103,9 @@ const formattedGuessInProcess = computed<string>({
     // format la valeur pour qu'elle soit de longueur 5, en maj et sans digit
     guessInProcess.value = rawValue.slice(0, WORD_SIZE).toUpperCase();
     /* .replace(/[^A-Z]+/gi, ""); */
+    // ------------------------------------
 
-    // si il y a un nombre
+    // SI USER TAPE UN NOMBRE, ENVOIE LA MODALE ERROR
     if (regex.test(rawValue)) {
       showModalInfo("Error", "Number is not permited");
       // retire le nombre du v-model
@@ -105,6 +113,7 @@ const formattedGuessInProcess = computed<string>({
       // met à jour la valeur de l'input
       input.value ? (input.value.value = guessInProcess.value) : "";
     }
+    //-------------------------------------------
   },
 });
 
@@ -112,10 +121,11 @@ const formattedGuessInProcess = computed<string>({
 function onSubmit(event: Event) {
   // Si le mot n'est pas anglais, tu return, donc cele ne fait rien
   if (!englishWord.includes(formattedGuessInProcess.value)) {
+    // ajoute le style shake
     classesStyling.value = {
       shake: true,
     };
-    /* MODAL INFO*/
+    // affiche la modale signalant l'erreur
     let messageToDisplay = "";
     formattedGuessInProcess.value.length !== Number(`${WORD_SIZE}`)
       ? (messageToDisplay = `This word must contain ${WORD_SIZE} letters`)
@@ -124,10 +134,11 @@ function onSubmit(event: Event) {
 
     return;
   }
+  // si le mot est correcte, ne fait pas l'animation shake
   classesStyling.value = {
     shake: false,
   };
-  // SINON je passe la valeur au component parent, qui va la stocker dans le tableau de guesses submited
+  // ET je passe la valeur au component parent, qui va la stocker dans le tableau de guesses submited
   emit("guess-submitted", formattedGuessInProcess.value);
   guessInProcess.value = null;
 }
@@ -161,7 +172,7 @@ function showModalInfo(title: string, message: string) {
   modalInfo.title = title;
   // execute la fonction dans le component child qui ouvre la modale
   // la fonction est accessible ici grace au defineExpose() dans le component child
-  dialogElement?.value?.toggleModal();
+  dialogComponent?.value?.toggleModal();
 }
 
 // pour refaire le focus sur l'input,

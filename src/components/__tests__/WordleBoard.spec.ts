@@ -109,18 +109,12 @@ describe("WordleBoard", () => {
     );
     // si utilisateur n'a rien tapé, je ne renvoie aucun de ces messages
     test("no end of game if the user has not make a guess yet", async () => {
-      // Assert - evalue
-      // expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
-      // expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
       const modal = wrapper.find("#info-modal-game");
       expect(modal.classes()).toContain("hidden");
-      // expect(modal.find("h2").text()).not.toContain(DEFEAT_MESSAGE);
-      // expect(modal.find("h2").text()).not.toContain(VICTORY_MESSAGE);
     });
     test("A button is displayed at the end of the game to ask if the user want to play again", async () => {
       const modal = wrapper.find("#info-modal-game");
       expect(modal.classes()).toContain("hidden");
-      // expect(wrapper.text()).not.toContain("Play again");
       await playerSubmitAndTypeGuess(wordOfTheDay);
       expect(modal.classes()).not.toContain("hidden");
       expect(modal.find("button[name=reset]").text()).toContain("Play again");
@@ -132,8 +126,6 @@ describe("WordleBoard", () => {
       await wrapper.find("button[name=reset]").trigger("click");
     });
     test("When click on button play again, all the message disappear", async () => {
-      // expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
-      // expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
       const modal = wrapper.find("#info-modal-game");
       expect(modal.classes()).toContain("hidden");
       expect(modal.find("h2").text()).not.toContain(VICTORY_MESSAGE);
@@ -248,9 +240,6 @@ describe("WordleBoard", () => {
     });
     test("player guesses can only be submited if they are real words", async () => {
       await playerSubmitAndTypeGuess("QWERT");
-
-      // expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
-      // expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
       // test vérifie que la modal s'affiche bien lors d'une erreur
       openModalInformation(
         "This word does not exist in the list",

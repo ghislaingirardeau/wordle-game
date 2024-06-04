@@ -62,25 +62,6 @@
             </button>
           </template>
         </dialog-info>
-
-        <!-- <div v-if="isGameOver" class="result_block w-full flex justify-center">
-          <h2
-            v-text="
-              guessSubmited.includes(wordOfTheDay)
-                ? VICTORY_MESSAGE
-                : `${DEFEAT_MESSAGE} The word to find was: '${wordOfTheDay}'`
-            "
-            class="text-xl underline text-marine mr-5"
-          ></h2>
-          <button
-            name="reset"
-            type="button"
-            class="text-marine bg-amber hover:bg-amber focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
-            @click="startNewGame"
-          >
-            Play again
-          </button>
-        </div> -->
       </div>
     </header>
 

@@ -38,7 +38,32 @@
           </Transition>
         </div>
 
-        <div v-if="isGameOver" class="result_block w-full flex justify-center">
+        <!-- Modal to display info -->
+        <dialog-info
+          ref="dialogComponent"
+          :isGameOver="isGameOver"
+          idName="game"
+        >
+          <template v-slot:title> Result of the game </template>
+          <template v-slot:message>
+            <h2 v-if="guessSubmited.includes(wordOfTheDay)">
+              {{ VICTORY_MESSAGE }}
+            </h2>
+            <h2 v-else>
+              {{ DEFEAT_MESSAGE }} The word to find was: {{ wordOfTheDay }}
+            </h2>
+            <button
+              name="reset"
+              type="button"
+              class="text-marine bg-amber hover:bg-amber focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
+              @click="startNewGame"
+            >
+              Play again
+            </button>
+          </template>
+        </dialog-info>
+
+        <!-- <div v-if="isGameOver" class="result_block w-full flex justify-center">
           <h2
             v-text="
               guessSubmited.includes(wordOfTheDay)
@@ -55,7 +80,7 @@
           >
             Play again
           </button>
-        </div>
+        </div> -->
       </div>
     </header>
 
@@ -90,6 +115,7 @@ import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
 import Difficulty from "@/components/menu/Difficulty.vue";
+import DialogInfo from "./DialogInfo.vue";
 // @ts-ignore: Unreachable code error
 import Rules from "@/components/menu/Rules.vue";
 

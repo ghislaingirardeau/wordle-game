@@ -2,7 +2,7 @@
   <div>
     <!-- Main modal -->
     <div
-      id="info-modal"
+      :id="'info-modal-' + idName"
       ref="dialogElement"
       tabindex="-1"
       aria-hidden="true"
@@ -22,7 +22,7 @@
               ref="crossCloseModal"
               type="button"
               class="text-amber bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-              data-modal-hide="info-modal"
+              :id="'info-modal-' + idName"
               @click="toggleModal"
             >
               <svg
@@ -45,9 +45,9 @@
           </div>
           <!-- Modal body -->
           <div class="p-4 md:p-5 space-y-4">
-            <p class="text-white leading-relaxed">
+            <div class="text-white leading-relaxed">
               <slot name="message"></slot>
-            </p>
+            </div>
           </div>
         </div>
       </div>
@@ -56,9 +56,21 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref } from "vue";
+import { ref, type Ref, watch } from "vue";
 
 const dialogElement = ref<HTMLElement>();
+const props = defineProps({
+  isGameOver: Boolean,
+  idName: String,
+});
+
+watch(
+  () => props.isGameOver,
+  (a, b) => {
+    console.log(a, b);
+    toggleModal();
+  }
+);
 
 function toggleModal(): void {
   const element = dialogElement.value as HTMLElement;

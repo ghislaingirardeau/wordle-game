@@ -22,9 +22,11 @@
       @focusout="reFocusOnBlur"
     />
     <!-- Modal to display info -->
-    <dialog-info ref="dialogComponent">
+    <dialog-info ref="dialogComponent" idName="error">
       <template v-slot:title> {{ modalInfo.title }} </template>
-      <template v-slot:message> {{ modalInfo.message }} </template>
+      <template v-slot:message>
+        <p>{{ modalInfo.message }}</p>
+      </template>
     </dialog-info>
   </div>
 </template>

@@ -72,7 +72,7 @@ describe("WordleBoard", () => {
       await playerSubmitAndTypeGuess(wordOfTheDay);
       setTimeout(() => {
         openModalInformation(VICTORY_MESSAGE, "h2", "game");
-      }, 1000);
+      }, 1300);
     });
 
     describe.each([
@@ -99,7 +99,7 @@ describe("WordleBoard", () => {
                 "h2",
                 "game"
               );
-            }, 1000);
+            }, 1300);
 
             // expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
           } else {
@@ -122,7 +122,7 @@ describe("WordleBoard", () => {
       setTimeout(() => {
         expect(modal.classes()).not.toContain("hidden");
         expect(modal.find("button[name=reset]").text()).toContain("Play again");
-      }, 1000);
+      }, 1300);
     });
   });
   describe("Restart the game", () => {

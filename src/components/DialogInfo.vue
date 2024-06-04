@@ -6,7 +6,7 @@
       ref="dialogElement"
       tabindex="-1"
       aria-hidden="true"
-      class="hidden overflow-y-auto overflow-x-hidden fixed top-1/3 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      class="modal hidden overflow-y-auto overflow-x-hidden fixed top-1/3 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
     >
       <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
@@ -86,4 +86,24 @@ defineExpose({
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped>
+/*  0. BEFORE-OPEN STATE   */
+/* Before it's display */
+@starting-style {
+  .modal {
+    opacity: 0;
+  }
+}
+/*  1. IS-OPEN STATE   */
+/* The state at which the element is open + transition logic */
+.modal {
+  transition: opacity 0.3s, display 0.3s allow-discrete;
+  /* allow-discrete execute l'animation avant que l'élément disparaisse du DOM */
+}
+/*  2. EXITING STATE   */
+/* style when it leave */
+.hidden {
+  opacity: 0;
+  /* display none est deja appliqué par tailwind */
+}
+</style>

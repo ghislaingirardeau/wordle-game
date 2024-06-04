@@ -41,10 +41,20 @@ describe("WordleBoard", () => {
     await playerPressingEnter();
   }
 
-  function openModalInformation(message: string): void {
-    const modal = wrapper.find("#info-modal");
+  /**
+   * 2 modals inside the game, one to show end game info, one to show error game info
+   * @param message
+   * @param tagElement
+   * @param modalType
+   */
+  function openModalInformation(
+    message: string,
+    tagElement: string = "p",
+    modalType: string
+  ): void {
+    const modal = wrapper.find(`#info-modal-${modalType}`);
     expect(modal.classes()).not.toContain("hidden");
-    expect(modal.find("p").text()).toBe(message);
+    expect(modal.find(tagElement).text()).toBe(message);
   }
 
   //----------------------------------
@@ -61,7 +71,8 @@ describe("WordleBoard", () => {
     test("A victory message when user type the right word", async () => {
       await playerSubmitAndTypeGuess(wordOfTheDay);
       // Assert - evalue
-      expect(wrapper.text()).toContain(VICTORY_MESSAGE);
+      // expect(wrapper.text()).toContain(VICTORY_MESSAGE);
+      openModalInformation(VICTORY_MESSAGE, "h2", "game");
     });
 
     describe.each([
@@ -73,7 +84,7 @@ describe("WordleBoard", () => {
       { numberOfGuess: 5, shouldSeeDefeatMessage: false },
       { numberOfGuess: END_GAME_ATTEMPT.value, shouldSeeDefeatMessage: true },
     ])(
-      "A defeat message should appear if user make 6 worng attempts",
+      "A defeat message should appear if user make 6 wrong attempts",
       async ({ numberOfGuess, shouldSeeDefeatMessage }) => {
         test(`Therefore each guess ${numberOfGuess}, defeat message shoud ${
           shouldSeeDefeatMessage ? "" : "not"
@@ -82,9 +93,16 @@ describe("WordleBoard", () => {
             await playerSubmitAndTypeGuess("WRONG");
           }
           if (shouldSeeDefeatMessage) {
-            expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
+            openModalInformation(
+              DEFEAT_MESSAGE + " The word to find was: " + wordOfTheDay,
+              "h2",
+              "game"
+            );
+            // expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
           } else {
-            expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+            // expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+            const modal = wrapper.find("#info-modal-game");
+            expect(modal.classes()).toContain("hidden");
           }
         });
       }
@@ -92,13 +110,20 @@ describe("WordleBoard", () => {
     // si utilisateur n'a rien tapé, je ne renvoie aucun de ces messages
     test("no end of game if the user has not make a guess yet", async () => {
       // Assert - evalue
-      expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
-      expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+      // expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+      // expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+      const modal = wrapper.find("#info-modal-game");
+      expect(modal.classes()).toContain("hidden");
+      // expect(modal.find("h2").text()).not.toContain(DEFEAT_MESSAGE);
+      // expect(modal.find("h2").text()).not.toContain(VICTORY_MESSAGE);
     });
     test("A button is displayed at the end of the game to ask if the user want to play again", async () => {
-      expect(wrapper.text()).not.toContain("Play again");
+      const modal = wrapper.find("#info-modal-game");
+      expect(modal.classes()).toContain("hidden");
+      // expect(wrapper.text()).not.toContain("Play again");
       await playerSubmitAndTypeGuess(wordOfTheDay);
-      expect(wrapper.text()).toContain("Play again");
+      expect(modal.classes()).not.toContain("hidden");
+      expect(modal.find("button[name=reset]").text()).toContain("Play again");
     });
   });
   describe("Restart the game", () => {
@@ -107,8 +132,11 @@ describe("WordleBoard", () => {
       await wrapper.find("button[name=reset]").trigger("click");
     });
     test("When click on button play again, all the message disappear", async () => {
-      expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
-      expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+      // expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+      // expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+      const modal = wrapper.find("#info-modal-game");
+      expect(modal.classes()).toContain("hidden");
+      expect(modal.find("h2").text()).not.toContain(VICTORY_MESSAGE);
       /* expect(
         wrapper.find("input[type=text]").attributes("focus")
       ).not.toBeUndefined(); */
@@ -221,10 +249,14 @@ describe("WordleBoard", () => {
     test("player guesses can only be submited if they are real words", async () => {
       await playerSubmitAndTypeGuess("QWERT");
 
-      expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
-      expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
+      // expect(wrapper.text()).not.toContain(VICTORY_MESSAGE);
+      // expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
       // test vérifie que la modal s'affiche bien lors d'une erreur
-      openModalInformation("This word does not exist in the list");
+      openModalInformation(
+        "This word does not exist in the list",
+        "p",
+        "error"
+      );
     });
     test("player guesses are not case-sensitive", async () => {
       await playerSubmitAndTypeGuess(wordOfTheDay.toLowerCase());
@@ -237,7 +269,7 @@ describe("WordleBoard", () => {
       expect(
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toEqual("HR");
-      openModalInformation("Number is not permited");
+      openModalInformation("Number is not permited", "p", "error");
     });
     test("player typing a new letter during error modal open should close modal", async () => {
       await playerTypesGuess("HR3");
@@ -245,9 +277,10 @@ describe("WordleBoard", () => {
       expect(
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toEqual("HR");
-      openModalInformation("Number is not permited");
+      openModalInformation("Number is not permited", "p", "error");
       await playerTypesGuess("H");
-      const modal = wrapper.find("#info-modal");
+      // la modale se ferme lorsque je tape une nouvelle lettre
+      const modal = wrapper.find("#info-modal-error");
       expect(modal.classes()).toContain("hidden");
     });
     /* test("do not show non letter characters when the user type", async () => {

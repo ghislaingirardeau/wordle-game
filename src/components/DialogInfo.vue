@@ -20,6 +20,7 @@
             </h3>
             <button
               ref="crossCloseModal"
+              v-if="idName !== 'game'"
               type="button"
               class="text-amber bg-transparent hover:bg-white hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               :id="'info-modal-' + idName"

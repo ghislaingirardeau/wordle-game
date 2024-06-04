@@ -15,6 +15,7 @@
       id="input-user"
       type="text"
       autofocus
+      autocomplete="off"
       v-model="formattedGuessInProcess"
       :maxlength="WORD_SIZE"
       @keydown.enter="onSubmit"

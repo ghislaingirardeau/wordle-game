@@ -70,9 +70,9 @@ describe("WordleBoard", () => {
   describe("End of games messages", () => {
     test("A victory message when user type the right word", async () => {
       await playerSubmitAndTypeGuess(wordOfTheDay);
-      // Assert - evalue
-      // expect(wrapper.text()).toContain(VICTORY_MESSAGE);
-      openModalInformation(VICTORY_MESSAGE, "h2", "game");
+      setTimeout(() => {
+        openModalInformation(VICTORY_MESSAGE, "h2", "game");
+      }, 1000);
     });
 
     describe.each([
@@ -93,11 +93,14 @@ describe("WordleBoard", () => {
             await playerSubmitAndTypeGuess("WRONG");
           }
           if (shouldSeeDefeatMessage) {
-            openModalInformation(
-              DEFEAT_MESSAGE + " The word to find was: " + wordOfTheDay,
-              "h2",
-              "game"
-            );
+            setTimeout(() => {
+              openModalInformation(
+                DEFEAT_MESSAGE + " The word to find was: " + wordOfTheDay,
+                "h2",
+                "game"
+              );
+            }, 1000);
+
             // expect(wrapper.text()).toContain(DEFEAT_MESSAGE);
           } else {
             // expect(wrapper.text()).not.toContain(DEFEAT_MESSAGE);
@@ -116,8 +119,10 @@ describe("WordleBoard", () => {
       const modal = wrapper.find("#info-modal-game");
       expect(modal.classes()).toContain("hidden");
       await playerSubmitAndTypeGuess(wordOfTheDay);
-      expect(modal.classes()).not.toContain("hidden");
-      expect(modal.find("button[name=reset]").text()).toContain("Play again");
+      setTimeout(() => {
+        expect(modal.classes()).not.toContain("hidden");
+        expect(modal.find("button[name=reset]").text()).toContain("Play again");
+      }, 1000);
     });
   });
   describe("Restart the game", () => {

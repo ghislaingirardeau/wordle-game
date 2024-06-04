@@ -67,8 +67,9 @@ const props = defineProps({
 watch(
   () => props.isGameOver,
   (a, b) => {
-    console.log(a, b);
-    toggleModal();
+    setTimeout(() => {
+      toggleModal();
+    }, 1300);
   }
 );
 

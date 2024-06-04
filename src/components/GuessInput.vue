@@ -187,9 +187,8 @@ onMounted(() => {
 <style scoped lang="css">
 #input-user {
   position: fixed;
-  top: 0px;
+  top: 50%;
   opacity: 0;
-  right: 0;
   cursor: default;
 }
 #input-user:focus-visible {

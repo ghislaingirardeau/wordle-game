@@ -1,5 +1,5 @@
 <template>
-  <div class="text-xs italic text-marine my-2 rules-content">
+  <div class="text-xs italic text-marine my-2 rules_container">
     Try to find a {{ WORD_SIZE }} letter word in {{ END_GAME_ATTEMPT }} tries
     and Tap <code><small>'Enter'</small></code> to valid the word :
     <ul class="list-disc list-inside">

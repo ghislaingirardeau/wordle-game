@@ -191,7 +191,9 @@ describe("WordleBoard", () => {
     });
     test("Option show rules content", async () => {
       await wrapper.find(".actions_block h2[data-type=rules]").trigger("click");
-      expect(wrapper.find(".rules-content").text()).toContain("Try to find a");
+      expect(wrapper.find(".rules_container").text()).toContain(
+        "Try to find a"
+      );
     });
   });
   describe("player input", () => {
@@ -276,6 +278,10 @@ describe("WordleBoard", () => {
       // la modale se ferme lorsque je tape une nouvelle lettre
       const modal = wrapper.find("#info-modal-error");
       expect(modal.classes()).toContain("hidden");
+    });
+    test("player typing incorrect word should display the incorrects letters", async () => {
+      await playerSubmitAndTypeGuess("TRAIN");
+      expect(wrapper.text()).toContain("RAIN");
     });
     /* test("do not show non letter characters when the user type", async () => {
       await playerSubmitAndTypeGuess("333");

@@ -71,6 +71,10 @@
       :wordOfTheDay="wordOfTheDay"
       class="flex flex-col lg:order-last justify-around my-3 min-h-[60vh] w-[90%] md:w-[60%] lg:h-[100vh] lg:w-[50%]"
     />
+    <Letters-incorrect
+      :guessSubmited="guessSubmited"
+      :wordOfTheDay="wordOfTheDay"
+    />
     <footer
       class="min-h-[5vh] lg:h-[10vh] w-full lg:w-[30%] flex flex-col justify-start items-center border-solid border-amber border-t-2 lg:border-r-2"
     >
@@ -94,6 +98,7 @@ import englishWord from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
 import Difficulty from "@/components/menu/Difficulty.vue";
+import LettersIncorrect from "@/components/lettersIncorrect.vue";
 import DialogInfo from "./DialogInfo.vue";
 // @ts-ignore: Unreachable code error
 import Rules from "@/components/menu/Rules.vue";

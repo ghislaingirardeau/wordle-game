@@ -34,8 +34,6 @@
             <Difficulty v-if="isOptionsShow" />
             <Rules v-else-if="isRulesShow" />
           </Transition>
-          <!-- <Transition>
-          </Transition> -->
         </div>
 
         <!-- Modal to display info -->

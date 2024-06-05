@@ -120,6 +120,8 @@ const formattedGuessInProcess = computed<string>({
   },
 });
 
+let scrollFromTop = 0;
+
 // quand le joueur appuie sur enter
 function onSubmit(event: Event) {
   // Si le mot n'est pas anglais, tu return, donc cele ne fait rien
@@ -144,6 +146,11 @@ function onSubmit(event: Event) {
   // ET je passe la valeur au component parent, qui va la stocker dans le tableau de guesses submited
   emit("guess-submitted", formattedGuessInProcess.value);
   guessInProcess.value = null;
+  scrollFromTop += 100;
+  window.scrollTo({
+    top: scrollFromTop,
+    behavior: "smooth",
+  });
 }
 
 function reFocusOnBlur(event: Event) {

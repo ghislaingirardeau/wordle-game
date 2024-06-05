@@ -128,6 +128,10 @@ function onSubmitGuess(guess: string) {
 }
 
 function startNewGame(event: Event) {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
   guessSubmited.value = [];
   emit("restart-game");
 }

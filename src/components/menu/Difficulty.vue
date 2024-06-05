@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs_container">
+  <div class="tabs_container my-2">
     <ul
       ref="tabs"
       class="flex justify-between text-sm font-medium text-center text-marine"
@@ -50,8 +50,5 @@ function changeDifficulty(event: Event, level: string) {
 <style lang="css" scoped>
 .active {
   background-color: theme("colors.amber");
-}
-.tabs_container {
-  height: 68px;
 }
 </style>

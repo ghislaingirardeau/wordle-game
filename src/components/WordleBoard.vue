@@ -30,12 +30,12 @@
         </div>
 
         <div class="content_block w-full">
-          <Transition>
+          <Transition mode="out-in">
             <Difficulty v-if="isOptionsShow" />
+            <Rules v-else-if="isRulesShow" />
           </Transition>
-          <Transition>
-            <Rules v-if="isRulesShow" />
-          </Transition>
+          <!-- <Transition>
+          </Transition> -->
         </div>
 
         <!-- Modal to display info -->
@@ -156,13 +156,13 @@ function toggleContentToShow(content: string) {
 .v-enter-active,
 .v-leave-active {
   transition: all 0.5s ease;
-  height: 68px;
+  max-height: 100px;
 }
 
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
   transform: scale(0);
-  height: 0px;
+  max-height: 0px;
 }
 </style>

@@ -281,7 +281,14 @@ describe("WordleBoard", () => {
     });
     test("player typing incorrect word should display the incorrects letters", async () => {
       await playerSubmitAndTypeGuess("TRAIN");
-      expect(wrapper.text()).toContain("RAIN");
+      const letterElement = (x: string) =>
+        wrapper.find(`.helper_block span[data-letter="${x}"]`);
+      expect(letterElement("a").classes()).toContain("bg-amber");
+      expect(letterElement("n").classes()).toContain("bg-amber");
+      expect(letterElement("r").classes()).toContain("bg-amber");
+      expect(letterElement("i").classes()).toContain("bg-amber");
+      // word of the day contain "t" so no bg amber
+      expect(letterElement("t").classes()).not.toContain("bg-amber");
     });
     /* test("do not show non letter characters when the user type", async () => {
       await playerSubmitAndTypeGuess("333");

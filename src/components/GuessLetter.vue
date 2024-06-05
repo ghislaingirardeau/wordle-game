@@ -6,7 +6,7 @@
     <li
       v-for="numberLetter in Number(`${WORD_SIZE}`)"
       :key="`${numberLetter}`"
-      class="flex justify-center items-center w-12 h-20 mx-2 p-2 text-md border-solid border-2 border-amber rounded-lg bg-marine text-marine text-4xl"
+      class="flex justify-center w-12 h-12 mx-2 p-2 text-md border-solid border-2 border-amber rounded-lg bg-marine text-marine text-4xl"
       :class="{
         active: isCurrentWord,
         current: isCurrentLetter(numberLetter),
@@ -121,7 +121,7 @@ function feedbackLetter(numberLetter: number, reveal: boolean) {
   align-items: center;
   justify-content: center;
   width: 1.6em;
-  height: 2.6em;
+  height: 1.6em;
   margin-inline: 0.4em;
   padding: 0.4em;
   border: 2px solid grey;

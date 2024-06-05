@@ -110,11 +110,20 @@ const formattedGuessInProcess = computed<string>({
 
     // SI USER TAPE UN NOMBRE, ENVOIE LA MODALE ERROR
     if (regex.test(rawValue)) {
+      // execute le shake pour l'animation
+      classesStyling.value = {
+        shake: true,
+      };
       showModalInfo("Error", "Number is not permited");
       // retire le nombre du v-model
       guessInProcess.value = rawValue.slice(0, -1);
       // met à jour la valeur de l'input
       input.value ? (input.value.value = guessInProcess.value) : "";
+      setTimeout(() => {
+        classesStyling.value = {
+          shake: false,
+        };
+      }, 500);
     }
     //-------------------------------------------
   },
@@ -136,6 +145,13 @@ function onSubmit(event: Event) {
       ? (messageToDisplay = `This word must contain ${WORD_SIZE} letters`)
       : (messageToDisplay = "This word does not exist in the list");
     showModalInfo("Error", messageToDisplay);
+
+    // le shake a false à la fin de l'animation
+    setTimeout(() => {
+      classesStyling.value = {
+        shake: false,
+      };
+    }, 500);
 
     return;
   }

@@ -1,18 +1,11 @@
 <template>
   <div class="helper_block w-full flex justify-center flex-wrap my-1">
-    <!-- <span
-      v-for="letter in incorrectLetters"
-      :key="letter"
-      class="flex justify-center text-sm w-4 mx-1 border-solid border-2 border-marine rounded-sm bg-amber text-marine"
-    >
-      {{ letter }}
-    </span> -->
     <span
       v-for="letter in allLetters"
       :key="letter"
       :data-letter="letter"
       class="flex justify-center text-sm w-4 m-1 border-solid border-2 border-marine rounded-sm text-marine"
-      :class="{ 'bg-amber': incorrect(letter) }"
+      :class="incorrect(letter)"
     >
       {{ letter }}
     </span>
@@ -57,7 +50,9 @@ const allLetters = ref([
 ]);
 
 function incorrect(letter: string) {
-  return incorrectLetters.value.includes(letter.toUpperCase()) ? true : false;
+  return incorrectLetters.value.includes(letter.toUpperCase())
+    ? { "bg-amber": true, transition: true }
+    : { "bg-amber": false, transition: false };
 }
 
 const incorrectLetters = computed(() => {

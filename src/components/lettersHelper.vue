@@ -9,7 +9,7 @@
         v-for="letter in rowOfLetter"
         :key="letter"
         :data-letter="letter"
-        class="flex justify-center text-sm w-6 p-1 m-1 border-solid border-2 border-marine rounded-sm text-marine"
+        class="flex justify-center text-lg w-8 p-1 m-1 border-solid border-2 border-marine rounded-sm text-marine"
         :class="dynamicStyles(letter)"
         @click="triggerKeyPress"
       >

@@ -21,6 +21,7 @@
       @keydown.enter="onSubmit"
       :disabled="props.disabledInput"
       @focusout="reFocusOnBlur"
+      @input="fromVirtualKeyboard"
     />
     <!-- Modal to display info -->
     <dialog-info ref="dialogComponent" idName="error">
@@ -175,6 +176,10 @@ function reFocusOnBlur(event: Event) {
   const input = event.target as HTMLInputElement;
   // je dois mettre un léger délai sinon ne s'éxécute pas
   setTimeout(() => input.focus());
+}
+
+function fromVirtualKeyboard(e: Event) {
+  return;
 }
 
 // C'est ici qu'est choisi le mot à dispatcher en lettre

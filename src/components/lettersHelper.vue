@@ -15,41 +15,13 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
+import { type keyEvent } from "@/types/interface";
+import { allLetters } from "@/settings";
 
 const props = defineProps({
   guessSubmited: Array,
   wordOfTheDay: String,
 });
-
-const allLetters = ref([
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-  "Ent",
-]);
 
 function dynamicStyles(letter: string) {
   let classesToAdd = {
@@ -64,24 +36,39 @@ function dynamicStyles(letter: string) {
     classesToAdd.transition = true;
   }
   // pour la touche "enter" du clavier virtuelle
-  if (letter === "Ent") {
+  if (letter === "Ent" || letter === "Eff") {
     classesToAdd["bg-[blue]"] = true;
     classesToAdd["px-4"] = true;
   }
   return classesToAdd;
 }
 
-function triggerKeyPress(e: Event) {
+function triggerKeyPress(event: Event) {
   // verifie que c'est la touch enter
-  if (e.target.textContent === "Ent") {
-    console.dir(document.querySelector("input"));
+  const keyboardElement = event.target as HTMLElement;
+  const GuessInputElement = document.querySelector("input") as HTMLInputElement;
+  if (keyboardElement.textContent === "Ent") {
     // créer l'event keydown, qui est déjà sur l'input dans GuessInput
-    const event = new Event("keydown");
-    // ajoute la propriété key à event, sinon elle n'existe pas, car c'est un click
-    event.key = "Enter";
-    // récupére l'input "guess", éxécute l'event "keydown" qui est mis grace à @keydown.enter
+    const eventKeyDown = new Event("keydown") as keyEvent;
+    // ajoute la propriété "key" à event, sinon elle n'existe pas, car l'event actuel est un click
+    eventKeyDown.key = "Enter";
+    // récupére l'input "guess" qui a été crée dans "GuessInput",
+    // éxécute l'event "keydown" qui est mis grace à @keydown.enter
     // comme la propriété key:"Enter" est présente dans l'event, @keydown.enter ne pose pas de probleme
-    document.querySelector("input")?.dispatchEvent(event);
+    GuessInputElement.dispatchEvent(eventKeyDown);
+    return;
+  }
+  if (keyboardElement.textContent === "Eff") {
+    GuessInputElement.value = GuessInputElement.value.slice(0, -1);
+    const changeInputValue = new Event("input") as Event;
+    GuessInputElement.dispatchEvent(changeInputValue);
+    return;
+  }
+  // vérifie que l'input n'a pas déja 5 lettres
+  if (GuessInputElement.value.length < 5) {
+    GuessInputElement.value += keyboardElement.dataset.letter?.toUpperCase();
+    const changeInputValue = new Event("input") as Event;
+    GuessInputElement.dispatchEvent(changeInputValue);
   }
 }
 

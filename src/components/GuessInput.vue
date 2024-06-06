@@ -91,11 +91,7 @@ const formattedGuessInProcess = computed<string>({
   },
   set(rawValue: string) {
     // FERME LA MODALE SI CELLE-CI EST OUVERTE LORSQUE USER TAPE UNE NOUVELLE LETTRE
-    let isModalOpenOnType =
-      !dialogComponent?.value?.dialogElement?.classList.contains("hidden");
-    if (isModalOpenOnType) {
-      !dialogComponent?.value?.dialogElement?.classList.add("hidden");
-    }
+    closeModalOnTypeIfOpen();
     //------------------------------
 
     // SI USER TAPE UNE LETTRE, TOUT EST CORRECTE
@@ -111,20 +107,11 @@ const formattedGuessInProcess = computed<string>({
 
     // SI USER TAPE UN NOMBRE, ENVOIE LA MODALE ERROR
     if (regex.test(rawValue)) {
-      // execute le shake pour l'animation
-      classesStyling.value = {
-        shake: true,
-      };
-      showModalInfo("Error", "Number is not permited");
+      wordIncorrectShowModalAndShake("Number is not permited");
       // retire le nombre du v-model
       guessInProcess.value = rawValue.slice(0, -1);
       // met à jour la valeur de l'input
       input.value ? (input.value.value = guessInProcess.value) : "";
-      setTimeout(() => {
-        classesStyling.value = {
-          shake: false,
-        };
-      }, 500);
     }
     //-------------------------------------------
   },
@@ -134,26 +121,9 @@ let scrollFromTop = 0;
 
 // quand le joueur appuie sur enter
 function onSubmit(event: Event) {
-  // Si le mot n'est pas anglais, tu return, donc cele ne fait rien
+  // Si le mot n'est pas anglais, tu return, affiche la modal avec l'erreur et execute l'animation
   if (!englishWord.includes(formattedGuessInProcess.value)) {
-    // ajoute le style shake
-    classesStyling.value = {
-      shake: true,
-    };
-    // affiche la modale signalant l'erreur
-    let messageToDisplay = "";
-    formattedGuessInProcess.value.length !== Number(`${WORD_SIZE}`)
-      ? (messageToDisplay = `This word must contain ${WORD_SIZE} letters`)
-      : (messageToDisplay = "This word does not exist in the list");
-    showModalInfo("Error", messageToDisplay);
-
-    // le shake a false à la fin de l'animation
-    setTimeout(() => {
-      classesStyling.value = {
-        shake: false,
-      };
-    }, 500);
-
+    wordIncorrectShowModalAndShake(null);
     return;
   }
   // si le mot est correcte, ne fait pas l'animation shake
@@ -168,6 +138,35 @@ function onSubmit(event: Event) {
     top: scrollFromTop,
     behavior: "smooth",
   });
+}
+
+function wordIncorrectShowModalAndShake(errorNumberType: string | null) {
+  // ajoute le style shake
+  classesStyling.value = {
+    shake: true,
+  };
+  // affiche la modale signalant l'erreur
+  let messageToDisplay = "";
+  formattedGuessInProcess.value.length !== Number(`${WORD_SIZE}`)
+    ? (messageToDisplay = `This word must contain ${WORD_SIZE} letters`)
+    : (messageToDisplay = "This word does not exist in the list");
+  errorNumberType ? (messageToDisplay = errorNumberType) : null;
+  showModalInfo("Error", messageToDisplay);
+
+  // le shake a false à la fin de l'animation
+  setTimeout(() => {
+    classesStyling.value = {
+      shake: false,
+    };
+  }, 500);
+}
+
+function closeModalOnTypeIfOpen() {
+  let isModalOpenOnType =
+    !dialogComponent?.value?.dialogElement?.classList.contains("hidden");
+  if (isModalOpenOnType) {
+    !dialogComponent?.value?.dialogElement?.classList.add("hidden");
+  }
 }
 
 function reFocusOnBlur(event: Event) {

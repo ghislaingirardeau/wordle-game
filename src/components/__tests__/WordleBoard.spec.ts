@@ -274,9 +274,11 @@ describe("WordleBoard", () => {
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toEqual("HR");
       openModalInformation("Number is not permited", "p", "error");
-      await playerTypesGuess("H");
       // la modale se ferme lorsque je tape une nouvelle lettre
+      await playerTypesGuess("H");
       const modal = wrapper.find("#info-modal-error");
+      // ou la modale se ferme lorsque je clique dessus
+      // await modal.trigger("click");
       expect(modal.classes()).toContain("hidden");
     });
     test("player typing incorrect word should display the incorrects letters", async () => {

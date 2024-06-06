@@ -70,21 +70,25 @@ function dynamicStyles(letter: string) {
 
 /* HANDLE CLICK ON THE VIRTUALS KEYS */
 function triggerKeyPress(event: Event) {
-  // verifie que c'est la touch enter
-  const keyboardElement = event.target as HTMLElement;
+  const keyboardKeyElement = event.target as HTMLElement;
   const GuessInputElement = document.querySelector("input") as HTMLInputElement;
-  if (keyboardElement.textContent === "ENT") {
+
+  // Process aniamtion
+  keyAnimationOnTap(keyboardKeyElement);
+
+  // verifie que c'est la touch enter
+  if (keyboardKeyElement.textContent === "ENT") {
     createAndDispatchEvents("keydown", true, GuessInputElement);
     return;
   }
-  if (keyboardElement.textContent === "EFF") {
+  if (keyboardKeyElement.textContent === "EFF") {
     GuessInputElement.value = GuessInputElement.value.slice(0, -1);
     createAndDispatchEvents("input", false, GuessInputElement);
     return;
   }
   // vérifie que l'input n'a pas déja 5 lettres
   if (GuessInputElement.value.length < 5) {
-    GuessInputElement.value += keyboardElement.dataset.letter;
+    GuessInputElement.value += keyboardKeyElement.dataset.letter;
     createAndDispatchEvents("input", false, GuessInputElement);
   }
 }
@@ -104,6 +108,20 @@ function createAndDispatchEvents(
   const event = new Event(eventName) as keyEvent;
   enter ? (event.key = "Enter") : null;
   inputElement.dispatchEvent(event);
+}
+
+function keyAnimationOnTap(key: HTMLElement) {
+  const keyScale = [
+    { transform: "scale(1)" },
+    { transform: "scale(1.1)" },
+    { transform: "scale(1)" },
+  ];
+
+  const keyTiming = {
+    duration: 200,
+    iterations: 1,
+  };
+  key.animate(keyScale, keyTiming);
 }
 </script>
 

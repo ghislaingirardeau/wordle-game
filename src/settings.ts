@@ -1,4 +1,5 @@
 import { ref } from "vue";
+import { type levels } from "@/types/interface";
 
 export const VICTORY_MESSAGE: string = "You won!";
 export const DEFEAT_MESSAGE: string = "You lose!";
@@ -29,7 +30,34 @@ export function SET_DIFFICULTY(level: string) {
   }
 }
 
-interface levels {
-  type: string;
-  attempt: number;
-}
+// Virtual keyboard
+export const allLetters = ref([
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "i",
+  "j",
+  "k",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "q",
+  "r",
+  "s",
+  "t",
+  "u",
+  "v",
+  "w",
+  "x",
+  "y",
+  "z",
+  "Ent",
+  "Eff",
+]);

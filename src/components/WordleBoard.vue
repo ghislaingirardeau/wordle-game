@@ -54,7 +54,7 @@
               name="reset"
               type="button"
               class="text-marine bg-amber hover:bg-amber focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
-              @click="startNewGame"
+              @click.stop="startNewGame"
             >
               Play again
             </button>

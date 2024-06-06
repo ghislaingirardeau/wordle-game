@@ -178,6 +178,7 @@ function reFocusOnBlur(event: Event) {
 }
 
 function fromVirtualKeyboard(e: Event) {
+  // nothing to do because input value is already updated inside lettersHelper function
   return;
 }
 

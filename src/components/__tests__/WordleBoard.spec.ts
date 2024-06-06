@@ -283,12 +283,12 @@ describe("WordleBoard", () => {
       await playerSubmitAndTypeGuess("TRAIN");
       const letterElement = (x: string) =>
         wrapper.find(`.helper_block span[data-letter="${x}"]`);
-      expect(letterElement("a").classes()).toContain("bg-amber");
-      expect(letterElement("n").classes()).toContain("bg-amber");
-      expect(letterElement("r").classes()).toContain("bg-amber");
-      expect(letterElement("i").classes()).toContain("bg-amber");
+      expect(letterElement("A").classes()).toContain("bg-amber");
+      expect(letterElement("N").classes()).toContain("bg-amber");
+      expect(letterElement("R").classes()).toContain("bg-amber");
+      expect(letterElement("I").classes()).toContain("bg-amber");
       // word of the day contain "t" so no bg amber
-      expect(letterElement("t").classes()).not.toContain("bg-amber");
+      expect(letterElement("T").classes()).not.toContain("bg-amber");
     });
     /* test("do not show non letter characters when the user type", async () => {
       await playerSubmitAndTypeGuess("333");

@@ -1,15 +1,21 @@
 <template>
-  <div class="helper_block w-full flex justify-center flex-wrap my-1">
-    <span
-      v-for="letter in allLetters"
-      :key="letter"
-      :data-letter="letter"
-      class="flex justify-center text-sm w-4 m-1 border-solid border-2 border-marine rounded-sm text-marine"
-      :class="dynamicStyles(letter)"
-      @click="triggerKeyPress"
+  <div class="helper_block w-full flex flex-wrap my-1">
+    <div
+      v-for="(rowOfLetter, i) in allLetters"
+      :key="'row-' + i"
+      class="w-full flex justify-center"
     >
-      {{ letter }}
-    </span>
+      <span
+        v-for="letter in rowOfLetter"
+        :key="letter"
+        :data-letter="letter"
+        class="flex justify-center text-sm w-6 p-1 m-1 border-solid border-2 border-marine rounded-sm text-marine"
+        :class="dynamicStyles(letter)"
+        @click="triggerKeyPress"
+      >
+        {{ letter }}
+      </span>
+    </div>
   </div>
 </template>
 
@@ -50,12 +56,12 @@ function dynamicStyles(letter: string) {
     "px-4": false,
   };
   // pour les lettres incorrects
-  if (incorrectLetters.value.includes(letter.toUpperCase())) {
+  if (incorrectLetters.value.includes(letter)) {
     classesToAdd["bg-amber"] = true;
     classesToAdd.transition = true;
   }
   // pour la touche "enter" du clavier virtuelle
-  if (letter === "Ent" || letter === "Eff") {
+  if (letter === "ENT" || letter === "EFF") {
     classesToAdd["bg-[blue]"] = true;
     classesToAdd["px-4"] = true;
   }
@@ -67,18 +73,18 @@ function triggerKeyPress(event: Event) {
   // verifie que c'est la touch enter
   const keyboardElement = event.target as HTMLElement;
   const GuessInputElement = document.querySelector("input") as HTMLInputElement;
-  if (keyboardElement.textContent === "Ent") {
+  if (keyboardElement.textContent === "ENT") {
     createAndDispatchEvents("keydown", true, GuessInputElement);
     return;
   }
-  if (keyboardElement.textContent === "Eff") {
+  if (keyboardElement.textContent === "EFF") {
     GuessInputElement.value = GuessInputElement.value.slice(0, -1);
     createAndDispatchEvents("input", false, GuessInputElement);
     return;
   }
   // vérifie que l'input n'a pas déja 5 lettres
   if (GuessInputElement.value.length < 5) {
-    GuessInputElement.value += keyboardElement.dataset.letter?.toUpperCase();
+    GuessInputElement.value += keyboardElement.dataset.letter;
     createAndDispatchEvents("input", false, GuessInputElement);
   }
 }
@@ -95,7 +101,7 @@ function createAndDispatchEvents(
   enter: boolean,
   inputElement: HTMLInputElement
 ) {
-  const event = new Event(eventName);
+  const event = new Event(eventName) as keyEvent;
   enter ? (event.key = "Enter") : null;
   inputElement.dispatchEvent(event);
 }

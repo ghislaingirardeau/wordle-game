@@ -23,6 +23,25 @@ const props = defineProps({
   wordOfTheDay: String,
 });
 
+/* ARRAY CONTAINING THE LISTS OF INCORRECT LETTERS */
+const incorrectLetters = computed(() => {
+  let arrayOfUniqueLettersTyped = [
+    ...new Set(props.guessSubmited?.join("").split("")),
+  ];
+
+  let arrayOfWordDayLetter = props.wordOfTheDay?.split("");
+
+  let arrayOfIncorrectLetter: string[] = [];
+
+  arrayOfUniqueLettersTyped?.forEach((letter) => {
+    if (!arrayOfWordDayLetter?.includes(letter)) {
+      arrayOfIncorrectLetter.push(letter);
+    }
+  });
+  return arrayOfIncorrectLetter;
+});
+
+/* SET DYNAMIC STYLE DEPEND ON INCORRECT LETTER AND SPECIAL VIRTUAL KEYS */
 function dynamicStyles(letter: string) {
   let classesToAdd = {
     "bg-amber": false,
@@ -43,51 +62,43 @@ function dynamicStyles(letter: string) {
   return classesToAdd;
 }
 
+/* HANDLE CLICK ON THE VIRTUALS KEYS */
 function triggerKeyPress(event: Event) {
   // verifie que c'est la touch enter
   const keyboardElement = event.target as HTMLElement;
   const GuessInputElement = document.querySelector("input") as HTMLInputElement;
   if (keyboardElement.textContent === "Ent") {
-    // créer l'event keydown, qui est déjà sur l'input dans GuessInput
-    const eventKeyDown = new Event("keydown") as keyEvent;
-    // ajoute la propriété "key" à event, sinon elle n'existe pas, car l'event actuel est un click
-    eventKeyDown.key = "Enter";
-    // récupére l'input "guess" qui a été crée dans "GuessInput",
-    // éxécute l'event "keydown" qui est mis grace à @keydown.enter
-    // comme la propriété key:"Enter" est présente dans l'event, @keydown.enter ne pose pas de probleme
-    GuessInputElement.dispatchEvent(eventKeyDown);
+    createAndDispatchEvents("keydown", true, GuessInputElement);
     return;
   }
   if (keyboardElement.textContent === "Eff") {
     GuessInputElement.value = GuessInputElement.value.slice(0, -1);
-    const changeInputValue = new Event("input") as Event;
-    GuessInputElement.dispatchEvent(changeInputValue);
+    createAndDispatchEvents("input", false, GuessInputElement);
     return;
   }
   // vérifie que l'input n'a pas déja 5 lettres
   if (GuessInputElement.value.length < 5) {
     GuessInputElement.value += keyboardElement.dataset.letter?.toUpperCase();
-    const changeInputValue = new Event("input") as Event;
-    GuessInputElement.dispatchEvent(changeInputValue);
+    createAndDispatchEvents("input", false, GuessInputElement);
   }
 }
 
-const incorrectLetters = computed(() => {
-  let arrayOfUniqueLettersTyped = [
-    ...new Set(props.guessSubmited?.join("").split("")),
-  ];
-
-  let arrayOfWordDayLetter = props.wordOfTheDay?.split("");
-
-  let arrayOfIncorrectLetter: string[] = [];
-
-  arrayOfUniqueLettersTyped?.forEach((letter) => {
-    if (!arrayOfWordDayLetter?.includes(letter)) {
-      arrayOfIncorrectLetter.push(letter);
-    }
-  });
-  return arrayOfIncorrectLetter;
-});
+/**
+ * créer l'event keydown ou input, qui sont déjà sur l'input dans GuessInput
+ * ajoute la propriété "key" à event, sinon elle n'existe pas, car l'event actuel est un click
+ * récupére l'input "guess" qui a été crée dans "GuessInput",
+ * éxécute l'event "keydown" qui est mis grace à @keydown.enter
+ * comme la propriété key:"Enter" est présente dans l'event, @keydown.enter ne pose pas de probleme
+ */
+function createAndDispatchEvents(
+  eventName: string,
+  enter: boolean,
+  inputElement: HTMLInputElement
+) {
+  const event = new Event(eventName);
+  enter ? (event.key = "Enter") : null;
+  inputElement.dispatchEvent(event);
+}
 </script>
 
 <style scoped></style>

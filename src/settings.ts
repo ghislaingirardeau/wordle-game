@@ -15,7 +15,7 @@ export const LEVELS: levels[] = [
   { type: "Difficult", attempt: 4 },
 ];
 
-// Pour le component difficultyTabs
+// Pour le component difficulty
 export function SET_DIFFICULTY(level: string) {
   switch (level) {
     case "Easy":
@@ -29,6 +29,22 @@ export function SET_DIFFICULTY(level: string) {
       break;
   }
 }
+
+// Pour le component Langues
+export function SET_LANGUAGE(lang: string) {
+  switch (lang) {
+    case "French":
+      CURRENT_LANGUAGES.value = "French";
+      break;
+    case "English":
+      CURRENT_LANGUAGES.value = "English";
+      break;
+  }
+}
+
+export const LANGUAGES = ["English", "French"];
+
+export const CURRENT_LANGUAGES = ref("English");
 
 // Virtual keyboard
 export const allLetters = ref([

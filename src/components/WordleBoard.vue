@@ -27,12 +27,20 @@
           >
             Options
           </h2>
+          <h2
+            @click="toggleContentToShow('languages')"
+            class="text-xl underline text-marine inline-block cursor-pointer"
+            data-type="languages"
+          >
+            Languages
+          </h2>
         </div>
 
         <div class="content_block w-full">
           <Transition mode="out-in">
             <Difficulty v-if="isOptionsShow" />
             <Rules v-else-if="isRulesShow" />
+            <Languages v-else-if="isLanguagesShow" />
           </Transition>
         </div>
 
@@ -91,10 +99,11 @@ import {
   DEFEAT_MESSAGE,
   END_GAME_ATTEMPT,
   WORD_SIZE,
+  CURRENT_LANGUAGES,
 } from "@/settings";
 import { computed, onMounted, ref } from "vue";
 
-import englishWord from "../utils/englishWordsWith5Letters.json";
+import englishWords from "../utils/englishWordsWith5Letters.json";
 
 import GuessInput from "@/components/GuessInput.vue";
 import Difficulty from "@/components/menu/Difficulty.vue";
@@ -102,6 +111,7 @@ import LettersIncorrect from "@/components/lettersHelper.vue";
 import DialogInfo from "./DialogInfo.vue";
 // @ts-ignore: Unreachable code error
 import Rules from "@/components/menu/Rules.vue";
+import Languages from "@/components/menu/Langues.vue";
 
 const props = defineProps({
   wordOfTheDay: {
@@ -111,7 +121,7 @@ const props = defineProps({
     validator: (wordGiven: string) =>
       wordGiven.length === Number(`${WORD_SIZE}`) &&
       wordGiven === wordGiven.toUpperCase() &&
-      englishWord.includes(wordGiven),
+      englishWords.includes(wordGiven),
   },
 });
 
@@ -144,15 +154,25 @@ function startNewGame(event: Event) {
 // display / hide options menu
 const isOptionsShow = ref(false);
 const isRulesShow = ref(false);
+const isLanguagesShow = ref(false);
+
 function toggleContentToShow(content: string) {
   if (content === "rules") {
     isRulesShow.value = !isRulesShow.value;
     isOptionsShow.value = false;
+    isLanguagesShow.value = false;
     return;
   }
   if (content === "options") {
     isRulesShow.value = false;
     isOptionsShow.value = !isOptionsShow.value;
+    isLanguagesShow.value = false;
+    return;
+  }
+  if (content === "languages") {
+    isRulesShow.value = false;
+    isOptionsShow.value = false;
+    isLanguagesShow.value = !isLanguagesShow.value;
     return;
   }
 }

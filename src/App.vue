@@ -1,6 +1,6 @@
 <template>
   <wordle-board
-    :key="numberOfGamePlayed"
+    :key="numberOfGamePlayed + CURRENT_LANGUAGES"
     :wordOfTheDay="randomWord"
     :wordsListLang="wordsListLang"
     @restart-game="numberOfGamePlayed++"

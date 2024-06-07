@@ -1,5 +1,5 @@
 <template>
-  <div class="tabs_container my-2">
+  <div class="tabs_lang_container my-2">
     <ul
       ref="tabs"
       class="flex justify-around text-sm font-medium text-center text-marine"

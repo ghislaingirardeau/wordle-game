@@ -204,6 +204,16 @@ describe("WordleBoard", () => {
         "Try to find a"
       );
     });
+    test("Option change languages, on click current language is change with new word of the day and new list of words", async () => {
+      await wrapper
+        .find(".actions_block h2[data-type=languages]")
+        .trigger("click");
+      await wrapper.find(".tabs_lang_container #lang-French").trigger("click");
+      expect(CURRENT_LANGUAGES.value).toBe("French");
+      expect(
+        wrapper.find<HTMLInputElement>("input[type=text]").element.value
+      ).toBe("");
+    });
   });
   describe("player input", () => {
     test("Input has to be always focus", async () => {
@@ -211,8 +221,7 @@ describe("WordleBoard", () => {
       wrapper = mount(WordleBoard, {
         props: {
           wordOfTheDay: wordOfTheDay,
-          wordsListLang:
-            CURRENT_LANGUAGES.value === "English" ? englishWord : frenchWords,
+          wordsListLang: englishWord,
         },
         attachTo: "#app",
       });

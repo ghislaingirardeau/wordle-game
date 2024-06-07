@@ -15,7 +15,6 @@
       id="input-user"
       type="text"
       autofocus
-      readonly
       autocomplete="off"
       v-model="formattedGuessInProcess"
       :maxlength="WORD_SIZE"
@@ -38,12 +37,14 @@
 import { WORD_SIZE, END_GAME_ATTEMPT } from "@/settings";
 import { computed, onMounted, reactive, ref, type Ref } from "vue";
 
-import englishWord from "../utils/englishWordsWith5Letters.json";
-
 import GuessLetter from "@/components/GuessLetter.vue";
 import DialogInfo from "./DialogInfo.vue";
 
 const props = defineProps({
+  wordsListLang: {
+    type: Array,
+    required: true,
+  },
   disabledInput: {
     type: Boolean,
     required: true,
@@ -123,7 +124,10 @@ let scrollFromTop = 0;
 // quand le joueur appuie sur enter
 function onSubmit(event: Event) {
   // Si le mot n'est pas anglais, tu return, affiche la modal avec l'erreur et execute l'animation
-  if (!englishWord.includes(formattedGuessInProcess.value)) {
+  if (
+    props.wordsListLang &&
+    !props.wordsListLang.includes(formattedGuessInProcess.value)
+  ) {
     wordIncorrectShowModalAndShake(null);
     return;
   }
@@ -151,6 +155,7 @@ function wordIncorrectShowModalAndShake(errorNumberType: string | null) {
   formattedGuessInProcess.value.length !== Number(`${WORD_SIZE}`)
     ? (messageToDisplay = `This word must contain ${WORD_SIZE} letters`)
     : (messageToDisplay = "This word does not exist in the list");
+
   errorNumberType ? (messageToDisplay = errorNumberType) : null;
   showModalInfo("Error", messageToDisplay);
 

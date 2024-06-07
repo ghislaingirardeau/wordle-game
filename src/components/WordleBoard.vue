@@ -77,6 +77,7 @@
       :disabledInput="isGameOver"
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
+      :wordsListLang="wordsListLang"
       class="flex flex-col lg:order-last justify-around mt-2 min-h-[60vh] w-[90%] md:w-[60%] lg:h-[100vh] lg:w-[50%]"
     />
     <Letters-incorrect
@@ -99,7 +100,6 @@ import {
   DEFEAT_MESSAGE,
   END_GAME_ATTEMPT,
   WORD_SIZE,
-  CURRENT_LANGUAGES,
 } from "@/settings";
 import { computed, onMounted, ref } from "vue";
 
@@ -114,14 +114,18 @@ import Rules from "@/components/menu/Rules.vue";
 import Languages from "@/components/menu/Langues.vue";
 
 const props = defineProps({
+  wordsListLang: {
+    type: Array,
+    required: true,
+  },
   wordOfTheDay: {
     type: String,
     required: true,
     // methode sur la props pour vérifier que celle-ci aura bien une longueur de 5
-    validator: (wordGiven: string) =>
+    validator: (wordGiven: string, props) =>
       wordGiven.length === Number(`${WORD_SIZE}`) &&
       wordGiven === wordGiven.toUpperCase() &&
-      englishWords.includes(wordGiven),
+      props.wordsListLang.includes(wordGiven),
   },
 });
 

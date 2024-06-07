@@ -2,6 +2,7 @@
   <wordle-board
     :key="numberOfGamePlayed"
     :wordOfTheDay="randomWord"
+    :wordsListLang="wordsListLang"
     @restart-game="numberOfGamePlayed++"
   />
 </template>
@@ -9,8 +10,10 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
 import WordleBoard from "./components/WordleBoard.vue";
+import { CURRENT_LANGUAGES } from "@/settings";
 
-import englishWord from "./utils/englishWordsWith5Letters.json";
+import englishWords from "./utils/englishWordsWith5Letters.json";
+import frenchWords from "@/utils/wordsFr5.json";
 
 // le nombre de jeu fait par le joueur
 const numberOfGamePlayed = ref<number>(1);
@@ -23,9 +26,35 @@ const randomIndex = (min: number, max: number): number => {
 // trouve un mot aléatoire
 // pour qu'il se declenche, je dois lui passer une variable qui change, donc le numberOfGamePlayed
 const randomWord = computed<string>(() => {
-  const random = englishWord[randomIndex(numberOfGamePlayed.value, 2500)];
+  console.log(CURRENT_LANGUAGES.value);
+  let random = "TESTS";
+  if (CURRENT_LANGUAGES.value === "English") {
+    random =
+      englishWords[randomIndex(numberOfGamePlayed.value, englishWords.length)];
+  }
+  if (CURRENT_LANGUAGES.value === "French") {
+    random = frenchWords[
+      randomIndex(numberOfGamePlayed.value, frenchWords.length)
+    ]
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toUpperCase();
+  }
   console.log(random);
   return random;
+});
+
+const wordsListLang = computed(() => {
+  if (CURRENT_LANGUAGES.value === "English") {
+    return englishWords;
+  } else {
+    return frenchWords.map((w) =>
+      w
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toUpperCase()
+    );
+  }
 });
 </script>
 

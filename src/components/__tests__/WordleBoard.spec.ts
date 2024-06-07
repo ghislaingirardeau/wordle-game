@@ -7,8 +7,10 @@ import {
   VICTORY_MESSAGE,
   WORD_SIZE,
   END_GAME_ATTEMPT,
+  CURRENT_LANGUAGES,
 } from "@/settings";
-import exp from "constants";
+import englishWord from "@/utils/englishWordsWith5Letters.json";
+import frenchWords from "@/utils/wordsFr5.json";
 
 describe("WordleBoard", () => {
   // REFACTORISER, je peux utiliser les fonctions, objet, variable pour refactoriser le code de test
@@ -23,7 +25,10 @@ describe("WordleBoard", () => {
   beforeEach((): void => {
     // Arrange - le mount
     wrapper = mount(WordleBoard, {
-      props: { wordOfTheDay: wordOfTheDay },
+      props: {
+        wordOfTheDay: wordOfTheDay,
+        wordsListLang: englishWord,
+      },
     });
   });
 
@@ -143,6 +148,7 @@ describe("WordleBoard", () => {
     });
   });
   describe("Rules of the games", () => {
+    // CHECK PROPS VALIDATOR wordleBoard component
     beforeEach(() => {
       console.warn = vi.fn();
     });
@@ -159,21 +165,24 @@ describe("WordleBoard", () => {
         //* a executer avant le mount !
 
         // OPTION pour masquer le warning dans le test
-        /* const spy = vi.spyOn(console, "warn");
-      spy.mockImplementation(() => null); */
+        // const spy = vi.spyOn(console, "warn");
+        // spy.mockImplementation(() => null);
         //----------------------------------------
 
         mount(WordleBoard, {
-          props: { wordOfTheDay: objectFomEach.wordFromArray },
+          props: {
+            wordOfTheDay: objectFomEach.wordFromArray,
+            wordsListLang: englishWord,
+          },
         });
         // si j'envoie un mot de moins de 5 lettres, j'ai bien un console warnning coté navigateur
         // le warning s'affiche aussi dans le test
         expect(console.warn).toHaveBeenCalled();
       }
     );
-    test("No warning if the word of the day is real, uppercase and contain  letter", async () => {
+    test("No warning if the word of the day is real, uppercase and contain letter", async () => {
       mount(WordleBoard, {
-        props: { wordOfTheDay: "TESTS" },
+        props: { wordOfTheDay: "DIVER", wordsListLang: englishWord },
       });
       expect(console.warn).not.toHaveBeenCalled();
     });
@@ -200,7 +209,11 @@ describe("WordleBoard", () => {
     test("Input has to be always focus", async () => {
       document.body.innerHTML = "<div id='app'></div>";
       wrapper = mount(WordleBoard, {
-        props: { wordOfTheDay: wordOfTheDay },
+        props: {
+          wordOfTheDay: wordOfTheDay,
+          wordsListLang:
+            CURRENT_LANGUAGES.value === "English" ? englishWord : frenchWords,
+        },
         attachTo: "#app",
       });
       expect(

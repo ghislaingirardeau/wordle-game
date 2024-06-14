@@ -7,7 +7,7 @@
       tabindex="-1"
       @click="toggleModal"
       aria-hidden="true"
-      class="modal hidden overflow-y-auto overflow-x-hidden fixed top-1/3 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      class="modal hidden overflow-y-auto overflow-x-hidden fixed top-1/3 right-0 lg:left-1/3 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full lg:w-[35%]"
     >
       <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->

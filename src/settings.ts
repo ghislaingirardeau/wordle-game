@@ -50,5 +50,5 @@ export const CURRENT_LANGUAGES = ref("English");
 export const allLetters = ref([
   ["A", "Z", "E", "R", "T", "Y", "U", "I", "O", "P"],
   ["Q", "S", "D", "F", "G", "H", "J", "K", "L", "M"],
-  ["W", "X", "C", "V", "B", "N", "ENT", "EFF"],
+  ["W", "X", "C", "V", "B", "N"],
 ]);

@@ -1,5 +1,5 @@
 <template>
-  <div class="helper_block w-full flex flex-wrap my-1">
+  <div>
     <div
       v-for="(rowOfLetter, i) in allLetters"
       :key="'row-' + i"
@@ -9,12 +9,29 @@
         v-for="letter in rowOfLetter"
         :key="letter"
         :data-letter="letter"
-        class="flex justify-center text-lg w-8 p-1 m-1 border-solid border-2 border-marine rounded-sm text-marine"
+        class="flex justify-center text-lg lg:text-3xl lg:max-h-12 w-8 p-1 lg:p-5 m-1 lg:mx-3 lg:items-center border-solid border-2 border-marine rounded-sm text-marine"
         :class="dynamicStyles(letter)"
         @click="triggerKeyPress"
       >
         {{ letter }}
       </span>
+      <img
+        v-if="i === 2"
+        width="40"
+        height="40"
+        src="https://img.icons8.com/ios/50/backspace.png"
+        alt="backspace"
+        @click="triggerKeyBackspace"
+        class="mx-2"
+      />
+      <img
+        v-if="i === 2"
+        width="40"
+        height="40"
+        src="https://img.icons8.com/ios/50/enter-key.png"
+        alt="enter-key"
+        @click="triggerKeyEnter"
+      />
     </div>
   </div>
 </template>
@@ -52,18 +69,11 @@ function dynamicStyles(letter: string) {
   let classesToAdd = {
     "bg-amber": false,
     transition: false,
-    "bg-[blue]": false,
-    "px-4": false,
   };
   // pour les lettres incorrects
   if (incorrectLetters.value.includes(letter)) {
     classesToAdd["bg-amber"] = true;
     classesToAdd.transition = true;
-  }
-  // pour la touche "enter" du clavier virtuelle
-  if (letter === "ENT" || letter === "EFF") {
-    classesToAdd["bg-[blue]"] = true;
-    classesToAdd["px-4"] = true;
   }
   return classesToAdd;
 }
@@ -76,21 +86,31 @@ function triggerKeyPress(event: Event) {
   // Process aniamtion
   keyAnimationOnTap(keyboardKeyElement);
 
-  // verifie que c'est la touch enter
-  if (keyboardKeyElement.textContent === "ENT") {
-    createAndDispatchEvents("keydown", true, GuessInputElement);
-    return;
-  }
-  if (keyboardKeyElement.textContent === "EFF") {
-    GuessInputElement.value = GuessInputElement.value.slice(0, -1);
-    createAndDispatchEvents("input", false, GuessInputElement);
-    return;
-  }
   // vérifie que l'input n'a pas déja 5 lettres
   if (GuessInputElement.value.length < 5) {
     GuessInputElement.value += keyboardKeyElement.dataset.letter;
     createAndDispatchEvents("input", false, GuessInputElement);
   }
+}
+
+function triggerKeyBackspace(event: Event) {
+  const keyboardKeyElement = event.target as HTMLElement;
+  const GuessInputElement = document.querySelector("input") as HTMLInputElement;
+
+  // Process aniamtion
+  keyAnimationOnTap(keyboardKeyElement);
+  GuessInputElement.value = GuessInputElement.value.slice(0, -1);
+  createAndDispatchEvents("input", false, GuessInputElement);
+}
+
+function triggerKeyEnter(event: Event) {
+  const keyboardKeyElement = event.target as HTMLElement;
+  const GuessInputElement = document.querySelector("input") as HTMLInputElement;
+
+  // Process aniamtion
+  keyAnimationOnTap(keyboardKeyElement);
+  // verifie que c'est la touch enter
+  createAndDispatchEvents("keydown", true, GuessInputElement);
 }
 
 /**

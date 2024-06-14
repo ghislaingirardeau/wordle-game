@@ -101,9 +101,10 @@ import {
   END_GAME_ATTEMPT,
   WORD_SIZE,
 } from "@/settings";
-import { computed, onMounted, ref } from "vue";
-
-import englishWords from "../utils/englishWordsWith5Letters.json";
+import {
+  computed,
+  ref,
+} from "vue";
 
 import GuessInput from "@/components/GuessInput.vue";
 import Difficulty from "@/components/menu/Difficulty.vue";
@@ -122,10 +123,18 @@ const props = defineProps({
     type: String,
     required: true,
     // methode sur la props pour vérifier que celle-ci aura bien une longueur de 5
-    validator: (wordGiven: string, props) =>
-      wordGiven.length === Number(`${WORD_SIZE}`) &&
-      wordGiven === wordGiven.toUpperCase() &&
-      props.wordsListLang.includes(wordGiven),
+    validator: (wordGiven: string, props) => {
+      const words = props.wordsListLang as string[];
+      if (
+        wordGiven.length === Number(`${WORD_SIZE}`) &&
+        wordGiven === wordGiven.toUpperCase() &&
+        words.includes(wordGiven)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
 });
 

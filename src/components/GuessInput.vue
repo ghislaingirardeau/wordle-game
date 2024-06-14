@@ -15,7 +15,7 @@
       id="input-user"
       type="text"
       autofocus
-      :readonly="isLargeScreen"
+      :readonly="isLargeScreen()"
       autocomplete="off"
       v-model="formattedGuessInProcess"
       :maxlength="WORD_SIZE"
@@ -40,6 +40,8 @@ import { computed, onMounted, reactive, ref, type Ref } from "vue";
 
 import GuessLetter from "@/components/GuessLetter.vue";
 import DialogInfo from "./DialogInfo.vue";
+
+import { isLargeScreen } from "@/mixins/useScreen.js";
 
 const props = defineProps({
   wordsListLang: {
@@ -69,11 +71,6 @@ const guessInProcess = ref<string | null>(null);
 const modalInfo = reactive({
   title: "",
   message: "",
-});
-
-// on large screen virtaul keyboard is not show, so allowed typing keyboard
-const isLargeScreen = computed(() => {
-  return window.innerWidth > 1024 ? false : true;
 });
 
 // defini une ref sur un component
@@ -241,3 +238,4 @@ onMounted(() => {
   background-color: white;
 }
 </style>
+@/mixins/useScreen.js

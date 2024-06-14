@@ -1,9 +1,9 @@
 <template>
   <div
-    class="flex flex-col lg:flex-wrap justify-start items-center min-h-screen lg:h-screen font-Kalam mx-3"
+    class="flex flex-col lg:flex-wrap justify-start items-center min-h-screen lg:h-screen font-Kalam mx-3 lg:order-first"
   >
     <header
-      class="flex flex-col justify-start w-full min-h-[15vh] lg:h-[90vh] lg:w-[30%] border-solid border-amber lg:border-r-2"
+      class="menu_block flex flex-col justify-start w-full min-h-[15vh] lg:h-[90vh] lg:w-[30%] border-solid border-amber lg:border-r-2"
     >
       <h1 class="text-4xl text-center text-amber font-PermanentMarker my-2">
         Wordle Game
@@ -78,14 +78,15 @@
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
       :wordsListLang="wordsListLang"
-      class="flex flex-col lg:order-last justify-around mt-2 min-h-[60vh] w-[90%] md:w-[60%] lg:h-[100vh] lg:w-[50%]"
+      class="guesses_block flex flex-col justify-around mt-2 min-h-[60vh] w-[90%] md:w-[60%] lg:h-[45vh] lg:w-[65%] lg:order-3"
     />
-    <Letters-incorrect
+    <Letters-helper
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
+      class="helper_block w-full flex flex-wrap my-1 lg:h-[30vh] lg:w-[65%] lg:order-last"
     />
     <footer
-      class="min-h-[5vh] lg:h-[10vh] w-full lg:w-[30%] flex flex-col justify-start items-center border-solid border-amber border-t-2 lg:border-r-2"
+      class="footer_block min-h-[5vh] lg:h-[10vh] w-full lg:w-[30%] flex flex-col justify-start items-center border-solid border-amber border-t-2 lg:order-2 lg:border-r-2"
     >
       <div>
         <p>Develop by GG web dev</p>
@@ -101,14 +102,11 @@ import {
   END_GAME_ATTEMPT,
   WORD_SIZE,
 } from "@/settings";
-import {
-  computed,
-  ref,
-} from "vue";
+import { computed, ref } from "vue";
 
 import GuessInput from "@/components/GuessInput.vue";
 import Difficulty from "@/components/menu/Difficulty.vue";
-import LettersIncorrect from "@/components/lettersHelper.vue";
+import LettersHelper from "@/components/lettersHelper.vue";
 import DialogInfo from "./DialogInfo.vue";
 // @ts-ignore: Unreachable code error
 import Rules from "@/components/menu/Rules.vue";

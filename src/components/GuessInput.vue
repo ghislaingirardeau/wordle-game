@@ -15,7 +15,7 @@
       id="input-user"
       type="text"
       autofocus
-      readonly
+      :readonly="isLargeScreen"
       autocomplete="off"
       v-model="formattedGuessInProcess"
       :maxlength="WORD_SIZE"
@@ -69,6 +69,11 @@ const guessInProcess = ref<string | null>(null);
 const modalInfo = reactive({
   title: "",
   message: "",
+});
+
+// on large screen virtaul keyboard is not show, so allowed typing keyboard
+const isLargeScreen = computed(() => {
+  return window.innerWidth > 1024 ? false : true;
 });
 
 // defini une ref sur un component

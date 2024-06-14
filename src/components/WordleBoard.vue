@@ -78,9 +78,10 @@
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
       :wordsListLang="wordsListLang"
-      class="guesses_block flex flex-col justify-around mt-2 min-h-[60vh] w-[90%] md:w-[60%] lg:h-[45vh] lg:w-[65%] lg:order-3"
+      class="guesses_block flex flex-col justify-around mt-2 min-h-[60vh] w-[90%] md:w-[60%] lg:h-[100vh] lg:w-[35%] lg:order-3"
     />
     <Letters-helper
+      v-if="isLargeScreen"
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
       class="helper_block w-full flex flex-wrap my-1 lg:h-[30vh] lg:w-[65%] lg:order-last"
@@ -161,6 +162,10 @@ function startNewGame(event: Event) {
   guessSubmited.value = [];
   emit("restart-game");
 }
+
+const isLargeScreen = computed(() => {
+  return window.innerWidth > 1024 ? false : true;
+});
 
 // display / hide options menu
 const isOptionsShow = ref(false);

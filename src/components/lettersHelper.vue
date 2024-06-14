@@ -17,8 +17,8 @@
       </span>
       <img
         v-if="i === 2"
-        width="40"
-        height="40"
+        width="50"
+        height="50"
         src="https://img.icons8.com/ios/50/backspace.png"
         alt="backspace"
         @click="triggerKeyBackspace"
@@ -26,8 +26,8 @@
       />
       <img
         v-if="i === 2"
-        width="40"
-        height="40"
+        width="50"
+        height="50"
         src="https://img.icons8.com/ios/50/enter-key.png"
         alt="enter-key"
         @click="triggerKeyEnter"

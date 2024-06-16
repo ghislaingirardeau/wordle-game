@@ -113,7 +113,7 @@ import DialogInfo from "./DialogInfo.vue";
 import Rules from "@/components/menu/Rules.vue";
 import Languages from "@/components/menu/Langues.vue";
 
-import { isLargeScreen } from "@/mixins/useScreen.js";
+import { isLargeScreen } from "@/mixins/useScreen";
 
 const props = defineProps({
   wordsListLang: {

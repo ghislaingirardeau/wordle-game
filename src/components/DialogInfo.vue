@@ -68,6 +68,7 @@ const props = defineProps({
 watch(
   () => props.isGameOver,
   (a, b) => {
+    // si gameover, laisse le temps de l'animation des lettres du dernier mot pour afficher la modale
     setTimeout(() => {
       toggleModal();
     }, 1300);

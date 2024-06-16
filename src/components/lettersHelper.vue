@@ -15,23 +15,31 @@
       >
         {{ letter }}
       </span>
-      <img
+      <div
         v-if="i === 2"
-        width="50"
-        height="50"
-        src="https://img.icons8.com/ios/50/backspace.png"
-        alt="backspace"
-        @click="triggerKeyBackspace"
-        class="mx-2"
-      />
-      <img
+        class="keyboard_action keyboard_action-backspace mx-2 flex items-center"
+      >
+        <img
+          width="50"
+          height="50"
+          src="https://img.icons8.com/ios/50/backspace.png"
+          alt="backspace"
+          @click="triggerKeyBackspace"
+        />
+      </div>
+
+      <div
         v-if="i === 2"
-        width="50"
-        height="50"
-        src="https://img.icons8.com/ios/50/enter-key.png"
-        alt="enter-key"
-        @click="triggerKeyEnter"
-      />
+        class="keyboard_action keyboard_action-enter flex items-center"
+      >
+        <img
+          width="50"
+          height="50"
+          src="https://img.icons8.com/ios/50/enter-key.png"
+          alt="enter-key"
+          @click="triggerKeyEnter"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -81,7 +89,9 @@ function dynamicStyles(letter: string) {
 /* HANDLE CLICK ON THE VIRTUALS KEYS */
 function triggerKeyPress(event: Event) {
   const keyboardKeyElement = event.target as HTMLElement;
-  const GuessInputElement = document.querySelector("input") as HTMLInputElement;
+  const GuessInputElement = document.querySelector(
+    "input[type=text]"
+  ) as HTMLInputElement;
 
   // Process aniamtion
   keyAnimationOnTap(keyboardKeyElement);
@@ -145,4 +155,9 @@ function keyAnimationOnTap(key: HTMLElement) {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.keyboard_action {
+  height: 3rem;
+  width: 2.5rem;
+}
+</style>

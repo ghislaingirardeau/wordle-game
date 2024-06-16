@@ -84,7 +84,7 @@
       v-if="isLargeScreen()"
       :guessSubmited="guessSubmited"
       :wordOfTheDay="wordOfTheDay"
-      class="helper_block w-full flex flex-wrap my-2"
+      class="keyboard_block w-full flex flex-wrap my-2"
     />
     <footer
       class="footer_block min-h-[5vh] lg:h-[10vh] w-full lg:w-[55%] flex flex-col justify-start items-center border-solid border-amber border-t-2"

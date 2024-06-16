@@ -167,6 +167,9 @@ describe("player input", () => {
       wrapper.find<HTMLInputElement>("input[type=text]").element.value
     ).toEqual("A");
   });
+  test("Virtual keyboard should not display on large screen", async () => {
+    expect(wrapper.find(".keyboard_block").isVisible()).toBe(true);
+  });
   /* test("do not show non letter characters when the user type", async () => {
     await playerSubmitAndTypeGuess("333");
     expect(

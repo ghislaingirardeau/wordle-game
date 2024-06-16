@@ -146,13 +146,26 @@ describe("player input", () => {
   test("player typing incorrect word should display the incorrects letters", async () => {
     await playerSubmitAndTypeGuess("TRAIN");
     const letterElement = (x: string) =>
-      wrapper.find(`.helper_block span[data-letter="${x}"]`);
+      wrapper.find(`.keyboard_block span[data-letter="${x}"]`);
     expect(letterElement("A").classes()).toContain("bg-amber");
     expect(letterElement("N").classes()).toContain("bg-amber");
     expect(letterElement("R").classes()).toContain("bg-amber");
     expect(letterElement("I").classes()).toContain("bg-amber");
     // word of the day contain "t" so no bg amber
     expect(letterElement("T").classes()).not.toContain("bg-amber");
+  });
+  test("Click on virtual keyboard should display the letter inside the input", async () => {
+    // pour execution de l'animation
+    Element.prototype.animate = vi.fn();
+    const letterElement = wrapper.find<HTMLSpanElement>(
+      ".keyboard_block span[data-letter='A']"
+    );
+    await letterElement.trigger("click");
+    await wrapper.find("input[type=text]").setValue(letterElement.text());
+
+    expect(
+      wrapper.find<HTMLInputElement>("input[type=text]").element.value
+    ).toEqual("A");
   });
   /* test("do not show non letter characters when the user type", async () => {
     await playerSubmitAndTypeGuess("333");

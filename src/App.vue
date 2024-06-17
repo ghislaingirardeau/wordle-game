@@ -1,14 +1,16 @@
 <template>
-  <wordle-board
-    :key="numberOfGamePlayed + CURRENT_LANGUAGES"
-    :wordOfTheDay="randomWord"
-    :wordsListLang="wordsListLang"
-    @restart-game="numberOfGamePlayed++"
-  />
+  <Transition name="fade" mode="out-in">
+    <wordle-board
+      :key="numberOfGamePlayed + CURRENT_LANGUAGES"
+      :wordOfTheDay="randomWord"
+      :wordsListLang="wordsListLang"
+      @restart-game="numberOfGamePlayed++"
+    />
+  </Transition>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref, watch, onMounted } from "vue";
 import WordleBoard from "./components/WordleBoard.vue";
 import { CURRENT_LANGUAGES } from "@/settings";
 
@@ -56,6 +58,24 @@ const wordsListLang = computed(() => {
     );
   }
 });
+
+onMounted(async () => {
+  const url = import.meta.env.VITE_dicolink_url + "cheval/definitions";
+  const options = {
+    method: "GET",
+    headers: {
+      "x-rapidapi-key": import.meta.env.VITE_x_rapidapi_key,
+      "x-rapidapi-host": import.meta.env.VITE_x_rapidapi_host,
+    },
+  };
+  try {
+    const response = await fetch(url, options);
+    const result = await response.json();
+    console.log(result[0].definition);
+  } catch (error) {
+    console.error(error);
+  }
+});
 </script>
 
 <style>
@@ -64,6 +84,13 @@ body {
   background-color: theme("colors.white");
 }
 
-#app {
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

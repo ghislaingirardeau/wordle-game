@@ -44,7 +44,7 @@ export function SET_LANGUAGE(lang: string) {
 
 export const LANGUAGES = ["English", "French"];
 
-export const CURRENT_LANGUAGES = ref("English");
+export const CURRENT_LANGUAGES = ref("French");
 
 // Virtual keyboard
 export const allLetters = ref([

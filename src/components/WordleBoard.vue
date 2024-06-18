@@ -58,19 +58,11 @@
             <h2 v-else>
               {{ DEFEAT_MESSAGE }} The word to find was: {{ wordOfTheDay }}
             </h2>
-            <h3 v-if="wordDefinition">
+            <h3 v-if="wordDefinition" class="my-3">
               {{ wordDefinition }}
             </h3>
             <button
-              name="reset"
-              type="button"
-              class="text-marine bg-amber hover:bg-amber focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
-              @click.stop="startNewGame"
-            >
-              Play again
-            </button>
-            <button
-              v-if="!wordDefinition"
+              v-if="!wordDefinition && CURRENT_LANGUAGES === 'French'"
               name="definition"
               type="button"
               class="text-marine bg-amber hover:bg-amber focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
@@ -95,6 +87,14 @@
                 />
               </svg>
               <span v-else> Word definition </span>
+            </button>
+            <button
+              name="reset"
+              type="button"
+              class="text-marine bg-amber hover:bg-amber focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
+              @click.stop="startNewGame"
+            >
+              Play again
             </button>
           </template>
         </dialog-info>
@@ -132,6 +132,7 @@ import {
   DEFEAT_MESSAGE,
   END_GAME_ATTEMPT,
   WORD_SIZE,
+  CURRENT_LANGUAGES,
 } from "@/settings";
 import { computed, ref } from "vue";
 

@@ -4,15 +4,17 @@
       :key="numberOfGamePlayed + CURRENT_LANGUAGES"
       :wordOfTheDay="randomWord"
       :wordsListLang="wordsListLang"
-      @restart-game="numberOfGamePlayed++"
+      :scores="scores"
+      @restart-game="restartGame"
+      @update-score="updateScores"
     />
   </Transition>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch, onMounted } from "vue";
+import { computed, ref, reactive } from "vue";
 import WordleBoard from "./components/WordleBoard.vue";
-import { CURRENT_LANGUAGES } from "@/settings";
+import { CURRENT_LANGUAGES, END_GAME_ATTEMPT } from "@/settings";
 
 import englishWords from "./utils/englishWordsWith5Letters.json";
 import frenchWords from "@/utils/wordsFr5.json";
@@ -58,6 +60,27 @@ const wordsListLang = computed(() => {
     );
   }
 });
+
+function restartGame(payload: number) {
+  numberOfGamePlayed.value++;
+}
+
+// REGISTER SCORES
+interface Score {
+  score: number | string;
+  game: number;
+}
+
+const scores: Score[] = reactive([]);
+
+function updateScores(payload: number) {
+  scores.push({
+    score: payload == END_GAME_ATTEMPT.value ? "Lost" : payload,
+    game: numberOfGamePlayed.value,
+  });
+  console.log(scores);
+}
+//-----------------------
 </script>
 
 <style>

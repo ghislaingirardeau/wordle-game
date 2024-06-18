@@ -17,6 +17,7 @@
         <h3 v-if="wordDefinition" class="my-3">
           {{ wordDefinition }}
         </h3>
+        <p>{{ scores }}</p>
         <button
           v-if="!wordDefinition && CURRENT_LANGUAGES === 'French'"
           name="definition"
@@ -88,7 +89,7 @@ import {
   WORD_SIZE,
   CURRENT_LANGUAGES,
 } from "@/settings";
-import { computed, ref } from "vue";
+import { computed, ref, reactive, watch } from "vue";
 
 import TheHeader from "@/components/TheHeader.vue";
 import GuessInput from "@/components/GuessInput.vue";
@@ -120,10 +121,13 @@ const props = defineProps({
       }
     },
   },
+  scores: {
+    type: Array,
+  },
 });
 
 // recuperation de l'event de guessInput
-const emit = defineEmits(["restart-game"]);
+const emit = defineEmits(["restart-game", "update-score"]);
 
 // le tableau qui va recevoir tous les essais du joueur
 const guessSubmited = ref<string[]>([]);
@@ -139,6 +143,11 @@ const isGameOver = computed<boolean>(() => {
   );
 });
 
+watch(isGameOver, (a, b) => {
+  console.log("game is over");
+  emit("update-score", guessSubmited.value.length);
+});
+
 function onSubmitGuess(guess: string) {
   guessSubmited.value.push(guess);
 }
@@ -148,8 +157,8 @@ function startNewGame(event: Event) {
     top: 0,
     behavior: "smooth",
   });
-  guessSubmited.value = [];
   emit("restart-game");
+  guessSubmited.value = [];
 }
 
 async function getAndShowDefinition() {

@@ -5,7 +5,7 @@
       :id="'info-modal-' + idName"
       ref="dialogElement"
       tabindex="-1"
-      @click="toggleModal"
+      v-on="isGameOver ? {} : { click: toggleModal }"
       aria-hidden="true"
       class="modal hidden overflow-y-auto overflow-x-hidden fixed top-1/3 right-0 lg:left-1/3 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full lg:w-[35%]"
     >
@@ -78,6 +78,7 @@ watch(
 function toggleModal(): void {
   const element = dialogElement.value as HTMLElement;
   element.classList.toggle("hidden");
+  // si c'est la fin du jeu, désactive la possibilité de fermer la modale. Le seul choix est de rejouer
 }
 
 // define expose me permettra d'éxécuter cette méhode à partir du parent (en ajoutant une ref au component)

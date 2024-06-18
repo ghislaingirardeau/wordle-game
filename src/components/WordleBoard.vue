@@ -144,6 +144,7 @@ import Rules from "@/components/menu/Rules.vue";
 import Languages from "@/components/menu/Langues.vue";
 
 import { isLargeScreen } from "@/mixins/useScreen";
+import { useFrenchDictionary } from "@/mixins/useDictionary";
 
 const props = defineProps({
   wordsListLang: {
@@ -226,25 +227,10 @@ function toggleContentToShow(content: string) {
 }
 
 async function getAndShowDefinition() {
-  isLoadingDefinition.value = true;
-  const url =
-    import.meta.env.VITE_dicolink_url + props.wordOfTheDay + "/definitions";
-  const options = {
-    method: "GET",
-    headers: {
-      "x-rapidapi-key": import.meta.env.VITE_x_rapidapi_key,
-      "x-rapidapi-host": import.meta.env.VITE_x_rapidapi_host,
-    },
-  };
-  try {
-    const response = await fetch(url, options);
-    const result = await response.json();
-    wordDefinition.value = `${props.wordOfTheDay}: ${result[0].definition}`;
-    isLoadingDefinition.value = false;
-  } catch (error) {
-    console.error(error);
-    wordDefinition.value = "Impossible de récupérer la définition";
-  }
+  wordDefinition.value = await useFrenchDictionary(
+    isLoadingDefinition,
+    props.wordOfTheDay
+  );
 }
 //----------------------------
 </script>

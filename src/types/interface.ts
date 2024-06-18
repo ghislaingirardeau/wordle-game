@@ -7,4 +7,9 @@ interface levels {
   attempt: number;
 }
 
-export type { keyEvent, levels };
+interface Score {
+  score: number | string;
+  game: number;
+}
+
+export type { keyEvent, levels, Score };

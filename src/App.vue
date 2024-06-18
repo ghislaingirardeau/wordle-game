@@ -19,6 +19,8 @@ import { CURRENT_LANGUAGES, END_GAME_ATTEMPT } from "@/settings";
 import englishWords from "./utils/englishWordsWith5Letters.json";
 import frenchWords from "@/utils/wordsFr5.json";
 
+import { type Score } from "@/types/interface";
+
 // le nombre de jeu fait par le joueur
 const numberOfGamePlayed = ref<number>(1);
 // comme si le key du component à chaque changement le component fait un nouveau render
@@ -66,10 +68,6 @@ function restartGame(payload: number) {
 }
 
 // REGISTER SCORES
-interface Score {
-  score: number | string;
-  game: number;
-}
 
 const scores: Score[] = reactive([]);
 
@@ -78,7 +76,6 @@ function updateScores(payload: number) {
     score: payload == END_GAME_ATTEMPT.value ? "Lost" : payload,
     game: numberOfGamePlayed.value,
   });
-  console.log(scores);
 }
 //-----------------------
 </script>

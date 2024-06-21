@@ -43,10 +43,9 @@
 
       <div class="content_block w-full">
         <Transition mode="out-in">
-          <Difficulty v-if="isShow.difficulty" />
-          <Rules v-else-if="isShow.rules" />
-          <Languages v-else-if="isShow.languages" />
-          <Hint v-else-if="isShow.hint" />
+          <KeepAlive>
+            <component :is="component" />
+          </KeepAlive>
         </Transition>
       </div>
     </div>
@@ -62,47 +61,34 @@ import Hint from "@/components/menu/Hint.vue";
 
 import { CURRENT_LANGUAGE } from "@/settings";
 
-import { ref, reactive } from "vue";
+import { ref, reactive, shallowRef } from "vue";
 
-interface Show {
-  difficulty: boolean;
-  rules: boolean;
-  languages: boolean;
-  hint: boolean;
-}
-
-// display / hide option menu
-const isShow = reactive({
-  difficulty: false,
-  rules: false,
-  languages: false,
-  hint: false,
-});
+const component = shallowRef(null);
 
 function contentToShow(content: string) {
   if (content === "rules") {
-    toggleCurrentAndHideOthers("rules");
+    component.value === Rules
+      ? (component.value = null)
+      : (component.value = Rules);
     return;
   }
   if (content === "difficulty") {
-    toggleCurrentAndHideOthers("difficulty");
+    component.value === Difficulty
+      ? (component.value = null)
+      : (component.value = Difficulty);
     return;
   }
   if (content === "languages") {
-    toggleCurrentAndHideOthers("languages");
+    component.value === Languages
+      ? (component.value = null)
+      : (component.value = Languages);
     return;
   }
   if (content === "hint") {
-    toggleCurrentAndHideOthers("hint");
+    component.value === Hint
+      ? (component.value = null)
+      : (component.value = Hint);
     return;
-  }
-}
-
-// toggle la div concerné et ferme toutes les autres
-function toggleCurrentAndHideOthers(current: string) {
-  isShow[current as keyof Show] = !isShow[current as keyof Show];
-  for (let key in isShow) {
-    key != current ? (isShow[key as keyof Show] = false) : null;
   }
 }
 </script>

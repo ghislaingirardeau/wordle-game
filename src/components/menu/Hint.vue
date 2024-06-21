@@ -30,7 +30,6 @@ onMounted(() => {
   } else {
     console.log(hintDefinition.value);
   }
-  console.log("built hint");
 });
 </script>
 

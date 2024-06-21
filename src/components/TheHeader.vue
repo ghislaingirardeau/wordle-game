@@ -31,6 +31,13 @@
         >
           Languages
         </h2>
+        <h2
+          @click="toggleContentToShow('hint')"
+          class="text-xl underline text-marine inline-block cursor-pointer"
+          data-type="Hint"
+        >
+          Hint
+        </h2>
       </div>
 
       <div class="content_block w-full">
@@ -38,6 +45,7 @@
           <Difficulty v-if="isOptionsShow" />
           <Rules v-else-if="isRulesShow" />
           <Languages v-else-if="isLanguagesShow" />
+          <Hint v-else-if="isHintShow" />
         </Transition>
       </div>
     </div>
@@ -49,30 +57,43 @@ import Difficulty from "@/components/menu/Difficulty.vue";
 // @ts-ignore: Unreachable code error
 import Rules from "@/components/menu/Rules.vue";
 import Languages from "@/components/menu/Langues.vue";
+import Hint from "@/components/menu/Hint.vue";
 
 import { ref } from "vue";
 // display / hide options menu
 const isOptionsShow = ref(false);
 const isRulesShow = ref(false);
 const isLanguagesShow = ref(false);
+const isHintShow = ref(false);
 
 function toggleContentToShow(content: string) {
   if (content === "rules") {
     isRulesShow.value = !isRulesShow.value;
     isOptionsShow.value = false;
     isLanguagesShow.value = false;
+    isHintShow.value = false;
     return;
   }
   if (content === "options") {
     isRulesShow.value = false;
     isOptionsShow.value = !isOptionsShow.value;
-    isLanguagesShow.value = false;
+    isRulesShow.value = false;
+    isHintShow.value = false;
     return;
   }
   if (content === "languages") {
     isRulesShow.value = false;
     isOptionsShow.value = false;
     isLanguagesShow.value = !isLanguagesShow.value;
+    isHintShow.value = false;
+
+    return;
+  }
+  if (content === "hint") {
+    isRulesShow.value = false;
+    isOptionsShow.value = false;
+    isLanguagesShow.value = false;
+    isHintShow.value = !isHintShow.value;
     return;
   }
 }

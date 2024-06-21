@@ -1,7 +1,7 @@
 <template>
   <Transition name="fade" mode="out-in">
     <wordle-board
-      :key="numberOfGamePlayed + CURRENT_LANGUAGES"
+      :key="numberOfGamePlayed + CURRENT_LANGUAGE"
       :wordOfTheDay="randomWord"
       :wordsListLang="wordsListLang"
       :scores="scores"
@@ -14,7 +14,11 @@
 <script setup lang="ts">
 import { computed, ref, reactive } from "vue";
 import WordleBoard from "./components/WordleBoard.vue";
-import { CURRENT_LANGUAGES, END_GAME_ATTEMPT } from "@/settings";
+import {
+  CURRENT_LANGUAGE,
+  END_GAME_ATTEMPT,
+  CURRENT_WORDOFDAY_RAW,
+} from "@/settings";
 
 import englishWords from "./utils/englishWordsWith5Letters.json";
 import frenchWords from "@/utils/wordsFr5.json";
@@ -32,26 +36,26 @@ const randomIndex = (min: number, max: number): number => {
 // trouve un mot aléatoire
 // pour qu'il se declenche, je dois lui passer une variable qui change, donc le numberOfGamePlayed
 const randomWord = computed<string>(() => {
-  console.log(CURRENT_LANGUAGES.value);
+  console.log(CURRENT_LANGUAGE.value);
   let random = "TESTS";
-  if (CURRENT_LANGUAGES.value === "English") {
+  if (CURRENT_LANGUAGE.value === "English") {
     random =
       englishWords[randomIndex(numberOfGamePlayed.value, englishWords.length)];
   }
-  if (CURRENT_LANGUAGES.value === "French") {
-    random = frenchWords[
-      randomIndex(numberOfGamePlayed.value, frenchWords.length)
-    ]
+  if (CURRENT_LANGUAGE.value === "French") {
+    CURRENT_WORDOFDAY_RAW.value =
+      frenchWords[randomIndex(numberOfGamePlayed.value, frenchWords.length)];
+    random = CURRENT_WORDOFDAY_RAW.value
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
       .toUpperCase();
   }
-  console.log(random);
+  console.log(random, CURRENT_WORDOFDAY_RAW.value);
   return random;
 });
 
 const wordsListLang = computed(() => {
-  if (CURRENT_LANGUAGES.value === "English") {
+  if (CURRENT_LANGUAGE.value === "English") {
     return englishWords;
   } else {
     return frenchWords.map((w) =>

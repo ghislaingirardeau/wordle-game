@@ -34,17 +34,17 @@ export function SET_DIFFICULTY(level: string) {
 export function SET_LANGUAGE(lang: string) {
   switch (lang) {
     case "French":
-      CURRENT_LANGUAGES.value = "French";
+      CURRENT_LANGUAGE.value = "French";
       break;
     case "English":
-      CURRENT_LANGUAGES.value = "English";
+      CURRENT_LANGUAGE.value = "English";
       break;
   }
 }
 
 export const LANGUAGES = ["English", "French"];
 
-export const CURRENT_LANGUAGES = ref("French");
+export const CURRENT_LANGUAGE = ref("French");
 
 // Virtual keyboard
 export const allLetters = ref([
@@ -52,3 +52,5 @@ export const allLetters = ref([
   ["Q", "S", "D", "F", "G", "H", "J", "K", "L", "M"],
   ["W", "X", "C", "V", "B", "N"],
 ]);
+
+export const CURRENT_WORDOFDAY_RAW = ref("");

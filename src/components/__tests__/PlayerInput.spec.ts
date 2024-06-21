@@ -7,7 +7,7 @@ import {
   VICTORY_MESSAGE,
   WORD_SIZE,
   END_GAME_ATTEMPT,
-  CURRENT_LANGUAGES,
+  CURRENT_LANGUAGE,
 } from "@/settings";
 import englishWord from "@/utils/englishWordsWith5Letters.json";
 import frenchWords from "@/utils/wordsFr5.json";

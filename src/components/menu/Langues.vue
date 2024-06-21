@@ -24,12 +24,12 @@
 
 <script setup lang="ts">
 import { computed, ref, type Ref } from "vue";
-import { LANGUAGES, SET_LANGUAGE, CURRENT_LANGUAGES } from "@/settings";
+import { LANGUAGES, SET_LANGUAGE, CURRENT_LANGUAGE } from "@/settings";
 
 const tabs = ref<HTMLElement>();
 
 const currentLang = computed(() => {
-  return CURRENT_LANGUAGES.value;
+  return CURRENT_LANGUAGE.value;
 });
 
 function changeLanguage(event: Event, lang: string) {

@@ -7,7 +7,7 @@ import {
   VICTORY_MESSAGE,
   WORD_SIZE,
   END_GAME_ATTEMPT,
-  CURRENT_LANGUAGES,
+  CURRENT_LANGUAGE,
 } from "@/settings";
 import englishWord from "@/utils/englishWordsWith5Letters.json";
 import frenchWords from "@/utils/wordsFr5.json";
@@ -212,7 +212,7 @@ describe("WordleBoard", () => {
         .find(".actions_block h2[data-type=languages]")
         .trigger("click");
       await wrapper.find(".tabs_lang_container #lang-French").trigger("click");
-      expect(CURRENT_LANGUAGES.value).toBe("French");
+      expect(CURRENT_LANGUAGE.value).toBe("French");
       expect(
         wrapper.find<HTMLInputElement>("input[type=text]").element.value
       ).toBe("");

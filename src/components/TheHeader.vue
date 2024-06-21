@@ -35,6 +35,7 @@
           @click="contentToShow('hint')"
           class="text-xl underline text-marine inline-block cursor-pointer"
           data-type="Hint"
+          v-if="CURRENT_LANGUAGE === 'French'"
         >
           Hint
         </h2>
@@ -59,6 +60,8 @@ import Rules from "@/components/menu/Rules.vue";
 import Languages from "@/components/menu/Langues.vue";
 import Hint from "@/components/menu/Hint.vue";
 
+import { CURRENT_LANGUAGE } from "@/settings";
+
 import { ref, reactive } from "vue";
 
 interface Show {
@@ -67,6 +70,7 @@ interface Show {
   languages: boolean;
   hint: boolean;
 }
+
 // display / hide option menu
 const isShow = reactive({
   difficulty: false,

@@ -2,7 +2,7 @@
   <div
     class="flex flex-col justify-start items-center min-h-screen lg:h-screen font-Kalam mx-3"
   >
-    <TheHeader />
+    <TheHeader :wordOfTheDay="wordOfTheDay" />
 
     <!-- Modal to display info -->
     <dialog-info ref="dialogComponent" :isGameOver="isGameOver" idName="game">
@@ -19,7 +19,7 @@
         </h3>
         <p>{{ scores }}</p>
         <button
-          v-if="!wordDefinition && CURRENT_LANGUAGES === 'French'"
+          v-if="!wordDefinition && CURRENT_LANGUAGE === 'French'"
           name="definition"
           type="button"
           class="text-marine bg-amber hover:bg-amber focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
@@ -87,7 +87,7 @@ import {
   DEFEAT_MESSAGE,
   END_GAME_ATTEMPT,
   WORD_SIZE,
-  CURRENT_LANGUAGES,
+  CURRENT_LANGUAGE,
 } from "@/settings";
 import { computed, ref, reactive, watch } from "vue";
 

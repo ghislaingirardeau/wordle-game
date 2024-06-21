@@ -194,7 +194,7 @@ describe("WordleBoard", () => {
     // level of difficulties
     test("Option to change the difficulty of the game on click", async () => {
       await wrapper
-        .find(".actions_block h2[data-type=options]")
+        .find(".actions_block h2[data-type=difficulty]")
         .trigger("click");
       await wrapper.find(".tabs_container #level-medium").trigger("click");
       expect(END_GAME_ATTEMPT.value).toBe(6);

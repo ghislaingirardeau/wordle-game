@@ -10,29 +10,30 @@
       class="flex flex-col justify-start lg:h-[100%] items-center border-solid border-amber border-t-2 border-b-2 lg:border-b-0 md:text-center lg:text-left"
     >
       <div class="actions_block w-full flex justify-around my-3">
+        {{ isShow }}
         <h2
-          @click="toggleContentToShow('rules')"
+          @click="contentToShow('rules')"
           class="text-xl underline text-marine cursor-pointer"
           data-type="rules"
         >
           Rules
         </h2>
         <h2
-          @click="toggleContentToShow('options')"
+          @click="contentToShow('difficulty')"
           class="text-xl underline text-marine inline-block cursor-pointer"
-          data-type="options"
+          data-type="difficulty"
         >
-          Options
+          Difficulty
         </h2>
         <h2
-          @click="toggleContentToShow('languages')"
+          @click="contentToShow('languages')"
           class="text-xl underline text-marine inline-block cursor-pointer"
           data-type="languages"
         >
           Languages
         </h2>
         <h2
-          @click="toggleContentToShow('hint')"
+          @click="contentToShow('hint')"
           class="text-xl underline text-marine inline-block cursor-pointer"
           data-type="Hint"
         >
@@ -42,10 +43,10 @@
 
       <div class="content_block w-full">
         <Transition mode="out-in">
-          <Difficulty v-if="isOptionsShow" />
-          <Rules v-else-if="isRulesShow" />
-          <Languages v-else-if="isLanguagesShow" />
-          <Hint v-else-if="isHintShow" />
+          <Difficulty v-if="isShow.difficulty" />
+          <Rules v-else-if="isShow.rules" />
+          <Languages v-else-if="isShow.languages" />
+          <Hint v-else-if="isShow.hint" />
         </Transition>
       </div>
     </div>
@@ -59,42 +60,46 @@ import Rules from "@/components/menu/Rules.vue";
 import Languages from "@/components/menu/Langues.vue";
 import Hint from "@/components/menu/Hint.vue";
 
-import { ref } from "vue";
-// display / hide options menu
-const isOptionsShow = ref(false);
-const isRulesShow = ref(false);
-const isLanguagesShow = ref(false);
-const isHintShow = ref(false);
+import { ref, reactive } from "vue";
 
-function toggleContentToShow(content: string) {
+interface Show {
+  difficulty: boolean;
+  rules: boolean;
+  languages: boolean;
+  hint: boolean;
+}
+// display / hide option menu
+const isShow = reactive({
+  difficulty: false,
+  rules: false,
+  languages: false,
+  hint: false,
+});
+
+function contentToShow(content: string) {
   if (content === "rules") {
-    isRulesShow.value = !isRulesShow.value;
-    isOptionsShow.value = false;
-    isLanguagesShow.value = false;
-    isHintShow.value = false;
+    toggleCurrentAndHideOthers("rules");
     return;
   }
-  if (content === "options") {
-    isRulesShow.value = false;
-    isOptionsShow.value = !isOptionsShow.value;
-    isRulesShow.value = false;
-    isHintShow.value = false;
+  if (content === "difficulty") {
+    toggleCurrentAndHideOthers("difficulty");
     return;
   }
   if (content === "languages") {
-    isRulesShow.value = false;
-    isOptionsShow.value = false;
-    isLanguagesShow.value = !isLanguagesShow.value;
-    isHintShow.value = false;
-
+    toggleCurrentAndHideOthers("languages");
     return;
   }
   if (content === "hint") {
-    isRulesShow.value = false;
-    isOptionsShow.value = false;
-    isLanguagesShow.value = false;
-    isHintShow.value = !isHintShow.value;
+    toggleCurrentAndHideOthers("hint");
     return;
+  }
+}
+
+// toggle la div concerné et ferme toutes les autres
+function toggleCurrentAndHideOthers(current: string) {
+  isShow[current as keyof Show] = !isShow[current as keyof Show];
+  for (let key in isShow) {
+    key != current ? (isShow[key as keyof Show] = false) : null;
   }
 }
 </script>

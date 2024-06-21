@@ -10,7 +10,6 @@
       class="flex flex-col justify-start lg:h-[100%] items-center border-solid border-amber border-t-2 border-b-2 lg:border-b-0 md:text-center lg:text-left"
     >
       <div class="actions_block w-full flex justify-around my-3">
-        {{ isShow }}
         <h2
           @click="contentToShow('rules')"
           class="text-xl underline text-marine cursor-pointer"
